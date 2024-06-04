@@ -11,15 +11,17 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import java.util.Arrays;
+
 public class MainMenu {
     Texture texture;
     float width, height;
     private Stage stage;
     private SpriteBatch batch;
     private Table  table;
-    private int currentNumber = 2400;
+    private static int currentNumber = 2400;
     private Skin mySkin;
-    private MainGame game;
+    private static MainGame game;
     public MainMenu(Stage stage, SpriteBatch batch){
         this.stage=stage;
         this.batch=batch;
@@ -46,6 +48,7 @@ public class MainMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game=new MainGame(stage,batch);
+                game.setPlayers(2);
             }
         });
         table.add(buttonStart).width(400).height(80);
@@ -148,5 +151,7 @@ public class MainMenu {
         return new Label(text, labelStyle);
     }
 
-
+    public static int getCurrentNumber() {
+        return currentNumber;
+    }
 }

@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 public class MonoPoly extends ApplicationAdapter {
 	SpriteBatch batch;
 	Stage stage;
-	MainMenu mm;
+	static MainMenu mm;
 	OrthographicCamera camera;
 
 

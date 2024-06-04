@@ -11,8 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.Arrays;
+
 public class MainGame {
-    private  Texture texture;
+    private Texture texture;
     private Skin mySkin;
 
     SpriteBatch batch;
@@ -24,9 +26,21 @@ public class MainGame {
     private Viewport viewport1;
     private Viewport viewport2;
 
+    private static Player[] players;
+    private static Player[][] companies = {
+            {null, null, null},
+            {null, null, null},
+            {null, null},
+            {null, null, null, null},
+            {null, null, null},
+            {null, null, null},
+            {null, null, null},
+            {null, null}
+    };
+
     public MainGame(Stage stage, SpriteBatch batch) {
-        this.stage1=stage;
-        this.batch=batch;
+        this.stage1 = stage;
+        this.batch = batch;
 
         batch.flush();  // Flushes the batch
         stage.clear();  // Removes all actors from the stage
@@ -43,34 +57,33 @@ public class MainGame {
 //        viewport1.setScreenBounds(0, Gdx.graphics.getHeight() / 2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 2);
 //        viewport2.setScreenBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 2);
 
-      //  stage1 = new Stage(viewport1);
-     //   stage2=  new Stage(viewport2);
+        //  stage1 = new Stage(viewport1);
+        //   stage2=  new Stage(viewport2);
 //        Gdx.input.setInputProcessor(stage1);
 //        Gdx.input.setInputProcessor(stage1);
 
 
-        mySkin=new Skin(Gdx.files.internal("gdx-skins-master/default/skin/uiskin.json"));
+        mySkin = new Skin(Gdx.files.internal("gdx-skins-master/default/skin/uiskin.json"));
 
         Label label = new Label("AAAAA", mySkin);
-        label.setPosition(100,100);
+        label.setPosition(100, 100);
         stage1.addActor(label);
         Label label2 = new Label("AA234567AAA", mySkin);
-        label2.setPosition(50,100);
-       // stage2.addActor(label2);
+        label2.setPosition(50, 100);
+        // stage2.addActor(label2);
 
         texture = new Texture("monopolyField.jpg");
 
 
-
         Image image = new Image(texture);
         stage1.addActor(image);
-      //  image.setScaling(Scaling.stretchX);
+        //  image.setScaling(Scaling.stretchX);
 
     }
 
 
     public void update() {
-        Gdx.gl.glClearColor(0.8f,0.8f,0.8f,1);
+        Gdx.gl.glClearColor(0.8f, 0.8f, 0.8f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         // Set camera matrices and update viewports
 //        viewport1.apply();
@@ -94,7 +107,13 @@ public class MainGame {
 //        stage2.act();
 //        stage2.draw();
 
+
     }
 
-
+    public void setPlayers(int amountOfPlayers) {
+        players = new Player[amountOfPlayers];
+        for (int i = 0; i < amountOfPlayers; i++) {
+            players[i] = new Player("test");
+        }
+    }
 }
