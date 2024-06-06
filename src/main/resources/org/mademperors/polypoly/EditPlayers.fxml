@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="720.0" prefWidth="1280.0" style="-fx-padding: 50; -fx-background-color: aquamarine;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mademperors.polypoly.EditPlayersMenuController">
+   <center>
+      <GridPane fx:id="playerGrid" alignment="CENTER" hgap="7.0" maxHeight="720.0" maxWidth="1280.0" prefHeight="633.0" prefWidth="1123.0" vgap="7.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="710.4666748046875" minWidth="10.0" prefWidth="374.4666442871094" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="808.6666564941406" minWidth="10.0" prefWidth="710.5333557128906" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="101.20000305175782" minHeight="10.0" prefHeight="90.00000610351563" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="79.59999694824218" minHeight="10.0" prefHeight="78.79999389648437" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="CENTER" prefHeight="117.0" prefWidth="374.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" text="Імена гравців:" textAlignment="CENTER">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Label>
+            <HBox fx:id="player1Label" alignment="CENTER" prefHeight="106.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.rowIndex="1">
+               <children>
+                  <Label prefHeight="84.0" prefWidth="198.0" text="Гравець №1">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </Label>
+                  <Circle fill="#ff1f1f" radius="37.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="106.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.columnIndex="1">
+               <children>
+                  <Button fx:id="goBackToMenu" mnemonicParsing="false" onMouseClicked="#goToMenu" prefHeight="75.0" prefWidth="361.0" style="-fx-background-radius: 15;" text="Повернутися назад">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="startGame" mnemonicParsing="false" onMouseClicked="#beginGame" prefHeight="75.0" prefWidth="289.0" style="-fx-background-radius: 15;" text="Почати гру">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox fx:id="player2Label" alignment="CENTER" prefHeight="106.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.rowIndex="2">
+               <children>
+                  <Label prefHeight="84.0" prefWidth="198.0" text="Гравець №2">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </Label>
+                  <Circle fill="#ff7f00" radius="37.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox fx:id="player2Field" alignment="CENTER_LEFT" prefHeight="106.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <TextField fx:id="playerName2" prefHeight="75.0" prefWidth="733.0" promptText="Введіть ім'я гравця" style="-fx-background-radius: 15;">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox fx:id="player3Label" alignment="CENTER" prefHeight="106.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.rowIndex="3">
+               <children>
+                  <Label prefHeight="84.0" prefWidth="198.0" text="Гравець №3">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </Label>
+                  <Circle fill="YELLOW" radius="37.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox fx:id="player4Label" alignment="CENTER" prefHeight="106.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.rowIndex="4">
+               <children>
+                  <Label prefHeight="84.0" prefWidth="198.0" text="Гравець №4">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </Label>
+                  <Circle fill="LIME" radius="37.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox fx:id="player5Label" alignment="CENTER" prefHeight="106.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.rowIndex="5">
+               <children>
+                  <Label prefHeight="84.0" prefWidth="198.0" text="Гравець №5">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </Label>
+                  <Circle fill="BLUE" radius="37.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox fx:id="player6Label" alignment="CENTER" prefHeight="106.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.rowIndex="6">
+               <children>
+                  <Label prefHeight="84.0" prefWidth="198.0" text="Гравець №6">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </Label>
+                  <Circle fill="INDIGO" radius="37.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox fx:id="player1Field" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <TextField fx:id="playerName1" prefHeight="75.0" prefWidth="733.0" promptText="Введіть ім'я гравця" style="-fx-background-radius: 15;">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox fx:id="player3Field" alignment="CENTER_LEFT" prefHeight="106.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <TextField fx:id="playerName3" prefHeight="75.0" prefWidth="733.0" promptText="Введіть ім'я гравця" style="-fx-background-radius: 15;">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox fx:id="player4Field" alignment="CENTER_LEFT" prefHeight="106.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <children>
+                  <TextField fx:id="playerName4" prefHeight="75.0" prefWidth="733.0" promptText="Введіть ім'я гравця" style="-fx-background-radius: 15;">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox fx:id="player5Field" alignment="CENTER_LEFT" prefHeight="106.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <children>
+                  <TextField fx:id="playerName5" prefHeight="75.0" prefWidth="733.0" promptText="Введіть ім'я гравця" style="-fx-background-radius: 15;">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox fx:id="player6Field" alignment="CENTER_LEFT" prefHeight="106.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <children>
+                  <TextField fx:id="playerName6" prefHeight="75.0" prefWidth="733.0" promptText="Введіть ім'я гравця" style="-fx-background-radius: 15;">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+         </children>
+      </GridPane>
+   </center>
+</BorderPane>
