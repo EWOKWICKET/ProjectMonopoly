@@ -1,0 +1,6 @@
+/* styles.css */
+.border-pane {
+    -fx-background-image: url('assets/mainMenu.jpg');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}

@@ -2,17 +2,24 @@ package org.mademperors.polypoly;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class MainMenuController {
+public class MainMenuController implements Initializable {
 
     @FXML
     private TextField amountOfMoney;
@@ -37,6 +44,8 @@ public class MainMenuController {
 
     @FXML
     private Button startButton;
+
+
 
     @FXML
     void closeWindow(MouseEvent event) {
@@ -117,4 +126,10 @@ public class MainMenuController {
 
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+       BorderPane borderPane= (BorderPane) startButton.getParent().getParent().getParent();
+        borderPane.getStyleClass().add("border-pane");
+   //             System.out.println(startButton.getParent().getParent().getParent().getClass());
+    }
 }

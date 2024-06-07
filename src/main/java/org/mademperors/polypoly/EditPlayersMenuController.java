@@ -2,19 +2,23 @@ package org.mademperors.polypoly;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class EditPlayersMenuController {
+public class EditPlayersMenuController  implements Initializable {
 
     @FXML
     private HBox player1Field;
@@ -84,20 +88,80 @@ public class EditPlayersMenuController {
 
     @FXML
     void beginGame(MouseEvent event) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        String[] playerNames=new String[6];
+        if(isAllNamesNormal(playerNames)){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PolypolyGame.fxml"));
+            try {
 
-        // Set the title of the Alert dialog
-        alert.setTitle("Помилка");
+                Parent polypolyGame = loader.load();
 
-        // Set the header text
-        alert.setHeaderText(null);
+                Stage stage = (Stage) startGame.getScene().getWindow();
+                // Set the new scene
+                stage.setScene(new Scene(polypolyGame));
+              
+                GameController.throwDices();
+            }
+            catch (IOException e){
+                // Create an Alert of type INFORMATION
+                Alert alert = new Alert(Alert.AlertType.ERROR);
 
-        // Set the content text
-        alert.setContentText("Гра почалась");
-        // Show the Alert dialog and wait for user response
-        alert.showAndWait();
-        GameController.throwDices();
+                // Set the title of the Alert dialog
+                alert.setTitle("Помилка");
+
+                // Set the header text
+                alert.setHeaderText(null);
+
+                // Set the content text
+                alert.setContentText("Упс.. Щось пішло не так");
+
+                // Show the Alert dialog and wait for user response
+                alert.showAndWait();
+            }
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+
+            // Set the title of the Alert dialog
+            alert.setTitle("Помилка");
+
+            // Set the header text
+            alert.setHeaderText(null);
+
+            // Set the content text
+            alert.setContentText("Введіть коректні назви гравців. Не може бути гравців з однаковими іменами або без імені.");
+            // Show the Alert dialog and wait for user response
+            alert.showAndWait();
+        }
     }
+
+    private boolean isAllNamesNormal(String[] playerNames) {
+        return checkPLayer(playerName1.getText(), playerNames, 1) &&
+                checkPLayer(playerName2.getText(), playerNames,2)  &&
+                checkPLayer(playerName3.getText(), playerNames,3) &&
+                checkPLayer(playerName4.getText(), playerNames,4) &&
+                checkPLayer(playerName5.getText(), playerNames,5)  &&
+                checkPLayer(playerName6.getText(), playerNames,6);
+    }
+
+    private boolean checkPLayer(String playerName, String[] playerNames, int playerNumber) {
+        if(playerNumber>players){
+            return true;
+        }else{
+            if(playerName.isEmpty()){
+                return false;
+            }
+            else{
+                for(String name: playerNames){
+                    if(playerName.equals(name)){
+                        return false;
+                    }
+                }
+                playerNames[playerNumber-1]=playerName;
+                return true;
+            }
+        }
+    }
+
     @FXML
     void goToMenu(MouseEvent event) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
@@ -158,4 +222,10 @@ public class EditPlayersMenuController {
         }
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        BorderPane borderPane= (BorderPane) startGame.getParent().getParent().getParent();
+        borderPane.getStyleClass().add("border-pane");
+      //  System.out.println(startGame.getParent().getParent().getParent().getClass());
+    }
 }
