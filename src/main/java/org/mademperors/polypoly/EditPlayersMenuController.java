@@ -90,18 +90,31 @@ public class EditPlayersMenuController  implements Initializable {
     void beginGame(MouseEvent event) {
         String[] playerNames=new String[6];
         if(isAllNamesNormal(playerNames)){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PolypolyGame.fxml"));
+            try {
 
-            // Set the title of the Alert dialog
-            alert.setTitle("Кайф");
+                Parent polypolyGame = loader.load();
 
-            // Set the header text
-            alert.setHeaderText(null);
+                Stage stage = (Stage) startGame.getScene().getWindow();
+                // Set the new scene
+                stage.setScene(new Scene(polypolyGame));
+            }
+            catch (IOException e){
+                // Create an Alert of type INFORMATION
+                Alert alert = new Alert(Alert.AlertType.ERROR);
 
-            // Set the content text
-            alert.setContentText("Гра почалась");
-            // Show the Alert dialog and wait for user response
-            alert.showAndWait();
+                // Set the title of the Alert dialog
+                alert.setTitle("Помилка");
+
+                // Set the header text
+                alert.setHeaderText(null);
+
+                // Set the content text
+                alert.setContentText("Упс.. Щось пішло не так");
+
+                // Show the Alert dialog and wait for user response
+                alert.showAndWait();
+            }
         }
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mademperors.polypoly.PolypolyGameController">
+   <center>
+      <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+            <BorderPane fx:id="panelForPolypolyField" prefHeight="200.0" prefWidth="200.0">
+            <center>
+                <fx:include fx:id="polypolyField" source="monpolyField.fxml" />
+            </center>
+            </BorderPane>
+
+            <GridPane prefHeight="718.0" prefWidth="573.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="299.9999969482422" minHeight="10.0" prefHeight="130.0000030517578" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="522.4000091552734" minHeight="0.8000137329101733" prefHeight="25.600009155273455" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="465.9999877929688" minHeight="0.0" prefHeight="465.9999877929688" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="522.4000091552734" minHeight="9.599987792968705" prefHeight="9.599987792968705" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="522.4000091552734" minHeight="10.0" prefHeight="146.4000122070313" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: lightgray;">
+                     <children>
+                        <Label prefHeight="71.0" prefWidth="470.0" text="Гравець №1: ІМЯ">
+                           <font>
+                              <Font size="35.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="40.0" prefWidth="204.0" text="Гроші: 2500">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: black;" GridPane.rowIndex="1" />
+                  <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: black;" GridPane.rowIndex="3" />
+                  <FlowPane columnHalignment="CENTER" hgap="10.0" prefHeight="200.0" prefWidth="200.0" vgap="10.0" GridPane.rowIndex="4">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Button" />
+                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Button" />
+                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Button" />
+                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Button" />
+                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Button" />
+                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Button" />
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </FlowPane>
+                  <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" GridPane.rowIndex="2">
+                    <items>
+                        <VBox fx:id="paneForStreetColors" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                        <BorderPane fx:id="paneForStreets" prefHeight="200.0" prefWidth="200.0" />
+                    </items>
+                  </SplitPane>
+               </children>
+            </GridPane>
+        </items>
+      </SplitPane>
+   </center>
+</BorderPane>
