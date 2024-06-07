@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class EditPlayersMenuController  implements Initializable {
@@ -92,7 +93,6 @@ public class EditPlayersMenuController  implements Initializable {
         if(isAllNamesNormal(playerNames)){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("PolypolyGame.fxml"));
             try {
-
                 Parent polypolyGame = loader.load();
 
                 Stage stage = (Stage) startGame.getScene().getWindow();
@@ -141,6 +141,11 @@ public class EditPlayersMenuController  implements Initializable {
                 checkPLayer(playerName4.getText(), playerNames,4) &&
                 checkPLayer(playerName5.getText(), playerNames,5)  &&
                 checkPLayer(playerName6.getText(), playerNames,6);
+    }
+    public String[] getArrayOfPlayers(){
+        String[] playerNames=new String[6];
+        isAllNamesNormal(playerNames);
+        return playerNames;
     }
 
     private boolean checkPLayer(String playerName, String[] playerNames, int playerNumber) {
