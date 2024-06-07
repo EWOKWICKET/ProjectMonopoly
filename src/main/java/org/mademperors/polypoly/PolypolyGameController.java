@@ -4,11 +4,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -61,14 +64,35 @@ public class PolypolyGameController implements Initializable {
     }
 
     public void addRed(MouseEvent mouseEvent) {
-        VBox colorStreets=paneForStreetColors;
-        HBox streetOne=new HBox();
-        streetOne.setStyle("-fx-background-color: red;");
-        streetOne.setPadding(new Insets(5));
-        streetOne.setPrefHeight(50);
-        streetOne.setOnMouseClicked(event -> {
-            showAlertDialog(streetOne);
-        });
-        colorStreets.getChildren().add(streetOne);
+//        VBox colorStreets=paneForStreetColors;
+//        HBox streetOne=new HBox();
+//        streetOne.setStyle("-fx-background-color: red;");
+//        streetOne.setPadding(new Insets(5));
+//        streetOne.setPrefHeight(50);
+//        streetOne.setOnMouseClicked(event -> {
+//            showAlertDialog(streetOne);
+//        });
+//        colorStreets.getChildren().add(streetOne);
+
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("monpolyField.fxml"));
+//
+//            PolypolyFieldController ppfc=loader.getController();
+//            ppfc.throwDices();
+        GameController.throwDices();
+           AnchorPane anp = (AnchorPane) polypolyField.getCenter();
+        for (Node node : anp.getChildren()) {
+
+            if (node.getId()!=null && node.getId().equals("dice1")) {
+                BorderPane bp= (BorderPane) node;
+                bp.setCenter(GameController.diceImageView1);
+            }
+            if (node.getId()!=null && node.getId().equals("dice2")) {
+                BorderPane bp= (BorderPane) node;
+                bp.setCenter(GameController.diceImageView2);
+            }
+        }
+
+
+
     }
 }

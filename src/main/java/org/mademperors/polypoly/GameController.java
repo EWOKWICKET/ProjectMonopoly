@@ -23,8 +23,8 @@ public class GameController {
             new Image(String.valueOf(GameController.class.getResource("/assets/Dices/dice6.jpg")))
     };
 
-    private static final ImageView diceImageView1 = new ImageView();
-    private static final ImageView diceImageView2 = new ImageView();
+    public static final ImageView diceImageView1 = new ImageView(DICES[1]);
+    public static final ImageView diceImageView2 = new ImageView(DICES[2]);
 
     public static void throwDices() {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.2), e -> {
@@ -41,6 +41,7 @@ public class GameController {
         });
         timeline.play();
     }
+
 
     private static int extractDiceValue(Image image) {
         String url = image.getUrl();

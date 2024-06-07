@@ -99,7 +99,6 @@ public class EditPlayersMenuController  implements Initializable {
                 // Set the new scene
                 stage.setScene(new Scene(polypolyGame));
               
-                GameController.throwDices();
             }
             catch (IOException e){
                 // Create an Alert of type INFORMATION

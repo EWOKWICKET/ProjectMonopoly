@@ -141,4 +141,10 @@ public class PolypolyFieldController {
     @FXML
     private TextArea statisticsTextArea;
 
+    public void throwDices() {
+        dice1.setCenter(GameController.diceImageView1);
+        dice2.setCenter(GameController.diceImageView2);
+        GameController.throwDices();
+
+    }
 }
