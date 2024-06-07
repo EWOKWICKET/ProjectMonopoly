@@ -88,19 +88,65 @@ public class EditPlayersMenuController  implements Initializable {
 
     @FXML
     void beginGame(MouseEvent event) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        String[] playerNames=new String[6];
+        if(isAllNamesNormal(playerNames)){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
-        // Set the title of the Alert dialog
-        alert.setTitle("Помилка");
+            // Set the title of the Alert dialog
+            alert.setTitle("Кайф");
 
-        // Set the header text
-        alert.setHeaderText(null);
+            // Set the header text
+            alert.setHeaderText(null);
 
-        // Set the content text
-        alert.setContentText("Гра почалась");
-        // Show the Alert dialog and wait for user response
-        alert.showAndWait();
+            // Set the content text
+            alert.setContentText("Гра почалась");
+            // Show the Alert dialog and wait for user response
+            alert.showAndWait();
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+
+            // Set the title of the Alert dialog
+            alert.setTitle("Помилка");
+
+            // Set the header text
+            alert.setHeaderText(null);
+
+            // Set the content text
+            alert.setContentText("Введіть коректні назви гравців. Не може бути гравців з однаковими іменами або без імені.");
+            // Show the Alert dialog and wait for user response
+            alert.showAndWait();
+        }
     }
+
+    private boolean isAllNamesNormal(String[] playerNames) {
+        return checkPLayer(playerName1.getText(), playerNames, 1) &&
+                checkPLayer(playerName2.getText(), playerNames,2)  &&
+                checkPLayer(playerName3.getText(), playerNames,3) &&
+                checkPLayer(playerName4.getText(), playerNames,4) &&
+                checkPLayer(playerName5.getText(), playerNames,5)  &&
+                checkPLayer(playerName6.getText(), playerNames,6);
+    }
+
+    private boolean checkPLayer(String playerName, String[] playerNames, int playerNumber) {
+        if(playerNumber>players){
+            return true;
+        }else{
+            if(playerName.isEmpty()){
+                return false;
+            }
+            else{
+                for(String name: playerNames){
+                    if(playerName.equals(name)){
+                        return false;
+                    }
+                }
+                playerNames[playerNumber-1]=playerName;
+                return true;
+            }
+        }
+    }
+
     @FXML
     void goToMenu(MouseEvent event) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
