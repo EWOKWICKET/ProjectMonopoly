@@ -96,6 +96,7 @@ public class EditPlayersMenuController {
         alert.setContentText("Гра почалась");
         // Show the Alert dialog and wait for user response
         alert.showAndWait();
+        GameController.throwDices();
     }
     @FXML
     void goToMenu(MouseEvent event) {
