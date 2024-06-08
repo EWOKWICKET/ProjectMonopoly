@@ -37,13 +37,14 @@ public class PolypolyGameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        VBox colorStreets=paneForStreetColors;
+        VBox colorStreets = paneForStreetColors;
 
-        Label steets=new Label("Вулиці:");
+        Label steets = new Label("Вулиці:");
         steets.setStyle("-fx-font-size: 30px;");
         colorStreets.getChildren().add(steets);
 
     }
+
     private void showAlertDialog(HBox streetOne) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("streetCard.fxml"));
@@ -79,19 +80,18 @@ public class PolypolyGameController implements Initializable {
 //            PolypolyFieldController ppfc=loader.getController();
 //            ppfc.throwDices();
         GameController.throwDices();
-           AnchorPane anp = (AnchorPane) polypolyField.getCenter();
+        AnchorPane anp = (AnchorPane) polypolyField.getCenter();
         for (Node node : anp.getChildren()) {
 
-            if (node.getId()!=null && node.getId().equals("dice1")) {
-                BorderPane bp= (BorderPane) node;
+            if (node.getId() != null && node.getId().equals("dice1")) {
+                BorderPane bp = (BorderPane) node;
                 bp.setCenter(GameController.diceImageView1);
             }
-            if (node.getId()!=null && node.getId().equals("dice2")) {
-                BorderPane bp= (BorderPane) node;
+            if (node.getId() != null && node.getId().equals("dice2")) {
+                BorderPane bp = (BorderPane) node;
                 bp.setCenter(GameController.diceImageView2);
             }
         }
-
 
 
     }

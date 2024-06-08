@@ -46,7 +46,6 @@ public class MainMenuController implements Initializable {
     private Button startButton;
 
 
-
     @FXML
     void closeWindow(MouseEvent event) {
         System.exit(0);
@@ -54,10 +53,10 @@ public class MainMenuController implements Initializable {
 
     @FXML
     void minusMoney(MouseEvent event) {
-        int money=Integer.parseInt(amountOfMoney.getText());
-        money-=200;
-        if(money<200){
-            money=200;
+        int money = Integer.parseInt(amountOfMoney.getText());
+        money -= 200;
+        if (money < 200) {
+            money = 200;
         }
         amountOfMoney.setText(String.valueOf(money));
     }
@@ -65,27 +64,27 @@ public class MainMenuController implements Initializable {
 
     @FXML
     void minusPlayers(MouseEvent event) {
-        int players =Integer.parseInt(numberOfPlayers.getText());
-        players --;
-        if(players <2){
-            players =2;
+        int players = Integer.parseInt(numberOfPlayers.getText());
+        players--;
+        if (players < 2) {
+            players = 2;
         }
         numberOfPlayers.setText(String.valueOf(players));
     }
 
     @FXML
     void plusMoney(MouseEvent event) {
-        int money=Integer.parseInt(amountOfMoney.getText());
-        money+=200;
+        int money = Integer.parseInt(amountOfMoney.getText());
+        money += 200;
         amountOfMoney.setText(String.valueOf(money));
     }
 
     @FXML
     void plusPlayers(MouseEvent event) {
-        int players =Integer.parseInt(numberOfPlayers.getText());
+        int players = Integer.parseInt(numberOfPlayers.getText());
         players++;
-        if(players >6){
-            players =6;
+        if (players > 6) {
+            players = 6;
         }
         numberOfPlayers.setText(String.valueOf(players));
     }
@@ -97,13 +96,12 @@ public class MainMenuController implements Initializable {
 
             Parent editPlayersMenu = loader.load();
 
-            EditPlayersMenuController editplayers=loader.getController();
+            EditPlayersMenuController editplayers = loader.getController();
             editplayers.setGridOfPlayers(Integer.parseInt(numberOfPlayers.getText()), Integer.parseInt(amountOfMoney.getText()));
             Stage stage = (Stage) startButton.getScene().getWindow();
             // Set the new scene
             stage.setScene(new Scene(editPlayersMenu));
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             // Create an Alert of type INFORMATION
             Alert alert = new Alert(Alert.AlertType.ERROR);
 
@@ -120,7 +118,8 @@ public class MainMenuController implements Initializable {
             alert.showAndWait();
         }
     }
-    void setPlayerAndMoney(int players, int money){
+
+    void setPlayerAndMoney(int players, int money) {
         numberOfPlayers.setText(String.valueOf(players));
         amountOfMoney.setText(String.valueOf(money));
 
@@ -128,8 +127,8 @@ public class MainMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-       BorderPane borderPane= (BorderPane) startButton.getParent().getParent().getParent();
+        BorderPane borderPane = (BorderPane) startButton.getParent().getParent().getParent();
         borderPane.getStyleClass().add("border-pane");
-   //             System.out.println(startButton.getParent().getParent().getParent().getClass());
+        //             System.out.println(startButton.getParent().getParent().getParent().getClass());
     }
 }
