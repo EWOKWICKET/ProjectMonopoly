@@ -56,4 +56,18 @@ public class GameController {
         char ch = url.charAt(url.length() - 5);
         return Character.getNumericValue(ch);
     }
+
+    public static void trade(Player p1, int p1Money, Street[] p1Streets, Player p2, int p2Money, Street[] p2Streets) {
+        //to player 1
+        p1.setMoney(p1.getMoney() + p2Money);
+        for (Street p2Street : p2Streets) {
+            p2Street.tradedTo(p1);
+        }
+
+        //to player 2
+        p2.setMoney(p2.getMoney() + p1Money);
+        for (Street p1Street : p1Streets) {
+            p1Street.tradedTo(p1);
+        }
+    }
 }

@@ -14,6 +14,10 @@ public class Player {
         this.color = color;
     }
 
+    // player goes bankrupt and being deleted from players array
+    public void goBankrupt() {}
+
+    //getters and setters
     public String getName() {
         return name;
     }
