@@ -1,4 +1,4 @@
-package org.mademperors.polypoly;
+package org.mademperors.polypoly.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class EditPlayersMenuController  implements Initializable {
@@ -91,7 +90,7 @@ public class EditPlayersMenuController  implements Initializable {
     void beginGame(MouseEvent event) {
         String[] playerNames=new String[6];
         if(isAllNamesNormal(playerNames)){
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("PolypolyGame.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/mademperors/polypoly/PolypolyGame.fxml"));
             try {
                 Parent polypolyGame = loader.load();
 
@@ -168,7 +167,7 @@ public class EditPlayersMenuController  implements Initializable {
 
     @FXML
     void goToMenu(MouseEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/mademperors/polypoly/MainMenu.fxml"));
         try {
 
             Parent mainMenu = loader.load();

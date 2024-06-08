@@ -1,13 +1,11 @@
-package org.mademperors.polypoly;
+package org.mademperors.polypoly.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -47,7 +45,7 @@ public class PolypolyGameController implements Initializable {
 
     private void showAlertDialog(HBox streetOne) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("streetCard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/mademperors/polypoly/streetCard.fxml"));
             Parent root = loader.load();
 
             Stage dialogStage = new Stage();
@@ -75,7 +73,7 @@ public class PolypolyGameController implements Initializable {
 //        });
 //        colorStreets.getChildren().add(streetOne);
 
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("monpolyField.fxml"));
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/mademperors/polypoly/monopolyField.fxml"));
 //
 //            PolypolyFieldController ppfc=loader.getController();
 //            ppfc.throwDices();

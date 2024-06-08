@@ -1,4 +1,4 @@
-package org.mademperors.polypoly;
+package org.mademperors.polypoly.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;

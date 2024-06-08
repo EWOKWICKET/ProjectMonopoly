@@ -1,4 +1,4 @@
-package org.mademperors.polypoly;
+package org.mademperors.polypoly.models;
 
 public class Street {
 

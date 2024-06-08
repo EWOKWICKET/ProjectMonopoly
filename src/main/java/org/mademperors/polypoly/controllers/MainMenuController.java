@@ -1,4 +1,4 @@
-package org.mademperors.polypoly;
+package org.mademperors.polypoly.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,10 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -91,7 +88,8 @@ public class MainMenuController implements Initializable {
 
     @FXML
     void startGame(MouseEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("EditPlayers.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/mademperors/polypoly/EditPlayers.fxml"));
+//        System.out.println(getClass().getResource("GameController.java"));
         try {
 
             Parent editPlayersMenu = loader.load();
@@ -129,6 +127,9 @@ public class MainMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         BorderPane borderPane = (BorderPane) startButton.getParent().getParent().getParent();
         borderPane.getStyleClass().add("border-pane");
+        System.out.println(getClass().getResource("/styles.css"));
+        System.out.println(getClass().getResource("/org/mademperors/polypoly/PolypolyGame.fxml"));
+
         //             System.out.println(startButton.getParent().getParent().getParent().getClass());
     }
 }
