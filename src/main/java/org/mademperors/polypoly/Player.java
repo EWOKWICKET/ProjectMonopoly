@@ -14,8 +14,19 @@ public class Player {
         this.color = color;
     }
 
-    // player goes bankrupt and being deleted from players array
-    public void goBankrupt() {}
+    // ADD being deleted from players array
+    public void goBankrupt() {
+        Bank.takeBankruptPlayerStreets(this);
+    }
+
+    public void addMoney(int amount) {
+        money += amount;
+    }
+
+    public void decreaseMoney(int amount) {
+        money -= amount;
+    }
+
 
     //getters and setters
     public String getName() {
@@ -23,9 +34,6 @@ public class Player {
     }
     public int getMoney() {
         return money;
-    }
-    public void setMoney(int money) {
-        this.money = money;
     }
     public boolean isInJail() {
         return inJail;

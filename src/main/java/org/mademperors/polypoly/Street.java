@@ -13,16 +13,15 @@ public class Street {
     private boolean isMonopoly = false;
     private boolean hasHotel = false;
     private boolean isMortgaged = false;
-    private Player owner;
+    private Player owner = null;
 
-    public Street(String name, int price, int housePrice, int hotelPrice, int[] rentModel, Player owner) {
+    public Street(String name, int price, int housePrice, int hotelPrice, int[] rentModel) {
         this.name = name;
         this.price = price;
         this.housePrice = housePrice;
         this.hotelPrice = hotelPrice;
         this.rentModel = rentModel;
         this.rent = rentModel[0];
-        this.owner = owner;
     }
 
     public void buyStreet(Player owner) {
@@ -30,11 +29,15 @@ public class Street {
         rent = rentModel[0];
     }
 
+    public void unmortgage() {
+        owner.decreaseMoney(price/2);
+        isMortgaged = false;
+    }
+
     public void tradedTo(Player newOwner) {
         owner = newOwner;
     }
 
-    //add turn counter to lose on 10th turn
     public void loseStreet() {
         owner = null;
         isMonopoly = false;
@@ -55,20 +58,18 @@ public class Street {
 
     public void buyHotel() {
         hasHotel = true;
-        rent = rentModel[7];
+        rent = rentModel[6];
     }
 
     public void sellHotel() {
         hasHotel = false;
-        rent = rentModel[6];
+        rent = rentModel[5];
     }
 
     public void mortgage() {
+        owner.addMoney(price/2);
         isMortgaged = true;
     }
-
-    //add monopoly check
-    public void isInMonopoly(){}
 
     //getters and setters
     public int getPrice() {
@@ -91,11 +92,22 @@ public class Street {
     }
     public void setMonopoly(boolean monopoly) {
         isMonopoly = monopoly;
+        if (isMonopoly) {
+            rent = rentModel[1];
+        } else {
+            rent = rentModel[0];
+        }
     }
     public String getName() {
         return name;
     }
     public boolean isMortgaged() {
         return isMortgaged;
+    }
+    public Player getOwner() {
+        return owner;
+    }
+    public void setOwner(Player owner) {
+        this.owner = owner;
     }
 }
