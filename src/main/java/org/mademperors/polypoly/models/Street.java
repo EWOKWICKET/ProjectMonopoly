@@ -27,15 +27,18 @@ public class Street {
     public void buyStreet(Player owner) {
         this.owner = owner;
         rent = rentModel[0];
+        owner.decreaseMoney(price);
     }
 
     public void unmortgage() {
         owner.decreaseMoney(price/2);
         isMortgaged = false;
+        Bank.returnStreet(this);
     }
 
     public void tradedTo(Player newOwner) {
         owner = newOwner;
+        Bank.checkMonopolyByStreet(this);
     }
 
     public void loseStreet() {
@@ -72,6 +75,14 @@ public class Street {
     }
 
     //getters and setters
+    public void setMonopoly(boolean monopoly) {
+        isMonopoly = monopoly;
+        if (isMonopoly) {
+            rent = rentModel[1];
+        } else {
+            rent = rentModel[0];
+        }
+    }
     public int getPrice() {
         return price;
     }
@@ -89,14 +100,6 @@ public class Street {
     }
     public boolean isMonopoly() {
         return isMonopoly;
-    }
-    public void setMonopoly(boolean monopoly) {
-        isMonopoly = monopoly;
-        if (isMonopoly) {
-            rent = rentModel[1];
-        } else {
-            rent = rentModel[0];
-        }
     }
     public String getName() {
         return name;

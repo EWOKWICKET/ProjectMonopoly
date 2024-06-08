@@ -8,6 +8,7 @@ import javafx.util.Duration;
 import org.mademperors.polypoly.models.Player;
 import org.mademperors.polypoly.models.Street;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class GameController {
@@ -58,14 +59,10 @@ public class GameController {
     public static void trade(Player p1, int p1Money, Street[] p1Streets, Player p2, int p2Money, Street[] p2Streets) {
         //to player 1
         p1.addMoney(p2Money);
-        for (Street p2Street : p2Streets) {
-            p2Street.tradedTo(p1);
-        }
+        Arrays.stream(p2Streets).forEach(street -> street.tradedTo(p1));
 
         //to player 2
         p2.addMoney(p1Money);
-        for (Street p1Street : p1Streets) {
-            p1Street.tradedTo(p1);
-        }
+        Arrays.stream(p1Streets).forEach(street -> street.tradedTo(p2));
     }
 }
