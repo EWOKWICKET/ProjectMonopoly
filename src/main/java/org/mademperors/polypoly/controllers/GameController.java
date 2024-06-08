@@ -1,16 +1,14 @@
-package org.mademperors.polypoly;
+package org.mademperors.polypoly.controllers;
 
-import javafx.animation.PauseTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import org.mademperors.polypoly.models.Player;
+import org.mademperors.polypoly.models.Street;
 
-import java.net.URL;
-import java.util.Objects;
 import java.util.Random;
-import java.util.ResourceBundle;
 
 public class GameController {
 
