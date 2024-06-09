@@ -53,7 +53,7 @@ public class Bank {
             }
     };
 
-    private static Map<Street, Integer> mortgaged = new HashMap<Street, Integer>();
+    private static final Map<Street, Integer> mortgaged = new HashMap<Street, Integer>();
 
 //    public static void checkMonopolies() {
 //        Arrays.stream(streets).forEach(Bank::checkMonopoly);

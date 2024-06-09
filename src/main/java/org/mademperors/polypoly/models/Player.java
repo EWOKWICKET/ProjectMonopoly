@@ -2,7 +2,7 @@ package org.mademperors.polypoly.models;
 
 public class Player {
 
-    private String name;
+    private final String name;
     private int money;
     private boolean inJail = false;
     private int jailFreeCards = 0;

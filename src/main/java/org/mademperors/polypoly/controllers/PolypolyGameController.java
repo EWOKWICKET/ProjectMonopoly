@@ -15,12 +15,23 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.mademperors.polypoly.models.DiceResultListener;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PolypolyGameController implements Initializable {
+
+    //Dice interfaces and fields
+    private static int lastDiceResult;
+    private static final DiceResultListener diceResultListener = new DiceResultListener() {
+        @Override
+        public void onDiceResult(int result) {
+            lastDiceResult = result;
+            System.out.println(lastDiceResult);
+        }
+    };
 
     public BorderPane polypolyField;
     public Button AddRed;
@@ -77,7 +88,9 @@ public class PolypolyGameController implements Initializable {
 //
 //            PolypolyFieldController ppfc=loader.getController();
 //            ppfc.throwDices();
-        int[] result = GameController.throwDices();
+
+        GameController.throwDices(diceResultListener);
+
         AnchorPane anp = (AnchorPane) polypolyField.getCenter();
         for (Node node : anp.getChildren()) {
 
@@ -90,7 +103,5 @@ public class PolypolyGameController implements Initializable {
                 bp.setCenter(GameController.diceImageView2);
             }
         }
-
-
     }
 }

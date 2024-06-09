@@ -2,10 +2,10 @@ package org.mademperors.polypoly.models;
 
 public class Street {
 
-    private String name;
-    private int price;
-    private int housePrice;
-    private int hotelPrice;
+    private final String name;
+    private final int price;
+    private final int housePrice;
+    private final int hotelPrice;
     private int rent;
     /* rent with no monopoly, with monopoly, with houses and hotel */
     private int[] rentModel = {0, 0, 0, 0, 0, 0, 0};
