@@ -77,7 +77,7 @@ public class PolypolyGameController implements Initializable {
 //
 //            PolypolyFieldController ppfc=loader.getController();
 //            ppfc.throwDices();
-        GameController.throwDices();
+        int[] result = GameController.throwDices();
         AnchorPane anp = (AnchorPane) polypolyField.getCenter();
         for (Node node : anp.getChildren()) {
 

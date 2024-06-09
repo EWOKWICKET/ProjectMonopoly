@@ -27,7 +27,8 @@ public class GameController {
     public static final ImageView diceImageView1 = new ImageView(DICES[1]);
     public static final ImageView diceImageView2 = new ImageView(DICES[2]);
 
-    public static void throwDices() {
+    public static int[] throwDices() {
+        int[] result = new int[2];
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.115), e -> {
             diceImageView1.setImage(DICES[rnd.nextInt(0, DICES.length)]);
             diceImageView2.setImage(DICES[rnd.nextInt(0, DICES.length)]);
@@ -36,7 +37,8 @@ public class GameController {
         timeline.setOnFinished(e -> {
             int dice1 = extractDiceValue(diceImageView1.getImage());
             int dice2 = extractDiceValue(diceImageView2.getImage());
-
+            result[0] = dice1;
+            result[1] = dice2;
             /* makes dices to disappear 5 seconds later */
 //            PauseTransition pause = new PauseTransition(Duration.seconds(5));
 //            pause.setOnFinished(ev -> {
@@ -47,6 +49,7 @@ public class GameController {
 
         });
         timeline.play();
+        return result;
     }
 
 
@@ -56,13 +59,35 @@ public class GameController {
         return Character.getNumericValue(ch);
     }
 
-    public static void trade(Player p1, int p1Money, Street[] p1Streets, Player p2, int p2Money, Street[] p2Streets) {
+    public static void trade(Player p1, int p1Money, Street[] p1Streets, int p1JailFreeCardsAmount, Player p2, int p2Money, Street[] p2Streets, int p2JailFreeCardsAmount) {
         //to player 1
         p1.addMoney(p2Money);
+        p1.acquireJailFreeCards(p2JailFreeCardsAmount);
+        p2.spendJailFreeCards(p2JailFreeCardsAmount);
         Arrays.stream(p2Streets).forEach(street -> street.tradedTo(p1));
 
         //to player 2
         p2.addMoney(p1Money);
+        p2.acquireJailFreeCards(p1JailFreeCardsAmount);
+        p1.spendJailFreeCards(p1JailFreeCardsAmount);
         Arrays.stream(p1Streets).forEach(street -> street.tradedTo(p2));
+    }
+
+    public void mortgageActions(Street street) {
+        if (street.isMortgaged()) {
+            street.unmortgage();
+        } else {
+            street.mortgage();
+        }
+    }
+
+    //LIMIT so that it can be used only for monopolies
+    public void upgradeStreet(Street street) {
+        street.upgrade();
+    }
+
+    //LIMIT so that it can be used only for monopolies with 1 house minimum
+    public void downgradeStreet(Street street) {
+        street.downgrade();
     }
 }

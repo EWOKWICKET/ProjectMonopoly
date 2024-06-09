@@ -27,6 +27,11 @@ public class Player {
         money -= amount;
     }
 
+    //LIMIT so that player could use only in jail
+    public void useJailFreeCard() {
+        spendJailFreeCards(1);
+        inJail = false;
+    }
 
     //getters and setters
     public String getName() {
@@ -44,11 +49,11 @@ public class Player {
     public int getJailFreeCards() {
         return jailFreeCards;
     }
-    public void useJailFreeCard() {
-        this.jailFreeCards--;
+    public void spendJailFreeCards(int amount) {
+        this.jailFreeCards -= amount;
     }
-    public void acquireJailFreeCard() {
-        this.jailFreeCards++;
+    public void acquireJailFreeCards(int amount) {
+        this.jailFreeCards += amount;
     }
     public String getPlayerColor() {
         return color;

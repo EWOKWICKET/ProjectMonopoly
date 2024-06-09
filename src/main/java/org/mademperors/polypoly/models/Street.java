@@ -49,24 +49,20 @@ public class Street {
         numberOfHouses = 0;
     }
 
-    public void buyHouse() {
-        numberOfHouses++;
-        rent = rentModel[1 + numberOfHouses];
+    public void upgrade() {
+        if (numberOfHouses < 4) {
+            buyHouse();
+        } else {
+            buyHotel();
+        }
     }
 
-    public void sellHouse() {
-        numberOfHouses--;
-        rent = rentModel[1 + numberOfHouses];
-    }
-
-    public void buyHotel() {
-        hasHotel = true;
-        rent = rentModel[6];
-    }
-
-    public void sellHotel() {
-        hasHotel = false;
-        rent = rentModel[5];
+    public void downgrade() {
+        if (hasHotel) {
+            sellHotel();
+        } else {
+            sellHouse();
+        }
     }
 
     public void mortgage() {
@@ -112,5 +108,31 @@ public class Street {
     }
     public void setOwner(Player owner) {
         this.owner = owner;
+    }
+
+
+    //private methods
+    private void buyHouse() {
+        numberOfHouses++;
+        rent = rentModel[1 + numberOfHouses];
+        owner.decreaseMoney(housePrice);
+    }
+
+    private void sellHouse() {
+        numberOfHouses--;
+        rent = rentModel[1 + numberOfHouses];
+        owner.addMoney((int) (housePrice / 1.5));
+    }
+
+    private void buyHotel() {
+        hasHotel = true;
+        rent = rentModel[6];
+        owner.decreaseMoney(hotelPrice);
+    }
+
+    private void sellHotel() {
+        hasHotel = false;
+        rent = rentModel[5];
+        owner.addMoney((int) (housePrice / 1.5));
     }
 }

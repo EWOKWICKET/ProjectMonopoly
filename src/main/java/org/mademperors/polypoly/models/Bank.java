@@ -59,6 +59,10 @@ public class Bank {
 //        Arrays.stream(streets).forEach(Bank::checkMonopoly);
 //    }
 
+    public void nextTurn() {
+        updateMortgaged();
+    }
+
     public static void checkMonopoly(Street[] monopolyGroup) {
         Player firstOwner = monopolyGroup[0].getOwner();
         if (firstOwner == null) {
@@ -88,27 +92,10 @@ public class Bank {
         });
     }
 
-    private static void updateMortgaged() {
-        Iterator<Map.Entry<Street, Integer>> iterator = mortgaged.entrySet().iterator();
 
-        while (iterator.hasNext()) {
-            Map.Entry<Street, Integer> entry = iterator.next();
-
-            entry.setValue(entry.getValue() - 1);
-
-            if (entry.getValue() == 0) {
-                takePlayerStreet(entry.getKey());
-                iterator.remove();
-            }
-        }
-    }
 
     public static void returnStreet(Street street) {
         mortgaged.remove(street);
-    }
-
-    public static void takePlayerStreet(Street street) {
-        street.loseStreet();
     }
 
     public static void takeBankruptPlayerStreets(Player bankruptPlayer) {
@@ -118,5 +105,18 @@ public class Bank {
                 .forEach(Street::loseStreet);
     }
 
+    private static void updateMortgaged() {
+        Iterator<Map.Entry<Street, Integer>> iterator = mortgaged.entrySet().iterator();
 
+        while (iterator.hasNext()) {
+            Map.Entry<Street, Integer> entry = iterator.next();
+
+            entry.setValue(entry.getValue() - 1);
+
+            if (entry.getValue() == 0) {
+                entry.getKey().loseStreet();
+                iterator.remove();
+            }
+        }
+    }
 }
