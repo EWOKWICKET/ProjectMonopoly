@@ -9,4 +9,6 @@ module org.mademperors.polypoly {
     opens org.mademperors.polypoly.controllers to javafx.fxml;
     exports org.mademperors.polypoly.models;
     opens org.mademperors.polypoly.models to javafx.fxml;
+    exports org.mademperors.polypoly.listeners;
+    opens org.mademperors.polypoly.listeners to javafx.fxml;
 }

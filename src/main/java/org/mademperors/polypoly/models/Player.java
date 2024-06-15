@@ -14,7 +14,7 @@ public class Player {
         this.color = color;
     }
 
-    // ADD being deleted from players array
+    // DELETE player from players array()
     public void goBankrupt() {
         Bank.takeBankruptPlayerStreets(this);
     }

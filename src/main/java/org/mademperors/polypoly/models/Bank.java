@@ -4,52 +4,54 @@ import java.util.*;
 
 public class Bank {
 
+    private static final GameLogger logger = GameLogger.getInstance();
+
     private static final Street[][] streets = {
             {
-                    new Street("", 1, 1, 1, new int[]{1}),
-                    new Street("", 1, 1, 1, new int[]{1}),
-                    new Street("", 1, 1, 1, new int[]{1}),
-                    new Street("", 1, 1, 1, new int[]{1})
+                    new Street("a", 1, 1, 1, new int[]{1}),
+                    new Street("b", 1, 1, 1, new int[]{1}),
+                    new Street("c", 1, 1, 1, new int[]{1}),
+                    new Street("d", 1, 1, 1, new int[]{1})
             },
             {
-                    new Street("", 1, 1, 1, new int[]{1}),
-                    new Street("", 1, 1, 1, new int[]{1}),
-                    new Street("", 1, 1, 1, new int[]{1})
+                    new Street("e", 1, 1, 1, new int[]{1}),
+                    new Street("f", 1, 1, 1, new int[]{1}),
+                    new Street("g", 1, 1, 1, new int[]{1})
             },
             {
-                    new Street("", 1, 1, 1, new int[]{1}),
-                    new Street("", 1, 1, 1, new int[]{1}),
-                    new Street("", 1, 1, 1, new int[]{1})
+                    new Street("h", 1, 1, 1, new int[]{1}),
+                    new Street("i", 1, 1, 1, new int[]{1}),
+                    new Street("j", 1, 1, 1, new int[]{1})
             },
             {
-                    new Street("", 1, 1, 1, new int[]{1}),
-                    new Street("", 1, 1, 1, new int[]{1}),
-                    new Street("", 1, 1, 1, new int[]{1})
+                    new Street("k", 1, 1, 1, new int[]{1}),
+                    new Street("l", 1, 1, 1, new int[]{1}),
+                    new Street("m", 1, 1, 1, new int[]{1})
             },
             {
-                    new Street("", 1, 1, 1, new int[]{1}),
-                    new Street("", 1, 1, 1, new int[]{1}),
-                    new Street("", 1, 1, 1, new int[]{1})
+                    new Street("n", 1, 1, 1, new int[]{1}),
+                    new Street("o", 1, 1, 1, new int[]{1}),
+                    new Street("p", 1, 1, 1, new int[]{1})
             },
             {
-                    new Street("", 1, 1, 1, new int[]{1}),
-                    new Street("", 1, 1, 1, new int[]{1}),
-                    new Street("", 1, 1, 1, new int[]{1})
+                    new Street("q", 1, 1, 1, new int[]{1}),
+                    new Street("r", 1, 1, 1, new int[]{1}),
+                    new Street("s", 1, 1, 1, new int[]{1})
             },
             {
-                    new Street("", 1, 1, 1, new int[]{1}),
-                    new Street("", 1, 1, 1, new int[]{1}),
-                    new Street("", 1, 1, 1, new int[]{1})
+                    new Street("t", 1, 1, 1, new int[]{1}),
+                    new Street("u", 1, 1, 1, new int[]{1}),
+                    new Street("v", 1, 1, 1, new int[]{1})
             },
             {
-                    new Street("", 1, 1, 1, new int[]{1}),
-                    new Street("", 1, 1, 1, new int[]{1}),
-                    new Street("", 1, 1, 1, new int[]{1})
+                    new Street("w", 1, 1, 1, new int[]{1}),
+                    new Street("z", 1, 1, 1, new int[]{1}),
+                    new Street("y", 1, 1, 1, new int[]{1})
             },
             {
-                    new Street("", 1, 1, 1, new int[]{1}),
-                    new Street("", 1, 1, 1, new int[]{1}),
-                    new Street("", 1, 1, 1, new int[]{1})
+                    new Street("z", 1, 1, 1, new int[]{1}),
+                    new Street("N", 1, 1, 1, new int[]{1}),
+                    new Street("D", 1, 1, 1, new int[]{1})
             }
     };
 
@@ -103,6 +105,7 @@ public class Bank {
                 .flatMap(Arrays::stream)
                 .filter(street -> street.getOwner() == bankruptPlayer)
                 .forEach(Street::loseStreet);
+        logger.logInfo(String.format("%s went bankrupt", bankruptPlayer.getName()));
     }
 
     private static void updateMortgaged() {
@@ -114,8 +117,11 @@ public class Bank {
             entry.setValue(entry.getValue() - 1);
 
             if (entry.getValue() == 0) {
-                entry.getKey().loseStreet();
+                Street streetLost = entry.getKey();
+                streetLost.loseStreet();
                 iterator.remove();
+                logger.logInfo(String.format("Mortgaged street %s lost", streetLost));
+                checkMonopolyByStreet(streetLost);
             }
         }
     }

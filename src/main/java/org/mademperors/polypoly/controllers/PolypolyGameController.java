@@ -15,23 +15,25 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.mademperors.polypoly.models.DiceResultListener;
+import org.mademperors.polypoly.listeners.DiceResultListener;
+import org.mademperors.polypoly.models.Player;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PolypolyGameController implements Initializable {
+public class PolypolyGameController implements Initializable, DiceResultListener {
 
     //Dice interfaces and fields
     private static int lastDiceResult;
-    private static final DiceResultListener diceResultListener = new DiceResultListener() {
-        @Override
-        public void onDiceResult(int result) {
-            lastDiceResult = result;
-            System.out.println(lastDiceResult);
-        }
-    };
+    private static Player currentPlayer;
+//    private static final DiceResultListener diceResultListener = new DiceResultListener() {
+//        @Override
+//        public void onDiceResult(int result) {
+//            lastDiceResult = result;
+//            System.out.println(lastDiceResult);
+//        }
+//    };
 
     public BorderPane polypolyField;
     public Button AddRed;
@@ -89,7 +91,7 @@ public class PolypolyGameController implements Initializable {
 //            PolypolyFieldController ppfc=loader.getController();
 //            ppfc.throwDices();
 
-        GameController.throwDices(diceResultListener);
+        GameController.throwDices(this);
 
         AnchorPane anp = (AnchorPane) polypolyField.getCenter();
         for (Node node : anp.getChildren()) {
@@ -103,5 +105,11 @@ public class PolypolyGameController implements Initializable {
                 bp.setCenter(GameController.diceImageView2);
             }
         }
+    }
+
+    @Override
+    public void onDiceResult(int result) {
+        lastDiceResult = result;
+        System.out.println(lastDiceResult);
     }
 }
