@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="720.0" prefWidth="1280.0" stylesheets="/styles.css" style="-fx-padding: 50; -fx-background-color: aquamarine;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mademperors.polypoly.controllers.EditPlayersMenuController">
+<BorderPane prefHeight="720.0" prefWidth="1280.0" style="-fx-padding: 50; -fx-background-color: aquamarine;" stylesheets="/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mademperors.polypoly.controllers.EditPlayersMenuController">
    <center>
       <GridPane fx:id="playerGrid" alignment="CENTER" hgap="7.0" maxHeight="720.0" maxWidth="1280.0" prefHeight="633.0" prefWidth="1123.0" vgap="7.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -40,7 +40,7 @@
                         <Font size="35.0" />
                      </font>
                   </Label>
-                  <Circle fill="#ff1f1f" radius="37.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="player1Image" fill="#ff1f1f" radius="37.0" stroke="BLACK" strokeType="INSIDE" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="106.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.columnIndex="1">
@@ -64,7 +64,7 @@
                         <Font size="35.0" />
                      </font>
                   </Label>
-                  <Circle fill="#ff7f00" radius="37.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="player2Image" fill="#ff7f00" radius="37.0" stroke="BLACK" strokeType="INSIDE" />
                </children>
             </HBox>
             <HBox fx:id="player2Field" alignment="CENTER_LEFT" prefHeight="106.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -83,7 +83,7 @@
                         <Font size="35.0" />
                      </font>
                   </Label>
-                  <Circle fill="YELLOW" radius="37.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="player3Image" fill="YELLOW" radius="37.0" stroke="BLACK" strokeType="INSIDE" />
                </children>
             </HBox>
             <HBox fx:id="player4Label" alignment="CENTER" prefHeight="106.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.rowIndex="4">
@@ -93,7 +93,7 @@
                         <Font size="35.0" />
                      </font>
                   </Label>
-                  <Circle fill="LIME" radius="37.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="player4Image" fill="LIME" radius="37.0" stroke="BLACK" strokeType="INSIDE" />
                </children>
             </HBox>
             <HBox fx:id="player5Label" alignment="CENTER" prefHeight="106.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.rowIndex="5">
@@ -103,7 +103,7 @@
                         <Font size="35.0" />
                      </font>
                   </Label>
-                  <Circle fill="BLUE" radius="37.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="player5Image" fill="BLUE" radius="37.0" stroke="BLACK" strokeType="INSIDE" />
                </children>
             </HBox>
             <HBox fx:id="player6Label" alignment="CENTER" prefHeight="106.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.rowIndex="6">
@@ -113,7 +113,7 @@
                         <Font size="35.0" />
                      </font>
                   </Label>
-                  <Circle fill="INDIGO" radius="37.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="player6Image" fill="INDIGO" radius="37.0" stroke="BLACK" strokeType="INSIDE" />
                </children>
             </HBox>
             <HBox fx:id="player1Field" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="1">

@@ -3,16 +3,15 @@ package org.mademperors.polypoly.controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.mademperors.polypoly.listeners.DiceResultListener;
@@ -20,6 +19,7 @@ import org.mademperors.polypoly.models.Player;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class PolypolyGameController implements Initializable, DiceResultListener {
@@ -54,6 +54,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         steets.setStyle("-fx-font-size: 30px;");
         colorStreets.getChildren().add(steets);
 
+
     }
 
     private void showAlertDialog(HBox streetOne) {
@@ -76,15 +77,15 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     }
 
     public void addRed(MouseEvent mouseEvent) {
-//        VBox colorStreets=paneForStreetColors;
-//        HBox streetOne=new HBox();
-//        streetOne.setStyle("-fx-background-color: red;");
-//        streetOne.setPadding(new Insets(5));
-//        streetOne.setPrefHeight(50);
-//        streetOne.setOnMouseClicked(event -> {
-//            showAlertDialog(streetOne);
-//        });
-//        colorStreets.getChildren().add(streetOne);
+        VBox colorStreets=paneForStreetColors;
+        HBox streetOne=new HBox();
+        streetOne.setStyle("-fx-background-color: red;");
+        streetOne.setPadding(new Insets(5));
+        streetOne.setPrefHeight(50);
+        streetOne.setOnMouseClicked(event -> {
+            showAlertDialog(streetOne);
+        });
+        colorStreets.getChildren().add(streetOne);
 
 //            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/mademperors/polypoly/monopolyField.fxml"));
 //
@@ -107,9 +108,38 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         }
     }
 
+
     @Override
     public void onDiceResult(int result) {
         lastDiceResult = result;
         System.out.println(lastDiceResult);
     }
+//    private BorderPane[] getFields(){
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/mademperors/polypoly/monopolyField.fxml"));
+////        System.out.println(getClass().getResource("GameController.java"));
+//        try {
+//
+//            Parent polyfieldcontr = loader.load();
+//
+//            PolypolyFieldController ppfc = loader.getController();
+//            return ppfc.getFields();
+//
+//        } catch (IOException e) {
+//            // Create an Alert of type INFORMATION
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//
+//            // Set the title of the Alert dialog
+//            alert.setTitle("Помилка");
+//
+//            // Set the header text
+//            alert.setHeaderText(null);
+//
+//            // Set the content text
+//            alert.setContentText("Упс.. Щось пішло не так");
+//
+//            // Show the Alert dialog and wait for user response
+//            alert.showAndWait();
+//        }
+//        return null;
+//    }
 }

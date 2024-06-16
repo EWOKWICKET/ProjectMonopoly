@@ -8,10 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,6 +23,12 @@ import java.util.ResourceBundle;
 
 public class EditPlayersMenuController  implements Initializable {
 
+    public Circle player1Image;
+    public Circle player2Image;
+    public Circle player3Image;
+    public Circle player4Image;
+    public Circle player5Image;
+    public Circle player6Image;
     @FXML
     private HBox player1Field;
 
@@ -227,8 +236,19 @@ public class EditPlayersMenuController  implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //sets backgroundImage
         BorderPane borderPane= (BorderPane) startGame.getParent().getParent().getParent();
         borderPane.getStyleClass().add("border-pane");
-      //  System.out.println(startGame.getParent().getParent().getParent().getClass());
+
+        fillCircle(player1Image, "file:src/main/resources/assets/players/winx1.png");
+        fillCircle(player2Image, "file:src/main/resources/assets/players/winx2.png");
+        fillCircle(player3Image, "file:src/main/resources/assets/players/winx3.png");
+        fillCircle(player4Image, "file:src/main/resources/assets/players/winx4.png");
+        fillCircle(player5Image, "file:src/main/resources/assets/players/winx5.png");
+    }
+
+    private void fillCircle(Circle playerImage, String s) {
+        Image image = new Image(s);
+        playerImage.setFill(new ImagePattern(image));
     }
 }

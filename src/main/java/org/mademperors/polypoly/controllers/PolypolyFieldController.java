@@ -3,6 +3,7 @@ package org.mademperors.polypoly.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 
 public class PolypolyFieldController {
 
@@ -19,132 +20,132 @@ public class PolypolyFieldController {
     private TextArea eventCardTextArea;
 
     @FXML
-    private BorderPane field1;
+    private StackPane field1;
 
     @FXML
-    private BorderPane field10;
+    private StackPane field10;
 
     @FXML
-    private BorderPane field11;
+    private StackPane field11;
 
     @FXML
-    private BorderPane field12;
+    private BorderPane field111;
 
     @FXML
-    private BorderPane field13;
+    private BorderPane field1111;
 
     @FXML
-    private BorderPane field14;
+    private StackPane field12;
 
     @FXML
-    private BorderPane field15;
+    private StackPane field13;
 
     @FXML
-    private BorderPane field16;
+    private StackPane field14;
 
     @FXML
-    private BorderPane field17;
+    private StackPane field15;
 
     @FXML
-    private BorderPane field18;
+    private StackPane field16;
 
     @FXML
-    private BorderPane field19;
+    private StackPane field17;
 
     @FXML
-    private BorderPane field2;
+    private StackPane field18;
 
     @FXML
-    private BorderPane field20;
+    private StackPane field19;
 
     @FXML
-    private BorderPane field21;
+    private StackPane field2;
 
     @FXML
-    private BorderPane field22;
+    private StackPane field20;
 
     @FXML
-    private BorderPane field23;
+    private StackPane field21;
 
     @FXML
-    private BorderPane field24;
+    private StackPane field22;
 
     @FXML
-    private BorderPane field25;
+    private StackPane field23;
 
     @FXML
-    private BorderPane field26;
+    private StackPane field24;
 
     @FXML
-    private BorderPane field27;
+    private StackPane field25;
 
     @FXML
-    private BorderPane field28;
+    private StackPane field26;
 
     @FXML
-    private BorderPane field29;
+    private StackPane field27;
 
     @FXML
-    private BorderPane field3;
+    private StackPane field28;
 
     @FXML
-    private BorderPane field30;
+    private StackPane field29;
 
     @FXML
-    private BorderPane field31;
+    private StackPane field3;
 
     @FXML
-    private BorderPane field32;
+    private StackPane field30;
 
     @FXML
-    private BorderPane field33;
+    private StackPane field31;
 
     @FXML
-    private BorderPane field34;
+    private StackPane field32;
 
     @FXML
-    private BorderPane field35;
+    private StackPane field33;
 
     @FXML
-    private BorderPane field36;
+    private StackPane field34;
 
     @FXML
-    private BorderPane field37;
+    private StackPane field35;
 
     @FXML
-    private BorderPane field38;
+    private StackPane field36;
 
     @FXML
-    private BorderPane field39;
+    private StackPane field37;
 
     @FXML
-    private BorderPane field4;
+    private StackPane field38;
 
     @FXML
-    private BorderPane field40;
+    private StackPane field39;
 
     @FXML
-    private BorderPane field5;
+    private StackPane field4;
 
     @FXML
-    private BorderPane field6;
+    private StackPane field40;
 
     @FXML
-    private BorderPane field7;
+    private StackPane field5;
 
     @FXML
-    private BorderPane field8;
+    private StackPane field6;
 
     @FXML
-    private BorderPane field9;
+    private StackPane field7;
+
+    @FXML
+    private StackPane field8;
+
+    @FXML
+    private StackPane field9;
 
     @FXML
     private TextArea statisticsTextArea;
 
-//    public void throwDices() {
-//        dice1.setCenter(GameController.diceImageView1);
-//        dice2.setCenter(GameController.diceImageView2);
-//        GameController.throwDices();
-//
-//    }
 }

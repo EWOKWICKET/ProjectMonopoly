@@ -130,6 +130,5 @@ public class MainMenuController implements Initializable {
         System.out.println(getClass().getResource("/styles.css"));
         System.out.println(getClass().getResource("/org/mademperors/polypoly/PolypolyGame.fxml"));
 
-        //             System.out.println(startButton.getParent().getParent().getParent().getClass());
     }
 }
