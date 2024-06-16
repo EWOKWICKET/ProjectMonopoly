@@ -40,6 +40,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     //Dice interfaces and fields
     private static int lastDiceResult;
     private static int currentPlayerIndex = 0;
+    private boolean isDiceThrown=false;
 
 
     public BorderPane polypolyField;
@@ -351,9 +352,20 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     }
 
     public void endTurn(MouseEvent mouseEvent) {
-        currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
-        GameController.setCurrentPlayer(players[currentPlayerIndex]);
-        setPlayerMenu(GameController.getCurrentPlayer());
+        if(isDiceThrown) {
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+            GameController.setCurrentPlayer(players[currentPlayerIndex]);
+            setPlayerMenu(GameController.getCurrentPlayer());
+            isDiceThrown=false;
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Не кидані кубики");
+            alert.setHeaderText(null);
+            alert.setContentText("Ви ще не кинули кубики. Не можна закінчити хід, не кинувши кубики.");
+
+            alert.showAndWait();
+        }
 //        System.out.println(currentPlayerIndex);
     }
 
@@ -409,8 +421,19 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 //                bp.setCenter(GameController.diceImageView2);
 //            }
 //        }
-        dice1.setCenter(GameController.diceImageView1);
-        dice2.setCenter(GameController.diceImageView2);
+        if (!isDiceThrown) {
+            GameController.throwDices(this);
+            dice1.setCenter(GameController.diceImageView1);
+            dice2.setCenter(GameController.diceImageView2);
+            isDiceThrown = true;
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Вже кидані кубики");
+            alert.setHeaderText(null);
+            alert.setContentText("Ви вже кинули кубики. Не можна кидати кубики двічі.");
+
+            alert.showAndWait();
+        }
     }
 
 }
