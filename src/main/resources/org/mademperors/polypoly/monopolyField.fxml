@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" >
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mademperors.polypoly.controllers.PolypolyFieldController">
     <top>
         <GridPane gridLinesVisible="true" maxHeight="130.0" prefHeight="150.0" prefWidth="783.0" BorderPane.alignment="CENTER">
             <columnConstraints>
@@ -34,7 +34,7 @@
             <children>
                 <StackPane fx:id="field1">
                     <children>
-                        <BorderPane fx:id="field11" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: darkblue;">
+                        <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: darkblue;">
                             <center>
                                 <Label prefHeight="62.0" prefWidth="82.0" style="-fx-font-weight: bold;" text="Старт" textFill="WHITE" underline="true" BorderPane.alignment="CENTER">
                                     <font>
@@ -147,7 +147,7 @@
                 </StackPane>
                 <StackPane fx:id="field11" GridPane.columnIndex="10">
                     <children>
-                        <BorderPane fx:id="field111" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: darkblue;">
+                        <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: darkblue;">
                             <center>
                                 <Label prefHeight="62.0" prefWidth="82.0" style="-fx-font-weight: bold;" text="Старт" textFill="WHITE" underline="true" BorderPane.alignment="CENTER">
                                     <font>
@@ -333,7 +333,7 @@
             <children>
                 <StackPane fx:id="field31">
                     <children>
-                        <BorderPane fx:id="field111" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: darkblue;">
+                        <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: darkblue;">
                             <center>
                                 <Label prefHeight="62.0" prefWidth="82.0" style="-fx-font-weight: bold;" text="Старт" textFill="WHITE" underline="true" BorderPane.alignment="CENTER">
                                     <font>
@@ -446,7 +446,7 @@
                 </StackPane>
                 <StackPane fx:id="field21" GridPane.columnIndex="10">
                     <children>
-                        <BorderPane fx:id="field1111" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: darkblue;">
+                        <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: darkblue;">
                             <center>
                                 <Label prefHeight="62.0" prefWidth="82.0" style="-fx-font-weight: bold;" text="Старт" textFill="WHITE" underline="true" BorderPane.alignment="CENTER">
                                     <font>

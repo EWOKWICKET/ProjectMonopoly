@@ -1,5 +1,6 @@
 package org.mademperors.polypoly.controllers;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,16 +11,20 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.mademperors.polypoly.StreetCharacteristicsAlert;
 import org.mademperors.polypoly.listeners.DiceResultListener;
+import org.mademperors.polypoly.models.Bank;
 import org.mademperors.polypoly.models.Player;
+import org.mademperors.polypoly.models.Street;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class PolypolyGameController implements Initializable, DiceResultListener {
@@ -27,29 +32,180 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     //Dice interfaces and fields
     private static int lastDiceResult;
     private static Player currentPlayer;
-//    private static final DiceResultListener diceResultListener = new DiceResultListener() {
-//        @Override
-//        public void onDiceResult(int result) {
-//            lastDiceResult = result;
-//            System.out.println(lastDiceResult);
-//        }
-//    };
 
     public BorderPane polypolyField;
     public Button AddRed;
+    public Button throdDicesButton;
     @FXML
     private VBox paneForStreetColors;
+
+    private PolypolyFieldController ppfc;
 
     @FXML
     private BorderPane paneForStreets;
 
     @FXML
     private BorderPane panelForPolypolyField;
+    @FXML
+    private BorderPane dice1;
+
+    @FXML
+    private BorderPane dice2;
+
+    @FXML
+    private BorderPane eventCard;
+
+    @FXML
+    private TextArea eventCardTextArea;
+
+    @FXML
+    private StackPane field1;
+
+    @FXML
+    private StackPane field10;
+
+    @FXML
+    private StackPane field11;
+
+    @FXML
+    private BorderPane field111;
+
+    @FXML
+    private BorderPane field1111;
+
+    @FXML
+    private StackPane field12;
+
+    @FXML
+    private StackPane field13;
+
+    @FXML
+    private StackPane field14;
+
+    @FXML
+    private StackPane field15;
+
+    @FXML
+    private StackPane field16;
+
+    @FXML
+    private StackPane field17;
+
+    @FXML
+    private StackPane field18;
+
+    @FXML
+    private StackPane field19;
+
+    @FXML
+    private StackPane field2;
+
+    @FXML
+    private StackPane field20;
+
+    @FXML
+    private StackPane field21;
+
+    @FXML
+    private StackPane field22;
+
+    @FXML
+    private StackPane field23;
+
+    @FXML
+    private StackPane field24;
+
+    @FXML
+    private StackPane field25;
+
+    @FXML
+    private StackPane field26;
+
+    @FXML
+    private StackPane field27;
+
+    @FXML
+    private StackPane field28;
+
+    @FXML
+    private StackPane field29;
+
+    @FXML
+    private StackPane field3;
+
+    @FXML
+    private StackPane field30;
+
+    @FXML
+    private StackPane field31;
+
+    @FXML
+    private StackPane field32;
+
+    @FXML
+    private StackPane field33;
+
+    @FXML
+    private StackPane field34;
+
+    @FXML
+    private StackPane field35;
+
+    @FXML
+    private StackPane field36;
+
+    @FXML
+    private StackPane field37;
+
+    @FXML
+    private StackPane field38;
+
+    @FXML
+    private StackPane field39;
+
+    @FXML
+    private StackPane field4;
+
+    @FXML
+    private StackPane field40;
+
+    @FXML
+    private StackPane field5;
+
+    @FXML
+    private StackPane field6;
+
+    @FXML
+    private StackPane field7;
+
+    @FXML
+    private StackPane field8;
+
+    @FXML
+    private StackPane field9;
+
+    @FXML
+    private TextArea statisticsTextArea;
+    private Bank bank;
+
+    // Method to return an array of all StackPanes
+    private StackPane[] getAllStackPanes() {
+        return new StackPane[] {
+                field1, field2, field3, field4, field5, field6, field7, field8, field9, field10,
+                field11, field12, field13, field14, field15, field16, field17, field18, field19, field20,
+                field21, field22, field23, field24, field25, field26, field27, field28, field29, field30,
+                field31, field32, field33, field34, field35, field36, field37, field38, field39, field40
+        };
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        VBox colorStreets = paneForStreetColors;
 
+         bank=new Bank();
+        initStreets(bank.getAllStreets());
+
+        VBox colorStreets = paneForStreetColors;
+        colorStreets.setSpacing(10);
         Label steets = new Label("Вулиці:");
         steets.setStyle("-fx-font-size: 30px;");
         colorStreets.getChildren().add(steets);
@@ -57,7 +213,43 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
     }
 
-    private void showAlertDialog(HBox streetOne) {
+    private void initStreets(Street[][] allStreets) {
+        StackPane[] streets= getAllStackPanes();
+        int index=0;
+        for(Street[] oneColorStreet:allStreets){
+            for(Street oneStreet: oneColorStreet){
+                while (streets[index].getId().equals("field1") || streets[index].getId().equals("field11")|| streets[index].getId().equals("field21") || streets[index].getId().equals("field31")   ){
+                    index++;
+                }
+
+                    ObservableList<Node> nodes= streets[index].getChildren();
+                    for(Node node:nodes){
+                        node.setOnMouseClicked(event -> {
+                            showAlertDialog(node, oneStreet);
+                        });
+                        if(node.getClass().toString().contains("AnchorPane")){
+                            AnchorPane ap= (AnchorPane) node;
+                            ObservableList<Node> labels= ap.getChildren();
+                            for(Node label:labels){
+                                Label realLabel= (Label) label;
+                                if(realLabel.getText().contains("вул")){
+                                    realLabel.setText(oneStreet.getName());
+
+                                }
+                                else{
+                                    realLabel.setText("$ "+ oneStreet.getPrice());
+                                }
+                            }
+                            index++;
+
+
+                    }
+                }
+            }
+        }
+    }
+
+    private void showAlertDialog(Node streetOne, Street street) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/mademperors/polypoly/streetCard.fxml"));
             Parent root = loader.load();
@@ -69,6 +261,15 @@ public class PolypolyGameController implements Initializable, DiceResultListener
             dialogStage.setScene(new Scene(root));
             dialogStage.setTitle("Custom Alert");
 
+            StreetCharacteristicsAlert sca=loader.getController();
+            sca.setStreetName(street.getName());
+            sca.setOnlyStreetPrice(street.getRentModel()[0]);
+            sca.setOneHousePrice(street.getRentModel()[1]);
+            sca.setTwoHousePrice(street.getRentModel()[2]);
+            sca.setThreeHousePrice(street.getRentModel()[3]);
+            sca.setFourHousePrice(street.getRentModel()[4]);
+            sca.setHotelPrice(street.getRentModel()[5]);
+            sca.setStreetColor("yellow");
 
             dialogStage.showAndWait();
         } catch (IOException e) {
@@ -83,29 +284,14 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         streetOne.setPadding(new Insets(5));
         streetOne.setPrefHeight(50);
         streetOne.setOnMouseClicked(event -> {
-            showAlertDialog(streetOne);
+            showAlertDialog(streetOne,bank.getAllStreets()[0][0]);
         });
         colorStreets.getChildren().add(streetOne);
 
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/mademperors/polypoly/monopolyField.fxml"));
-//
-//            PolypolyFieldController ppfc=loader.getController();
-//            ppfc.throwDices();
 
         GameController.throwDices(this);
 
-        AnchorPane anp = (AnchorPane) polypolyField.getCenter();
-        for (Node node : anp.getChildren()) {
 
-            if (node.getId() != null && node.getId().equals("dice1")) {
-                BorderPane bp = (BorderPane) node;
-                bp.setCenter(GameController.diceImageView1);
-            }
-            if (node.getId() != null && node.getId().equals("dice2")) {
-                BorderPane bp = (BorderPane) node;
-                bp.setCenter(GameController.diceImageView2);
-            }
-        }
     }
 
 
@@ -114,32 +300,22 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         lastDiceResult = result;
         System.out.println(lastDiceResult);
     }
-//    private BorderPane[] getFields(){
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/mademperors/polypoly/monopolyField.fxml"));
-////        System.out.println(getClass().getResource("GameController.java"));
-//        try {
+
+    public void throwDices(MouseEvent mouseEvent) {
+
+//        AnchorPane anp = (AnchorPane) polypolyField.getCenter();
+//        for (Node node : anp.getChildren()) {
 //
-//            Parent polyfieldcontr = loader.load();
-//
-//            PolypolyFieldController ppfc = loader.getController();
-//            return ppfc.getFields();
-//
-//        } catch (IOException e) {
-//            // Create an Alert of type INFORMATION
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//
-//            // Set the title of the Alert dialog
-//            alert.setTitle("Помилка");
-//
-//            // Set the header text
-//            alert.setHeaderText(null);
-//
-//            // Set the content text
-//            alert.setContentText("Упс.. Щось пішло не так");
-//
-//            // Show the Alert dialog and wait for user response
-//            alert.showAndWait();
+//            if (node.getId() != null && node.getId().equals("dice1")) {
+//                BorderPane bp = (BorderPane) node;
+//                bp.setCenter(GameController.diceImageView1);
+//            }
+//            if (node.getId() != null && node.getId().equals("dice2")) {
+//                BorderPane bp = (BorderPane) node;
+//                bp.setCenter(GameController.diceImageView2);
+//            }
 //        }
-//        return null;
-//    }
+        dice1.setCenter(GameController.diceImageView1);
+        dice2.setCenter(GameController.diceImageView2);
+    }
 }

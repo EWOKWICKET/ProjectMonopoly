@@ -54,7 +54,7 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
                <children>
-                  <Label fx:id="zalogPrice" prefHeight="36.0" prefWidth="186.0" text="Залогова ціна: YYY" textFill="WHITE">
+                  <Label fx:id="mortgagePrice" prefHeight="36.0" prefWidth="186.0" text="Залогова ціна: YYY" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
