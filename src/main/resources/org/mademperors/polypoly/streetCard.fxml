@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="395.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mademperors.polypoly.StreetCharacteristicsAlert">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="395.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mademperors.polypoly.StreetCharacteristicsAlert">
    <top>
       <HBox fx:id="streetColor" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: yellow; -fx-border-color: red; -fx-border-width: 7;" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="streetName" prefHeight="44.0" prefWidth="169.0" text="вул. Сагайдачного" textAlignment="CENTER">
+            <Label fx:id="streetName" alignment="CENTER" prefHeight="44.0" prefWidth="366.0" text="вул. Сагайдачного" textAlignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font>

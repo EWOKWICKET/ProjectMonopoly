@@ -81,7 +81,7 @@ public class StreetCharacteristicsAlert {
         }
 
         public void setMortgagePrice(int mortgage) {
-                mortgagePrice.setText(String.valueOf(mortgage));
+                mortgagePrice.setText("Залогова ціна: "+String.valueOf(mortgage));
         }
 }
 

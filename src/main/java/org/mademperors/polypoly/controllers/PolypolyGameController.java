@@ -8,12 +8,12 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.mademperors.polypoly.StreetCharacteristicsAlert;
@@ -25,6 +25,7 @@ import org.mademperors.polypoly.models.Street;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class PolypolyGameController implements Initializable, DiceResultListener {
@@ -190,7 +191,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
     // Method to return an array of all StackPanes
     private StackPane[] getAllStackPanes() {
-        return new StackPane[] {
+        return new StackPane[]{
                 field1, field2, field3, field4, field5, field6, field7, field8, field9, field10,
                 field11, field12, field13, field14, field15, field16, field17, field18, field19, field20,
                 field21, field22, field23, field24, field25, field26, field27, field28, field29, field30,
@@ -201,7 +202,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-         bank=new Bank();
+        bank = new Bank();
         initStreets(bank.getAllStreets());
 
         VBox colorStreets = paneForStreetColors;
@@ -214,39 +215,142 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     }
 
     private void initStreets(Street[][] allStreets) {
-        StackPane[] streets= getAllStackPanes();
-        int index=0;
-        for(Street[] oneColorStreet:allStreets){
-            for(Street oneStreet: oneColorStreet){
-                while (streets[index].getId().equals("field1") || streets[index].getId().equals("field11")|| streets[index].getId().equals("field21") || streets[index].getId().equals("field31")   ){
+        StackPane[] streets = getAllStackPanes();
+        int index = 0;
+        setServices(streets);
+        for (Street[] oneColorStreet : allStreets) {
+            for (Street oneStreet : oneColorStreet) {
+                while (streets[index].getId().equals("field1") || streets[index].getId().equals("field11") || streets[index].getId().equals("field21") || streets[index].getId().equals("field31")
+                        || streets[index].getId().equals("field4")) {
                     index++;
                 }
 
-                    ObservableList<Node> nodes= streets[index].getChildren();
-                    for(Node node:nodes){
-                        node.setOnMouseClicked(event -> {
-                            showAlertDialog(node, oneStreet);
-                        });
-                        if(node.getClass().toString().contains("AnchorPane")){
-                            AnchorPane ap= (AnchorPane) node;
-                            ObservableList<Node> labels= ap.getChildren();
-                            for(Node label:labels){
-                                Label realLabel= (Label) label;
-                                if(realLabel.getText().contains("вул")){
-                                    realLabel.setText(oneStreet.getName());
+                ObservableList<Node> nodes = streets[index].getChildren();
+                for (Node node : nodes) {
+                    node.setOnMouseClicked(event -> {
+                        showAlertDialog(node, oneStreet);
+                    });
+                    if (node.getClass().toString().contains("AnchorPane")) {
+                        AnchorPane ap = (AnchorPane) node;
+                        ap.setStyle("-fx-background-color: " + oneStreet.getColor() + ";");
+                        ObservableList<Node> labels = ap.getChildren();
+                        for (Node label : labels) {
+                            Label realLabel = (Label) label;
+                            if (realLabel.getText().contains("вул")) {
+                                realLabel.setText(oneStreet.getName());
 
-                                }
-                                else{
-                                    realLabel.setText("$ "+ oneStreet.getPrice());
-                                }
+                            } else {
+                                realLabel.setText("$ " + oneStreet.getPrice());
                             }
-                            index++;
-
+                        }
+                        index++;
 
                     }
                 }
+
             }
         }
+    }
+
+    private void setServices(StackPane[] streets) {
+        setChance(4, streets);
+        setTax(6, 200, streets);
+        setCity(8, streets);
+
+        setChance(14, streets);
+        setTax(16, 200, streets);
+        setChance(18, streets);
+
+        setTax(24, 200, streets);
+        setChance(26, streets);
+        setTax(28, 200, streets);
+
+        setCity(34, streets);
+        setChance(36, streets);
+        setCity(38, streets);
+    }
+
+    private void setCity(int i, StackPane[] streets) {
+        ObservableList<Node> nodes = streets[i - 1].getChildren();
+        for (Node node : nodes) {
+            if (node instanceof AnchorPane) {
+                AnchorPane ap = (AnchorPane) node;
+                ap.setStyle("-fx-background-color: darkblue;");
+                ObservableList<Node> labels = ap.getChildren();
+
+                // Collect nodes to remove
+                List<Node> nodesToRemove = new ArrayList<>();
+
+                for (Node label : labels) {
+                    if (label instanceof Label) {
+                        Label realLabel = (Label) label;
+                        if (realLabel.getText().contains("вул")) {
+                            realLabel.setText("Місто");
+                            realLabel.setStyle("-fx-font-size: 25;");
+                            realLabel.setTextFill(Color.WHITE);
+                        } else {
+                            nodesToRemove.add(realLabel);
+                        }
+                    }
+                }
+
+                // Remove nodes after iteration
+                labels.removeAll(nodesToRemove);
+            }
+        }
+    }
+
+    private void setTax(int i, int taxPrice, StackPane[] streets) {
+        ObservableList<Node> nodes = streets[i - 1].getChildren();
+        for (Node node : nodes) {
+
+            if (node.getClass().toString().contains("AnchorPane")) {
+                AnchorPane ap = (AnchorPane) node;
+                ap.setStyle("-fx-background-color: white;");
+                ObservableList<Node> labels = ap.getChildren();
+                for (Node label : labels) {
+                    Label realLabel = (Label) label;
+                    if (realLabel.getText().contains("вул")) {
+                        realLabel.setText("Податок");
+                        realLabel.setStyle("-fx-font-size: 20;");
+                    } else {
+                        realLabel.setText("$ " + taxPrice);
+                    }
+                }
+
+            }
+        }
+    }
+
+    private void setChance(int i, StackPane[] streets) {
+        ObservableList<Node> nodes = streets[i-1].getChildren();
+        for (Node node : nodes) {
+            if (node instanceof AnchorPane) {
+                AnchorPane ap = (AnchorPane) node;
+                ap.setStyle("-fx-background-color: darkblue;");
+                ObservableList<Node> labels = ap.getChildren();
+
+                // Collect nodes to remove
+                List<Node> nodesToRemove = new ArrayList<>();
+
+                for (Node label : labels) {
+                    if (label instanceof Label) {
+                        Label realLabel = (Label) label;
+                        if (realLabel.getText().contains("вул")) {
+                            realLabel.setText("Шанс");
+                            realLabel.setStyle("-fx-font-size: 25;");
+                            realLabel.setTextFill(Color.WHITE);
+                        } else {
+                            nodesToRemove.add(realLabel);
+                        }
+                    }
+                }
+
+                // Remove nodes after iteration
+                labels.removeAll(nodesToRemove);
+            }
+        }
+
     }
 
     private void showAlertDialog(Node streetOne, Street street) {
@@ -269,7 +373,10 @@ public class PolypolyGameController implements Initializable, DiceResultListener
             sca.setThreeHousePrice(street.getRentModel()[3]);
             sca.setFourHousePrice(street.getRentModel()[4]);
             sca.setHotelPrice(street.getRentModel()[5]);
-            sca.setStreetColor("yellow");
+            sca.setStreetColor(street.getColor());
+            sca.setPriceForHotelLabel(street.getHotelPrice());
+            sca.setPriceForHouseLabel(street.getHousePrice());
+            sca.setMortgagePrice(street.getMortgagePrice());
 
             dialogStage.showAndWait();
         } catch (IOException e) {
