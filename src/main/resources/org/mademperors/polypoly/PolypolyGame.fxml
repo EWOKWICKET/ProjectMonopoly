@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.scene.image.ImageView?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mademperors.polypoly.controllers.PolypolyGameController">
    <center>
       <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -42,7 +43,13 @@
                                                 </Label>
                                             </center>
                                         </BorderPane>
-                                        <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" />
+                                        <FlowPane alignment="BASELINE_CENTER" prefHeight="200.0" prefWidth="200.0" style="-fx-padding: 20;">
+                                            <ImageView fx:id="player1" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                                            <ImageView fx:id="player2" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                                            <ImageView fx:id="player3" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                                            <ImageView fx:id="player4" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                                            <ImageView fx:id="player5" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                                        </FlowPane>
                                     </children>
                                 </StackPane>
                                 <StackPane fx:id="field2" GridPane.columnIndex="1">

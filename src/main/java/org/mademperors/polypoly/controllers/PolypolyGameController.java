@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,19 +13,24 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.mademperors.polypoly.StreetCharacteristicsAlert;
 import org.mademperors.polypoly.listeners.DiceResultListener;
 import org.mademperors.polypoly.models.Bank;
+import org.mademperors.polypoly.models.GameLogger;
 import org.mademperors.polypoly.models.Player;
 import org.mademperors.polypoly.models.Street;
 
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -40,9 +46,22 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     private static int currentPlayerIndex = 0;
 
 
+    @FXML
     public BorderPane polypolyField;
+    @FXML
     public Button AddRed;
+    @FXML
     public Button throdDicesButton;
+    @FXML
+    public ImageView player1;
+    @FXML
+    public ImageView player2;
+    @FXML
+    public ImageView player3;
+    @FXML
+    public ImageView player4;
+    @FXML
+    public ImageView player5;
     @FXML
     private VBox paneForStreetColors;
 
@@ -85,6 +104,16 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         };
     }
 
+    private ImageView[] getAllPlayerImages() {
+        return new ImageView[] {
+                player1,
+                player2,
+                player3,
+                player4,
+                player5
+        };
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -93,11 +122,26 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
         VBox colorStreets = paneForStreetColors;
         colorStreets.setSpacing(10);
-        Label steets = new Label("Вулиці:");
-        steets.setStyle("-fx-font-size: 30px;");
-        colorStreets.getChildren().add(steets);
+        Label streets = new Label("Вулиці:");
+        streets.setStyle("-fx-font-size: 30px;");
+        colorStreets.getChildren().add(streets);
+    }
 
+    public void initPlayerImages() {
+        String[] images = {"/assets/players/blue.png",
+                "/assets/players/red.png",
+                "/assets/players/green.png",
+                "/assets/players/purple.png",
+                "/assets/players/yellow.png"};
 
+        ImageView[] playerImages = getAllPlayerImages();
+        for (int i = 0; i < players.length; i++) {
+            InputStream imageStream = getClass().getResourceAsStream(images[i]);
+            assert imageStream != null; // говнокод але що поробиш
+            Image image = new Image(imageStream);
+            playerImages[i].setImage(image);
+            players[i].setPlayerImageView(playerImages[i]);
+        }
     }
 
     private void initStreets(Street[][] allStreets) {
@@ -249,7 +293,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
             dialogStage.initModality(Modality.APPLICATION_MODAL); // Block input events to other windows
 
             dialogStage.setScene(new Scene(root));
-            dialogStage.setTitle("Custom Alert");
+            dialogStage.setTitle("Street info");
 
             StreetCharacteristicsAlert sca=loader.getController();
             sca.setStreetName(street.getName());
@@ -303,6 +347,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
         for (int i = 0; i < shortenedNames.length; i ++) {
             players[i] = new Player(shortenedNames[i], initialMoney, colors[i]);
+            players[i].setPlayerIndex(i);
         }
 
         GameController.setCurrentPlayer(players[currentPlayerIndex]);
@@ -315,7 +360,34 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     @Override
     public void onDiceResult(int result) {
         lastDiceResult = result;
+        int newPositionIndex = players[currentPlayerIndex].getCurrentPositionIndex() + result;
+
+        if (newPositionIndex >= 40) {
+            players[currentPlayerIndex].addMoney(200);
+            newPositionIndex -= 40;
+        }
+
+        updatePlayerPosition(newPositionIndex);
+
+        players[currentPlayerIndex].setCurrentPositionIndex(newPositionIndex);
 //        System.out.println(lastDiceResult);
+    }
+
+    private void updatePlayerPosition(int newPositionIndex) {
+        ImageView currentPlayerImageView = players[currentPlayerIndex].getPlayerImageView();
+        int currentPositionIndex = players[currentPlayerIndex].getCurrentPositionIndex();
+        StackPane[] stackPanes = getAllStackPanes();
+
+        stackPanes[currentPositionIndex].getChildren().forEach(node -> {
+            if (node instanceof FlowPane fp) {
+                fp.getChildren().remove(currentPlayerImageView);
+            }
+        });
+        stackPanes[newPositionIndex].getChildren().forEach(node -> {
+            if (node instanceof FlowPane fp) {
+                fp.getChildren().add(currentPlayerImageView);
+            }
+        });
     }
 
     public void throwDices(MouseEvent mouseEvent) {
@@ -334,6 +406,8 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 //        }
         dice1.setCenter(GameController.diceImageView1);
         dice2.setCenter(GameController.diceImageView2);
+
+        GameController.throwDices(this);
     }
 }
 

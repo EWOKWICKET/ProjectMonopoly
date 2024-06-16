@@ -49,6 +49,7 @@ public class EditPlayersMenuController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/mademperors/polypoly/PolypolyGame.fxml"));
             try {
                 Parent polypolyGame = loader.load();
+                PolypolyGameController polypolyGameController = loader.getController();
 
                 Stage stage = (Stage) startGame.getScene().getWindow();
                 // Set the new scene
@@ -56,8 +57,10 @@ public class EditPlayersMenuController implements Initializable {
 
                 PolypolyGameController.setInitialMoney(initialMoney);
                 PolypolyGameController.setPlayers(playerNames);
+                polypolyGameController.initPlayerImages();
 
             } catch (IOException e) {
+                e.printStackTrace();
                 // Create an Alert of type INFORMATION
                 Alert alert = new Alert(Alert.AlertType.ERROR);
 

@@ -1,5 +1,7 @@
 package org.mademperors.polypoly.models;
 
+import javafx.scene.image.ImageView;
+
 public class Player {
 
     private final String name;
@@ -7,6 +9,9 @@ public class Player {
     private boolean inJail = false;
     private int jailFreeCards = 0;
     private final String color;
+    private ImageView playerImageView;
+    private int currentPositionIndex = 0;
+    private int playerIndex;
 
     public Player(String name, int money, String color) {
         this.name = name;
@@ -17,6 +22,7 @@ public class Player {
     // DELETE player from players array()
     public void goBankrupt() {
         Bank.takeBankruptPlayerStreets(this);
+        playerImageView.setVisible(false);
     }
 
     public void addMoney(int amount) {
@@ -57,5 +63,23 @@ public class Player {
     }
     public String getPlayerColor() {
         return color;
+    }
+    public ImageView getPlayerImageView() {
+        return playerImageView;
+    }
+    public void setPlayerImageView(ImageView playerImageView) {
+        this.playerImageView = playerImageView;
+    }
+    public int getCurrentPositionIndex() {
+        return currentPositionIndex;
+    }
+    public void setCurrentPositionIndex(int currentPositionIndex) {
+        this.currentPositionIndex = currentPositionIndex;
+    }
+    public int getPlayerIndex() {
+        return playerIndex;
+    }
+    public void setPlayerIndex(int playerIndex) {
+        this.playerIndex = playerIndex;
     }
 }
