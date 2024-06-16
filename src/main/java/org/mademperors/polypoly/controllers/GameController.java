@@ -79,7 +79,7 @@ public class GameController {
         logger.logInfo(info2.toString());
     }
 
-    public void mortgageActions(Street street) {
+    public static void mortgageActions(Street street) {
         if (street.isMortgaged()) {
             street.unmortgage();
             logger.logInfo(String.format("%s unmortgaged", street.getName()));
@@ -90,13 +90,13 @@ public class GameController {
     }
 
     //LIMIT so that it can be used only for monopolies
-    public void upgradeStreet(Street street) {
+    public static void upgradeStreet(Street street) {
         street.upgrade();
         logger.logInfo(String.format("%s upgraded", street.getName()));
     }
 
     //LIMIT so that it can be used only for monopolies with 1 house minimum
-    public void downgradeStreet(Street street) {
+    public static void downgradeStreet(Street street) {
         street.downgrade();
         logger.logInfo(String.format("%s downgraded", street.getName()));
     }
