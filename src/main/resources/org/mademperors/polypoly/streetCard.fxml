@@ -5,281 +5,321 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="395.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mademperors.polypoly.StreetCharacteristicsAlert">
-   <top>
-      <HBox fx:id="streetColor" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: yellow; -fx-border-color: red; -fx-border-width: 7;" BorderPane.alignment="CENTER">
+<BorderPane style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mademperors.polypoly.StreetCharacteristicsAlert">
+   <center>
+      <StackPane>
          <children>
-            <Label fx:id="streetName" alignment="CENTER" prefHeight="44.0" prefWidth="366.0" text="вул. Сагайдачного" textAlignment="CENTER">
+            <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="395.0">
+               <top>
+                  <HBox fx:id="streetColor" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: yellow; -fx-border-color: red; -fx-border-width: 7;" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label fx:id="streetName" alignment="CENTER" prefHeight="44.0" prefWidth="366.0" text="вул. Сагайдачного" textAlignment="CENTER">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </top>
+               <center>
+                  <GridPane style="-fx-background-color: darkblue; -fx-border-color: red; -fx-border-width: 7;" BorderPane.alignment="CENTER">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="276.0000366210937" minHeight="10.0" prefHeight="276.0000366210937" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="290.80000000000007" minHeight="10.0" prefHeight="98.60000000000002" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="140.60001220703128" minHeight="0.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+                           <children>
+                              <Label text="Ціна:" textFill="WHITE">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="priceForHouseLabel" text="Будинок- по ХХХ за кожний" textFill="WHITE">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="priceForHotelLabel" text="Готель- за ХХХ" textFill="WHITE">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+                           <children>
+                              <Label fx:id="mortgagePrice" prefHeight="36.0" prefWidth="186.0" text="Залогова ціна: YYY" textFill="WHITE">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <GridPane alignment="CENTER" gridLinesVisible="true" snapToPixel="false">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="326.79998779296875" minWidth="10.0" prefWidth="248.000112915039" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.20001220703125" minWidth="10.0" prefWidth="131.19988708496095" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="    Орендна плата:" textFill="WHITE">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+                                 <children>
+                                    <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="231.0" text="З одним будинком:" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="20.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets left="50.0" top="5.0" />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="40.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
+                                 <children>
+                                    <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="226.0" text="З двома будинками:" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="20.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets left="50.0" top="5.0" />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="40.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="181.0" text="Тільки вулиця:" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="20.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets left="50.0" top="5.0" />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="40.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
+                                 <children>
+                                    <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="226.0" text="З трьома будинками:" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="20.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets left="50.0" top="5.0" />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="40.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="5">
+                                 <children>
+                                    <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="226.0" text="З чотирма будинками:" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="20.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets left="50.0" top="5.0" />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="40.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="6">
+                                 <children>
+                                    <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="226.0" text="З готелем:" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets left="20.0" />
+                                       </opaqueInsets>
+                                    </Label>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets left="50.0" top="5.0" />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="40.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label fx:id="onlyStreetPrice" text="555" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="5.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <children>
+                                    <Label fx:id="oneHousePrice" text="555" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="5.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <children>
+                                    <Label fx:id="twoHousePrice" text="555" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="5.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                 <children>
+                                    <Label fx:id="threeHousePrice" text="555" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="5.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <children>
+                                    <Label fx:id="fourHousePrice" text="555" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="5.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                 <children>
+                                    <Label fx:id="hotelPrice" text="555" textFill="WHITE">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="5.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                           <GridPane.margin>
+                              <Insets top="5.0" />
+                           </GridPane.margin>
+                        </GridPane>
+                     </children>
+                  </GridPane>
+               </center>
+            </BorderPane>
+            <Label fx:id="mortgageLabel" prefHeight="182.0" prefWidth="400.0" rotate="-60.0" text="ЗАКЛАДЕНО" textFill="#f4f4f4" visible="false">
                <font>
-                  <Font size="20.0" />
+                  <Font size="67.0" />
                </font>
             </Label>
          </children>
-      </HBox>
-   </top>
-   <center>
-      <GridPane style="-fx-background-color: darkblue; -fx-border-color: red; -fx-border-width: 7;" BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="276.0000366210937" minHeight="10.0" prefHeight="276.0000366210937" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="290.80000000000007" minHeight="10.0" prefHeight="98.60000000000002" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="140.60001220703128" minHeight="0.0" prefHeight="45.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
-               <children>
-                  <Label text="Ціна:" textFill="WHITE">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="priceForHouseLabel" text="Будинок- по ХХХ за кожний" textFill="WHITE">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="priceForHotelLabel" text="Готель- за ХХХ" textFill="WHITE">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
-               <children>
-                  <Label fx:id="mortgagePrice" prefHeight="36.0" prefWidth="186.0" text="Залогова ціна: YYY" textFill="WHITE">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
-            <GridPane alignment="CENTER" gridLinesVisible="true" snapToPixel="false">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="326.79998779296875" minWidth="10.0" prefWidth="248.000112915039" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.20001220703125" minWidth="10.0" prefWidth="131.19988708496095" />
-              </columnConstraints>
-              <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Label text="    Орендна плата:" textFill="WHITE">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
-                     <children>
-                        <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="231.0" text="З одним будинком:" textFill="WHITE">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <opaqueInsets>
-                              <Insets left="20.0" />
-                           </opaqueInsets>
-                        </Label>
-                     </children>
-                     <opaqueInsets>
-                        <Insets left="50.0" top="5.0" />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets left="40.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
-                     <children>
-                        <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="226.0" text="З двома будинками:" textFill="WHITE">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <opaqueInsets>
-                              <Insets left="20.0" />
-                           </opaqueInsets>
-                        </Label>
-                     </children>
-                     <opaqueInsets>
-                        <Insets left="50.0" top="5.0" />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets left="40.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
-                     <children>
-                        <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="181.0" text="Тільки вулиця:" textFill="WHITE">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <opaqueInsets>
-                              <Insets left="20.0" />
-                           </opaqueInsets>
-                        </Label>
-                     </children>
-                     <opaqueInsets>
-                        <Insets left="50.0" top="5.0" />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets left="40.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
-                     <children>
-                        <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="226.0" text="З трьома будинками:" textFill="WHITE">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <opaqueInsets>
-                              <Insets left="20.0" />
-                           </opaqueInsets>
-                        </Label>
-                     </children>
-                     <opaqueInsets>
-                        <Insets left="50.0" top="5.0" />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets left="40.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="5">
-                     <children>
-                        <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="226.0" text="З чотирма будинками:" textFill="WHITE">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <opaqueInsets>
-                              <Insets left="20.0" />
-                           </opaqueInsets>
-                        </Label>
-                     </children>
-                     <opaqueInsets>
-                        <Insets left="50.0" top="5.0" />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets left="40.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="6">
-                     <children>
-                        <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="226.0" text="З готелем:" textFill="WHITE">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <opaqueInsets>
-                              <Insets left="20.0" />
-                           </opaqueInsets>
-                        </Label>
-                     </children>
-                     <opaqueInsets>
-                        <Insets left="50.0" top="5.0" />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets left="40.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <children>
-                        <Label fx:id="onlyStreetPrice" text="555" textFill="WHITE">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets left="5.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <children>
-                        <Label fx:id="oneHousePrice" text="555" textFill="WHITE">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets left="5.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <children>
-                        <Label fx:id="twoHousePrice" text="555" textFill="WHITE">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets left="5.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                     <children>
-                        <Label fx:id="threeHousePrice" text="555" textFill="WHITE">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets left="5.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                     <children>
-                        <Label fx:id="fourHousePrice" text="555" textFill="WHITE">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets left="5.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                     <children>
-                        <Label fx:id="hotelPrice" text="555" textFill="WHITE">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets left="5.0" />
-                     </padding>
-                  </HBox>
-               </children>
-               <GridPane.margin>
-                  <Insets top="5.0" />
-               </GridPane.margin>
-            </GridPane>
-         </children>
-      </GridPane>
+      </StackPane>
    </center>
+   <bottom>
+      <FlowPane fx:id="buttonPanel" prefHeight="98.0" prefWidth="395.0" style="-fx-padding: 10;">
+         <children>
+            <Button fx:id="addBuidingButton" alignment="CENTER" mnemonicParsing="false" onMousePressed="#addBuilding" prefHeight="51.0" prefWidth="107.0" text="Придбати будівлю" wrapText="true">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+            </Button>
+            <Button fx:id="tradeButton" alignment="CENTER" mnemonicParsing="false" onMousePressed="#trade" prefHeight="51.0" prefWidth="107.0" text="Обміняти" wrapText="true">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+            </Button>
+            <Button fx:id="delBuildingButton" alignment="CENTER" mnemonicParsing="false" onMousePressed="#delBuilding" prefHeight="51.0" prefWidth="107.0" text="Прибрати будівлю" wrapText="true">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+            </Button>
+            <Button fx:id="mortgageButton" alignment="CENTER" mnemonicParsing="false" onMousePressed="#mortage" prefHeight="51.0" prefWidth="107.0" text="Закласти" wrapText="true">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+            </Button>
+
+         </children>
+      </FlowPane>
+   </bottom>
 </BorderPane>
