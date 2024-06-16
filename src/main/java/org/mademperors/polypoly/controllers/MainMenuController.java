@@ -22,25 +22,13 @@ public class MainMenuController implements Initializable {
     private TextField amountOfMoney;
 
     @FXML
-    private Button closeButton;
+    private Button closeButton, startButton;
 
     @FXML
-    private Button minusMoney;
-
-    @FXML
-    private Button minusPlayers;
+    private Button minusMoney, plusMoney, minusPlayers, plusPlayers;
 
     @FXML
     private TextField numberOfPlayers;
-
-    @FXML
-    private Button plusMoney;
-
-    @FXML
-    private Button plusPlayers;
-
-    @FXML
-    private Button startButton;
 
 
     @FXML
@@ -80,8 +68,8 @@ public class MainMenuController implements Initializable {
     void plusPlayers(MouseEvent event) {
         int players = Integer.parseInt(numberOfPlayers.getText());
         players++;
-        if (players > 6) {
-            players = 6;
+        if (players == 6) {
+            players = 5;
         }
         numberOfPlayers.setText(String.valueOf(players));
     }
