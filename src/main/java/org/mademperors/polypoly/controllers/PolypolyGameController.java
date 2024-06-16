@@ -103,7 +103,10 @@ public class PolypolyGameController implements Initializable, DiceResultListener
        playerStreets=Arrays.stream(bank.getAllStreets()).flatMap(Arrays::stream).filter(street -> street.getOwner() == player).toArray(Street[]::new);
 
         VBox colorStreets = paneForStreetColors;
+        //clear panes
+       paneForStreets.getChildren().clear();
         colorStreets.getChildren().clear();
+
         colorStreets.setSpacing(10);
         Label steets = new Label("Вулиці:");
         steets.setStyle("-fx-font-size: 30px;");
@@ -350,6 +353,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     public void endTurn(MouseEvent mouseEvent) {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
         GameController.setCurrentPlayer(players[currentPlayerIndex]);
+        setPlayerMenu(GameController.getCurrentPlayer());
 //        System.out.println(currentPlayerIndex);
     }
 
@@ -371,6 +375,10 @@ public class PolypolyGameController implements Initializable, DiceResultListener
                 Street st=bn.getAllStreets()[0][1];
                 st.setMortgaged(true);
                 st.setOwner(players[i]);
+            }
+            if(i==1){
+                Bank bn=new Bank();
+                bn.getAllStreets()[0][2].setOwner(players[i]);
             }
         }
 
