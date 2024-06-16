@@ -8,35 +8,34 @@ public class Bank {
 
     private static final Street[][] streets = {
             {
-                    new Street("a", 1, 1, 1, new int[]{1}),
-                    new Street("b", 1, 1, 1, new int[]{1}),
-                    new Street("c", 1, 1, 1, new int[]{1}),
-                    new Street("d", 1, 1, 1, new int[]{1})
+                    new Street("a", 1, 1, 1, new int[]{1,2,3,4,5,6}),
+                    new Street("b", 1, 1, 1, new int[]{1,2,3,4,5,6}),
+                    new Street("d", 1, 1, 1, new int[]{1,2,3,4,5,6})
             },
             {
-                    new Street("e", 1, 1, 1, new int[]{1}),
-                    new Street("f", 1, 1, 1, new int[]{1}),
-                    new Street("g", 1, 1, 1, new int[]{1})
+                    new Street("e", 1, 1, 1, new int[]{1,2,3,4,5,6}),
+                    new Street("f", 1, 1, 1, new int[]{1,2,3,4,5,6}),
+                    new Street("g", 1, 1, 1, new int[]{1,2,3,4,5,6})
             },
             {
-                    new Street("h", 1, 1, 1, new int[]{1}),
-                    new Street("i", 1, 1, 1, new int[]{1}),
-                    new Street("j", 1, 1, 1, new int[]{1})
+                    new Street("h", 1, 1, 1, new int[]{1,2,3,4,5,6}),
+                    new Street("i", 1, 1, 1, new int[]{1,2,3,4,5,6}),
+                    new Street("j", 1, 1, 1, new int[]{1,2,3,4,5,6})
             },
             {
-                    new Street("k", 1, 1, 1, new int[]{1}),
-                    new Street("l", 1, 1, 1, new int[]{1}),
-                    new Street("m", 1, 1, 1, new int[]{1})
+                    new Street("k", 1, 1, 1, new int[]{1,2,3,4,5,6}),
+                    new Street("l", 1, 1, 1, new int[]{1,2,3,4,5,6}),
+                    new Street("m", 1, 1, 1, new int[]{1,2,3,4,5,6})
             },
             {
-                    new Street("n", 1, 1, 1, new int[]{1}),
-                    new Street("o", 1, 1, 1, new int[]{1}),
-                    new Street("p", 1, 1, 1, new int[]{1})
+                    new Street("n", 1, 1, 1, new int[]{1,2,3,4,5,6}),
+                    new Street("o", 1, 1, 1, new int[]{1,2,3,4,5,6}),
+                    new Street("p", 1, 1, 1, new int[]{1,2,3,4,5,6})
             },
             {
-                    new Street("q", 1, 1, 1, new int[]{1}),
-                    new Street("r", 1, 1, 1, new int[]{1}),
-                    new Street("s", 1, 1, 1, new int[]{1})
+                    new Street("q", 1, 1, 1, new int[]{1,2,3,4,5,6}),
+                    new Street("r", 1, 1, 1, new int[]{1,2,3,4,5,6}),
+                    new Street("s", 1, 1, 1, new int[]{1,2,3,4,5,6})
             },
             {
                     new Street("t", 1, 1, 1, new int[]{1}),
@@ -125,4 +124,9 @@ public class Bank {
             }
         }
     }
+
+    public Street[][] getAllStreets(){
+        return streets;
+    }
+
 }

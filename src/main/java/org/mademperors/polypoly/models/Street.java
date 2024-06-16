@@ -14,6 +14,7 @@ public class Street {
     private boolean hasHotel = false;
     private boolean isMortgaged = false;
     private Player owner = null;
+    private String color;
 
     public Street(String name, int price, int housePrice, int hotelPrice, int[] rentModel) {
         this.name = name;
@@ -109,7 +110,32 @@ public class Street {
     public void setOwner(Player owner) {
         this.owner = owner;
     }
+    public String getColor() {return color;}
+    public void setColor(String color) {this.color = color;}
 
+    public boolean isHasHotel() {
+        return hasHotel;
+    }
+
+    public void setHasHotel(boolean hasHotel) {
+        this.hasHotel = hasHotel;
+    }
+
+    public void setMortgaged(boolean mortgaged) {
+        isMortgaged = mortgaged;
+    }
+
+    public void setNumberOfHouses(int numberOfHouses) {
+        this.numberOfHouses = numberOfHouses;
+    }
+
+    public int[] getRentModel() {
+        return rentModel;
+    }
+
+    public void setRentModel(int[] rentModel) {
+        this.rentModel = rentModel;
+    }
 
     //private methods
     private void buyHouse() {
