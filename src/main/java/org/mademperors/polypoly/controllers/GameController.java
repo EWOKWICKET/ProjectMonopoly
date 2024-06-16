@@ -105,6 +105,10 @@ public class GameController {
         GameController.currentPlayer = currentPlayer;
     }
 
+    public static Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
     private static int extractDiceValue(Image image) {
         String url = image.getUrl();
         char ch = url.charAt(url.length() - 5);

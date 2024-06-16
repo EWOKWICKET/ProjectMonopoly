@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,6 +29,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class PolypolyGameController implements Initializable, DiceResultListener {
 
@@ -43,13 +45,14 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     public BorderPane polypolyField;
     public Button AddRed;
     public Button throdDicesButton;
+    public Button endMoveButton;
+    public Label playerMoney;
+    public Label playerName;
     @FXML
     private VBox paneForStreetColors;
 
-    private PolypolyFieldController ppfc;
-
     @FXML
-    private BorderPane paneForStreets;
+    private VBox paneForStreets;
 
     @FXML
     private BorderPane panelForPolypolyField;
@@ -63,9 +66,6 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     @FXML
     private TextArea eventCardTextArea;
 
-    @FXML
-    private BorderPane field111, field1111;
-
     @FXML private StackPane field1, field2, field3, field4, field5, field6, field7, field8, field9, field10,
             field11, field12, field13, field14, field15, field16, field17, field18, field19, field20,
             field21, field22, field23, field24, field25, field26, field27, field28, field29, field30,
@@ -74,6 +74,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     @FXML
     private TextArea statisticsTextArea;
     private Bank bank;
+    private Street[] playerStreets;
 
     // Method to return an array of all StackPanes
     private StackPane[] getAllStackPanes() {
@@ -90,14 +91,65 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
         bank = new Bank();
         initStreets(bank.getAllStreets());
-
         VBox colorStreets = paneForStreetColors;
         colorStreets.setSpacing(10);
         Label steets = new Label("Вулиці:");
         steets.setStyle("-fx-font-size: 30px;");
         colorStreets.getChildren().add(steets);
 
+        setPlayerMenu(GameController.getCurrentPlayer());
 
+    }
+
+    private void setPlayerMenu(Player player) {
+        playerName.setText("Гравець №"+(currentPlayerIndex+1)+":"+player.getName());
+        playerMoney.setText("Гроші: "+player.getMoney());
+       playerStreets=Arrays.stream(bank.getAllStreets()).flatMap(Arrays::stream).filter(street -> street.getOwner() == player).toArray(Street[]::new);
+
+       //set street colors in vBox
+        ArrayList<String> colors=new ArrayList<>();
+        Arrays.stream(playerStreets).forEach(street->{
+            if(!colors.contains(street.getColor())) {
+                VBox colorStreets = paneForStreetColors;
+                HBox streetOne = new HBox();
+                streetOne.setStyle("-fx-background-color: "+street.getColor()+";");
+                streetOne.setPadding(new Insets(5));
+                streetOne.setPrefHeight(50);
+                streetOne.setOnMouseClicked(event -> {
+                    showStreetThisColor(street.getColor(), playerStreets);
+                });
+                colorStreets.getChildren().add(streetOne);
+                colors.add(street.getColor());
+            }
+        });
+    }
+
+    private void showStreetThisColor(String color, Street[] playerStreets) {
+        Arrays.stream(playerStreets).forEach(street->{
+            VBox colorStreets = paneForStreets;
+            HBox streetOne = new HBox();
+            streetOne.setStyle("-fx-background-color: " + color + ";");
+            streetOne.setPadding(new Insets(5));
+            streetOne.setPrefHeight(50);
+            streetOne.setAlignment(Pos.CENTER); // Center align contents in the HBox
+
+            // Create label with street name
+            Label nameLabel = new Label(street.getName());
+            nameLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px;"); // Example styles
+            nameLabel.setAlignment(Pos.CENTER); // Center align label text
+            nameLabel.setWrapText(true); // Wrap text if it's too long
+
+            // Add label to the HBox
+            streetOne.getChildren().add(nameLabel);
+
+            // Set click event on the HBox
+            streetOne.setOnMouseClicked(event -> {
+                showAlertDialog(streetOne, street);
+            });
+
+            // Add HBox to the VBox
+            colorStreets.getChildren().add(streetOne);
+        });
     }
 
     private void initStreets(Street[][] allStreets) {
@@ -130,7 +182,6 @@ public class PolypolyGameController implements Initializable, DiceResultListener
                             }
                         }
                         index++;
-
                     }
                 }
 
@@ -285,7 +336,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         GameController.throwDices(this);
     }
 
-    public void endTurn() {
+    public void endTurn(MouseEvent mouseEvent) {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
         GameController.setCurrentPlayer(players[currentPlayerIndex]);
 //        System.out.println(currentPlayerIndex);
@@ -303,6 +354,10 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
         for (int i = 0; i < shortenedNames.length; i ++) {
             players[i] = new Player(shortenedNames[i], initialMoney, colors[i]);
+//            if(i==0){
+//                Bank bn=new Bank();
+//                bn.getAllStreets()[0][0].setOwner(players[i]);
+//            }
         }
 
         GameController.setCurrentPlayer(players[currentPlayerIndex]);
@@ -335,6 +390,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         dice1.setCenter(GameController.diceImageView1);
         dice2.setCenter(GameController.diceImageView2);
     }
+
 }
 
 
