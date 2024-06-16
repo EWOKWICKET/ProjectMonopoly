@@ -4,29 +4,21 @@ public class Street {
 
     private final String name;
     private final int price;
-    private final int housePrice;
-    private final int hotelPrice;
-    private int rent;
+    private final int housePrice, hotelPrice;
     /* rent with no monopoly, with monopoly, with houses and hotel */
     private int[] rentModel = {0, 0, 0, 0, 0, 0, 0};
+    private int rent = rentModel[0];
     private int numberOfHouses = 0;
-    private boolean isMonopoly = false;
-    private boolean hasHotel = false;
-    private boolean isMortgaged = false;
+    private boolean isMonopoly, hasHotel, isMortgaged = false;
     private Player owner = null;
     private String color;
-    private int mortgagePrice=0;
 
-    public Street(String name, int price, int[] rentModel, int housePrice, int hotelPrice, int mortgagePrice, String color) {
+    public Street(String name, int price, int housePrice, int hotelPrice, int[] rentModel) {
         this.name = name;
         this.price = price;
-        this.rentModel = rentModel;
         this.housePrice = housePrice;
         this.hotelPrice = hotelPrice;
-        this.mortgagePrice = mortgagePrice;
-        this.color = color;
-        this.rent = rentModel[0];
-
+        this.rentModel = rentModel;
     }
 
     public void buyStreet(Player owner) {
@@ -140,20 +132,6 @@ public class Street {
     public void setRentModel(int[] rentModel) {
         this.rentModel = rentModel;
     }
-
-    public int getRent() {
-        return rent;
-    }
-
-    public int getMortgagePrice() {
-        return mortgagePrice;
-    }
-
-    public void setMortgagePrice(int mortgagePrice) {
-        this.mortgagePrice = mortgagePrice;
-    }
-
-
 
     //private methods
     private void buyHouse() {

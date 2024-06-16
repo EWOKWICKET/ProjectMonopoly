@@ -8,12 +8,12 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.mademperors.polypoly.StreetCharacteristicsAlert;
@@ -25,14 +25,20 @@ import org.mademperors.polypoly.models.Street;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class PolypolyGameController implements Initializable, DiceResultListener {
 
+
+    private static Player[] players;
+    private static int initialMoney;
+
     //Dice interfaces and fields
     private static int lastDiceResult;
-    private static Player currentPlayer;
+    private static int currentPlayerIndex = 0;
+
 
     public BorderPane polypolyField;
     public Button AddRed;
@@ -48,10 +54,8 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     @FXML
     private BorderPane panelForPolypolyField;
     @FXML
-    private BorderPane dice1;
+    private BorderPane dice1, dice2;
 
-    @FXML
-    private BorderPane dice2;
 
     @FXML
     private BorderPane eventCard;
@@ -60,130 +64,12 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     private TextArea eventCardTextArea;
 
     @FXML
-    private StackPane field1;
+    private BorderPane field111, field1111;
 
-    @FXML
-    private StackPane field10;
-
-    @FXML
-    private StackPane field11;
-
-    @FXML
-    private BorderPane field111;
-
-    @FXML
-    private BorderPane field1111;
-
-    @FXML
-    private StackPane field12;
-
-    @FXML
-    private StackPane field13;
-
-    @FXML
-    private StackPane field14;
-
-    @FXML
-    private StackPane field15;
-
-    @FXML
-    private StackPane field16;
-
-    @FXML
-    private StackPane field17;
-
-    @FXML
-    private StackPane field18;
-
-    @FXML
-    private StackPane field19;
-
-    @FXML
-    private StackPane field2;
-
-    @FXML
-    private StackPane field20;
-
-    @FXML
-    private StackPane field21;
-
-    @FXML
-    private StackPane field22;
-
-    @FXML
-    private StackPane field23;
-
-    @FXML
-    private StackPane field24;
-
-    @FXML
-    private StackPane field25;
-
-    @FXML
-    private StackPane field26;
-
-    @FXML
-    private StackPane field27;
-
-    @FXML
-    private StackPane field28;
-
-    @FXML
-    private StackPane field29;
-
-    @FXML
-    private StackPane field3;
-
-    @FXML
-    private StackPane field30;
-
-    @FXML
-    private StackPane field31;
-
-    @FXML
-    private StackPane field32;
-
-    @FXML
-    private StackPane field33;
-
-    @FXML
-    private StackPane field34;
-
-    @FXML
-    private StackPane field35;
-
-    @FXML
-    private StackPane field36;
-
-    @FXML
-    private StackPane field37;
-
-    @FXML
-    private StackPane field38;
-
-    @FXML
-    private StackPane field39;
-
-    @FXML
-    private StackPane field4;
-
-    @FXML
-    private StackPane field40;
-
-    @FXML
-    private StackPane field5;
-
-    @FXML
-    private StackPane field6;
-
-    @FXML
-    private StackPane field7;
-
-    @FXML
-    private StackPane field8;
-
-    @FXML
-    private StackPane field9;
+    @FXML private StackPane field1, field2, field3, field4, field5, field6, field7, field8, field9, field10,
+            field11, field12, field13, field14, field15, field16, field17, field18, field19, field20,
+            field21, field22, field23, field24, field25, field26, field27, field28, field29, field30,
+            field31, field32, field33, field34, field35, field36, field37, field38, field39, field40;
 
     @FXML
     private TextArea statisticsTextArea;
@@ -191,7 +77,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
     // Method to return an array of all StackPanes
     private StackPane[] getAllStackPanes() {
-        return new StackPane[]{
+        return new StackPane[] {
                 field1, field2, field3, field4, field5, field6, field7, field8, field9, field10,
                 field11, field12, field13, field14, field15, field16, field17, field18, field19, field20,
                 field21, field22, field23, field24, field25, field26, field27, field28, field29, field30,
@@ -202,7 +88,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        bank = new Bank();
+         bank=new Bank();
         initStreets(bank.getAllStreets());
 
         VBox colorStreets = paneForStreetColors;
@@ -215,142 +101,39 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     }
 
     private void initStreets(Street[][] allStreets) {
-        StackPane[] streets = getAllStackPanes();
-        int index = 0;
-        setServices(streets);
-        for (Street[] oneColorStreet : allStreets) {
-            for (Street oneStreet : oneColorStreet) {
-                while (streets[index].getId().equals("field1") || streets[index].getId().equals("field11") || streets[index].getId().equals("field21") || streets[index].getId().equals("field31")
-                        || streets[index].getId().equals("field4")) {
+        StackPane[] streets= getAllStackPanes();
+        int index=0;
+        for(Street[] oneColorStreet:allStreets){
+            for(Street oneStreet: oneColorStreet){
+                while (streets[index].getId().equals("field1") || streets[index].getId().equals("field11")|| streets[index].getId().equals("field21") || streets[index].getId().equals("field31")   ){
                     index++;
                 }
 
-                ObservableList<Node> nodes = streets[index].getChildren();
-                for (Node node : nodes) {
-                    node.setOnMouseClicked(event -> {
-                        showAlertDialog(node, oneStreet);
-                    });
-                    if (node.getClass().toString().contains("AnchorPane")) {
-                        AnchorPane ap = (AnchorPane) node;
-                        ap.setStyle("-fx-background-color: " + oneStreet.getColor() + ";");
-                        ObservableList<Node> labels = ap.getChildren();
-                        for (Node label : labels) {
-                            Label realLabel = (Label) label;
-                            if (realLabel.getText().contains("вул")) {
-                                realLabel.setText(oneStreet.getName());
+                    ObservableList<Node> nodes= streets[index].getChildren();
+                    for(Node node:nodes){
+                        node.setOnMouseClicked(event -> {
+                            showAlertDialog(node, oneStreet);
+                        });
+                        if(node.getClass().toString().contains("AnchorPane")){
+                            AnchorPane ap= (AnchorPane) node;
+                            ObservableList<Node> labels= ap.getChildren();
+                            for(Node label:labels){
+                                Label realLabel= (Label) label;
+                                if(realLabel.getText().contains("вул")){
+                                    realLabel.setText(oneStreet.getName());
 
-                            } else {
-                                realLabel.setText("$ " + oneStreet.getPrice());
+                                }
+                                else{
+                                    realLabel.setText("$ "+ oneStreet.getPrice());
+                                }
                             }
-                        }
-                        index++;
+                            index++;
+
 
                     }
                 }
-
             }
         }
-    }
-
-    private void setServices(StackPane[] streets) {
-        setChance(4, streets);
-        setTax(6, 200, streets);
-        setCity(8, streets);
-
-        setChance(14, streets);
-        setTax(16, 200, streets);
-        setChance(18, streets);
-
-        setTax(24, 200, streets);
-        setChance(26, streets);
-        setTax(28, 200, streets);
-
-        setCity(34, streets);
-        setChance(36, streets);
-        setCity(38, streets);
-    }
-
-    private void setCity(int i, StackPane[] streets) {
-        ObservableList<Node> nodes = streets[i - 1].getChildren();
-        for (Node node : nodes) {
-            if (node instanceof AnchorPane) {
-                AnchorPane ap = (AnchorPane) node;
-                ap.setStyle("-fx-background-color: darkblue;");
-                ObservableList<Node> labels = ap.getChildren();
-
-                // Collect nodes to remove
-                List<Node> nodesToRemove = new ArrayList<>();
-
-                for (Node label : labels) {
-                    if (label instanceof Label) {
-                        Label realLabel = (Label) label;
-                        if (realLabel.getText().contains("вул")) {
-                            realLabel.setText("Місто");
-                            realLabel.setStyle("-fx-font-size: 25;");
-                            realLabel.setTextFill(Color.WHITE);
-                        } else {
-                            nodesToRemove.add(realLabel);
-                        }
-                    }
-                }
-
-                // Remove nodes after iteration
-                labels.removeAll(nodesToRemove);
-            }
-        }
-    }
-
-    private void setTax(int i, int taxPrice, StackPane[] streets) {
-        ObservableList<Node> nodes = streets[i - 1].getChildren();
-        for (Node node : nodes) {
-
-            if (node.getClass().toString().contains("AnchorPane")) {
-                AnchorPane ap = (AnchorPane) node;
-                ap.setStyle("-fx-background-color: white;");
-                ObservableList<Node> labels = ap.getChildren();
-                for (Node label : labels) {
-                    Label realLabel = (Label) label;
-                    if (realLabel.getText().contains("вул")) {
-                        realLabel.setText("Податок");
-                        realLabel.setStyle("-fx-font-size: 20;");
-                    } else {
-                        realLabel.setText("$ " + taxPrice);
-                    }
-                }
-
-            }
-        }
-    }
-
-    private void setChance(int i, StackPane[] streets) {
-        ObservableList<Node> nodes = streets[i-1].getChildren();
-        for (Node node : nodes) {
-            if (node instanceof AnchorPane) {
-                AnchorPane ap = (AnchorPane) node;
-                ap.setStyle("-fx-background-color: darkblue;");
-                ObservableList<Node> labels = ap.getChildren();
-
-                // Collect nodes to remove
-                List<Node> nodesToRemove = new ArrayList<>();
-
-                for (Node label : labels) {
-                    if (label instanceof Label) {
-                        Label realLabel = (Label) label;
-                        if (realLabel.getText().contains("вул")) {
-                            realLabel.setText("Шанс");
-                            realLabel.setStyle("-fx-font-size: 25;");
-                            realLabel.setTextFill(Color.WHITE);
-                        } else {
-                            nodesToRemove.add(realLabel);
-                        }
-                    }
-                }
-
-                // Remove nodes after iteration
-                labels.removeAll(nodesToRemove);
-            }
-        }
-
     }
 
     private void showAlertDialog(Node streetOne, Street street) {
@@ -373,10 +156,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
             sca.setThreeHousePrice(street.getRentModel()[3]);
             sca.setFourHousePrice(street.getRentModel()[4]);
             sca.setHotelPrice(street.getRentModel()[5]);
-            sca.setStreetColor(street.getColor());
-            sca.setPriceForHotelLabel(street.getHotelPrice());
-            sca.setPriceForHouseLabel(street.getHousePrice());
-            sca.setMortgagePrice(street.getMortgagePrice());
+            sca.setStreetColor("yellow");
 
             dialogStage.showAndWait();
         } catch (IOException e) {
@@ -397,15 +177,39 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
 
         GameController.throwDices(this);
-
-
     }
 
+    public void endTurn() {
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+        GameController.setCurrentPlayer(players[currentPlayerIndex]);
+//        System.out.println(currentPlayerIndex);
+    }
+
+    public static void setPlayers(String[] names) {
+        String[] shortenedNames = Arrays.stream(names)
+                .filter(Objects::nonNull)
+                .toArray(String[]::new);
+
+//        String[] colors = {"#0000FF", "#FF0000", "#008000","#800080", "#FFFF00"};
+        String[] colors = {"blue", "red", "green","purple", "yellow"};
+
+        players = new Player[shortenedNames.length];
+
+        for (int i = 0; i < shortenedNames.length; i ++) {
+            players[i] = new Player(shortenedNames[i], initialMoney, colors[i]);
+        }
+
+        GameController.setCurrentPlayer(players[currentPlayerIndex]);
+    }
+
+    public static void setInitialMoney(int initialMoney) {
+        PolypolyGameController.initialMoney = initialMoney;
+    }
 
     @Override
     public void onDiceResult(int result) {
         lastDiceResult = result;
-        System.out.println(lastDiceResult);
+//        System.out.println(lastDiceResult);
     }
 
     public void throwDices(MouseEvent mouseEvent) {

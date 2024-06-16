@@ -106,16 +106,6 @@
                   <Circle fx:id="player5Image" fill="BLUE" radius="37.0" stroke="BLACK" strokeType="INSIDE" />
                </children>
             </HBox>
-            <HBox fx:id="player6Label" alignment="CENTER" prefHeight="106.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.rowIndex="6">
-               <children>
-                  <Label prefHeight="84.0" prefWidth="198.0" text="Гравець №6">
-                     <font>
-                        <Font size="35.0" />
-                     </font>
-                  </Label>
-                  <Circle fx:id="player6Image" fill="INDIGO" radius="37.0" stroke="BLACK" strokeType="INSIDE" />
-               </children>
-            </HBox>
             <HBox fx:id="player1Field" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <TextField fx:id="playerName1" prefHeight="75.0" prefWidth="733.0" promptText="Введіть ім'я гравця" style="-fx-background-radius: 15;">
@@ -146,15 +136,6 @@
             <HBox fx:id="player5Field" alignment="CENTER_LEFT" prefHeight="106.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <children>
                   <TextField fx:id="playerName5" prefHeight="75.0" prefWidth="733.0" promptText="Введіть ім'я гравця" style="-fx-background-radius: 15;">
-                     <font>
-                        <Font size="35.0" />
-                     </font>
-                  </TextField>
-               </children>
-            </HBox>
-            <HBox fx:id="player6Field" alignment="CENTER_LEFT" prefHeight="106.0" prefWidth="374.0" spacing="10.0" style="-fx-background-color: lightgray; -fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="6">
-               <children>
-                  <TextField fx:id="playerName6" prefHeight="75.0" prefWidth="733.0" promptText="Введіть ім'я гравця" style="-fx-background-radius: 15;">
                      <font>
                         <Font size="35.0" />
                      </font>

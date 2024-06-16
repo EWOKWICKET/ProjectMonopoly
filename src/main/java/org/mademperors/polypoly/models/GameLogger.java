@@ -13,6 +13,6 @@ public class GameLogger implements Logger {
 
     @Override
     public void logInfo(String message) {
-        System.out.println(message);
+//        System.out.println(message);
     }
 }
