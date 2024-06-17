@@ -14,6 +14,7 @@ public class Player {
     private int currentPositionIndex = 0;
     private int playerIndex;
     private final Color color;
+    private boolean isBankrupt = false;
 
 
     public Player(String name, int money, String color) {
@@ -26,6 +27,11 @@ public class Player {
     public void goBankrupt() {
         Bank.takeBankruptPlayerStreets(this);
         playerImageView.setVisible(false);
+        isBankrupt = true;
+    }
+
+    public boolean isBankrupt() {
+        return isBankrupt;
     }
 
     public void buyStreet(Street street) {

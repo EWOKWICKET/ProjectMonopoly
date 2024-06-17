@@ -104,7 +104,7 @@ public class Bank {
                 .forEach(Street::loseStreet);
 
         Text playerName = Utils.paintPlayerName(bankruptPlayer);
-        logger.logInfo(String.format("%s went bankrupt", playerName));
+        logger.logInfo(String.format("%s went bankrupt", playerName.getText()));
     }
 
     private static void updateMortgaged() {

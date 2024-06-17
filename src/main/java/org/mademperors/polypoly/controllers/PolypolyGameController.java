@@ -567,7 +567,27 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
     private void applyTurnChanges() {
         buyStreetButton.setDisable(true);
+
+        if (players[currentPlayerIndex].getMoney() < 0) {
+            players[currentPlayerIndex].goBankrupt();
+            players = Arrays.stream(players).filter(player -> !player.isBankrupt()).toArray(Player[]::new);
+        }
+
+        if (players.length == 1) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Кінець гри");
+            alert.setHeaderText(null);
+            alert.setContentText("Гра закінчилась. Виграв гравець " + players[0].getName() + "!");
+            alert.setOnCloseRequest(event -> {
+                System.exit(0);
+            });
+            alert.showAndWait();
+
+            return;
+        }
+
         currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+
         GameController.setCurrentPlayer(players[currentPlayerIndex]);
         setPlayerMenu(GameController.getCurrentPlayer());
         isDiceThrown = false;
