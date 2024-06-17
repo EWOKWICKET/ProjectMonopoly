@@ -1,5 +1,8 @@
 package org.mademperors.polypoly.models;
 
+import javafx.scene.text.Text;
+import org.mademperors.polypoly.utils.Utils;
+
 import java.util.*;
 
 public class Bank {
@@ -67,7 +70,9 @@ public class Bank {
                 .flatMap(Arrays::stream)
                 .filter(street -> street.getOwner() == bankruptPlayer)
                 .forEach(Street::loseStreet);
-        logger.logInfo(String.format("%s went bankrupt", bankruptPlayer.getName()));
+
+        Text playerName = Utils.paintPlayerName(bankruptPlayer);
+        logger.logInfo(String.format("%s went bankrupt", playerName));
     }
 
     private static void updateMortgaged() {
@@ -82,6 +87,8 @@ public class Bank {
                 Street streetLost = entry.getKey();
                 streetLost.loseStreet();
                 iterator.remove();
+
+                Text streetName = Utils.paintStreetName(streetLost);
                 logger.logInfo(String.format("Mortgaged street %s lost", streetLost));
                 checkMonopolyByStreet(streetLost);
             }
