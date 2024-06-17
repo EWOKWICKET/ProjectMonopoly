@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import org.mademperors.polypoly.controllers.GameController;
+import org.mademperors.polypoly.models.Bank;
 import org.mademperors.polypoly.models.Street;
 
 public class StreetCharacteristicsAlert {
@@ -42,7 +43,7 @@ public class StreetCharacteristicsAlert {
 
     public void setPriceForBuildingsLabel(int priceForHouse, int priceForHotel) {
         priceForHouseLabel.setText("Будинок- по " + priceForHouse + " за кожний");
-        priceForHotelLabel.setText("Готель- за " + priceForHotel);
+        priceForHotelLabel.setText("Готель- за " + priceForHouse);
     }
 
     public void setStreetPrices(int[] rentModel) {
@@ -111,6 +112,7 @@ public class StreetCharacteristicsAlert {
 
 
     public void init() {
+        Bank.checkMonopolyByStreet(street);
         if (street.isMortgaged()) {
             mortgageLabel.setVisible(true);
             buttonPanel.getChildren().forEach(node -> {
@@ -119,35 +121,44 @@ public class StreetCharacteristicsAlert {
                 }
             });
         } else {
-            tradeButton.setDisable(false);
-            mortgageLabel.setVisible(false);
-//            if (street.getNumberOfHouses() == 0) {
-//                upgradeStreetButton.setDisable(false);
-//                downgradeStreetButton.setDisable(true);
-//            }
-//            if (street.getNumberOfHouses() > 0) {
-//                upgradeStreetButton.setDisable(false);
-//                downgradeStreetButton.setDisable(false);
-//            }
-//            if (street.isHasHotel()) {
-//                upgradeStreetButton.setDisable(true);
-//                downgradeStreetButton.setDisable(false);
-//            }
+            if(street.isMonopoly()) {
+                //  tradeButton.setDisable(false);
+                mortgageLabel.setVisible(false);
+                if (street.getNumberOfHouses() == 0) {
+                    upgradeStreetButton.setDisable(false);
+                    downgradeStreetButton.setDisable(true);
+                }
+                if (street.getNumberOfHouses() > 0) {
+                    upgradeStreetButton.setDisable(false);
+                    downgradeStreetButton.setDisable(false);
+                }
+                if (street.isHasHotel()) {
+                    upgradeStreetButton.setDisable(true);
+                    downgradeStreetButton.setDisable(false);
+                }
+            }
+            else{
+                upgradeStreetButton.setDisable(true);
+                downgradeStreetButton.setDisable(true);
+            }
 
         }
     }
 
     @FXML
-    public void upgradeStreet(MouseEvent mouseEvent) {
+    public void downgradeStreet(MouseEvent mouseEvent) {
+
         GameController.downgradeStreet(street);
+        init();
     }
 
     @FXML
-    public void downgradeStreet(MouseEvent mouseEvent) {
+    public void upgradeStreet(MouseEvent mouseEvent) {
         int playerMoney = street.getOwner().getMoney();
         int housePrice = street.getHousePrice();
         if ( playerMoney >= housePrice) {
             GameController.upgradeStreet(street);
+            init();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Недостатньо грошей");

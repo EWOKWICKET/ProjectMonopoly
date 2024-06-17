@@ -190,7 +190,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         streetToType.put(field5, "street");
         streetToType.put(field6, "tax");
         streetToType.put(field7, "street");
-        streetToType.put(field8, "city");
+        streetToType.put(field8, "chance");
         streetToType.put(field9, "street");
         streetToType.put(field10, "street");
         streetToType.put(field11, "jail");
@@ -216,11 +216,11 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         streetToType.put(field31, "goToJail");
         streetToType.put(field32, "street");
         streetToType.put(field33, "street");
-        streetToType.put(field34, "city");
+        streetToType.put(field34, "chance");
         streetToType.put(field35, "street");
         streetToType.put(field36, "chance");
         streetToType.put(field37, "street");
-        streetToType.put(field38, "city");
+        streetToType.put(field38, "chance");
         streetToType.put(field39, "street");
         streetToType.put(field40, "street");
     }
@@ -326,15 +326,12 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         setTax(28, 200, streets);
 
         setChance(34, streets);
-        setChance(36, streets);
+        setTax(36, 200, streets);
         setChance(38, streets);
     }
 
     private void setCity(int i, StackPane[] streets) {
         ObservableList<Node> nodes = streets[i - 1].getChildren();
-        if (i == 8) {
-            ServiceCards.showCity(eventCard, GameController.getCurrentPlayer());
-        }
         for (Node node : nodes) {
             if (node instanceof AnchorPane) {
                 AnchorPane ap = (AnchorPane) node;
@@ -518,18 +515,27 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 //                bp.setCenter(GameController.diceImageView2);
 //            }
 //        }
-        if (!isDiceThrown) {
-            soundManager.playThrow();
-            GameController.throwDices(this);
-            dice1.setCenter(GameController.diceImageView1);
-            dice2.setCenter(GameController.diceImageView2);
-        } else {
+        if(GameController.getCurrentPlayer().isInJail()){
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Вже кидані кубики");
+            alert.setTitle("Ви у в'язниці");
             alert.setHeaderText(null);
-            alert.setContentText("Ви вже кинули кубики. Не можна кидати кубики двічі.");
+            alert.setContentText("Ви у в'язниці. Ви не можете кидати ходити");
 
             alert.showAndWait();
+        }else {
+            if (!isDiceThrown) {
+                soundManager.playThrow();
+                GameController.throwDices(this);
+                dice1.setCenter(GameController.diceImageView1);
+                dice2.setCenter(GameController.diceImageView2);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Вже кидані кубики");
+                alert.setHeaderText(null);
+                alert.setContentText("Ви вже кинули кубики. Не можна кидати кубики двічі.");
+
+                alert.showAndWait();
+            }
         }
     }
 
@@ -718,6 +724,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
                 players[currentPlayerIndex].decreaseMoney(200);
                 logger.logInfo(players[currentPlayerIndex].getName() + " заплатив 200$ податку");
                 updateMoney();
+                setPlayerMenu(GameController.getCurrentPlayer());
             }
             case "city" -> {
                 isEventCardPresent=true;
@@ -754,6 +761,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     }
 
     public void goToJail() {
+        isDiceThrown=true;
         soundManager.playToJail();
         players[currentPlayerIndex].setCurrentPositionIndex(10);
         updatePlayerPosition(10);

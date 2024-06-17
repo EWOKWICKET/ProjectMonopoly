@@ -332,17 +332,12 @@
    <bottom>
       <FlowPane fx:id="buttonPanel" prefHeight="98.0" prefWidth="395.0" style="-fx-padding: 10;">
          <children>
-            <Button fx:id="upgradeStreetButton" disable="true" alignment="CENTER" mnemonicParsing="false" onMousePressed="#upgradeStreet" prefHeight="51.0" prefWidth="107.0" text="Придбати будівлю" wrapText="true">
+            <Button fx:id="upgradeStreetButton" alignment="CENTER" disable="true" mnemonicParsing="false" onMousePressed="#upgradeStreet" prefHeight="51.0" prefWidth="107.0" text="Придбати будівлю" wrapText="true">
                <FlowPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </FlowPane.margin>
             </Button>
-            <Button fx:id="downgradeStreetButton" disable="true" alignment="CENTER" mnemonicParsing="false" onMousePressed="#downgradeStreet" prefHeight="51.0" prefWidth="107.0" text="Продати будівлю" wrapText="true">
-               <FlowPane.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </FlowPane.margin>
-            </Button>
-            <Button fx:id="tradeButton" alignment="CENTER" mnemonicParsing="false" onMousePressed="#trade" prefHeight="51.0" prefWidth="107.0" text="Обміняти" wrapText="true">
+            <Button fx:id="downgradeStreetButton" alignment="CENTER" disable="true" mnemonicParsing="false" onMousePressed="#downgradeStreet" prefHeight="51.0" prefWidth="107.0" text="Продати будівлю" wrapText="true">
                <FlowPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </FlowPane.margin>
