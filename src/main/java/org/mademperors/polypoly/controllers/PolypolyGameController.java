@@ -22,6 +22,7 @@ import org.mademperors.polypoly.StreetCharacteristicsAlert;
 import org.mademperors.polypoly.listeners.DiceResultListener;
 import org.mademperors.polypoly.models.Bank;
 import org.mademperors.polypoly.models.Player;
+import org.mademperors.polypoly.models.ServiceCards;
 import org.mademperors.polypoly.models.Street;
 
 
@@ -221,6 +222,9 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
     private void setCity(int i, StackPane[] streets) {
         ObservableList<Node> nodes = streets[i - 1].getChildren();
+        if(i==8){
+            ServiceCards.showCity(eventCard, GameController.getCurrentPlayer());
+        }
         for (Node node : nodes) {
             if (node instanceof AnchorPane) {
                 AnchorPane ap = (AnchorPane) node;
