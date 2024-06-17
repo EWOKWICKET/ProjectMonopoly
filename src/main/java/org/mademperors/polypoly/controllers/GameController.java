@@ -42,10 +42,9 @@ public class GameController {
         timeline.setOnFinished(e -> {
             int dice1 = extractDiceValue(diceImageView1.getImage());
             int dice2 = extractDiceValue(diceImageView2.getImage());
-            listener.onDiceResult(dice1 + dice2);
-
             Text playerName = Utils.paintPlayerName(currentPlayer);
-            logger.logInfo(String.format("%s threw dices %d:%d", playerName.getText(), dice1, dice2));
+            logger.logInfo(String.format("%s кинув кубики %d : %d", playerName.getText(), dice1, dice2));
+            listener.onDiceResult(dice1 + dice2);
             /* makes dices to disappear 5 seconds later */
 //            PauseTransition pause = new PauseTransition(Duration.seconds(5));
 //            pause.setOnFinished(ev -> {

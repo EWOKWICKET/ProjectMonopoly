@@ -109,8 +109,8 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         };
     }
 
-    private Map<StackPane, Object> streetMap = new HashMap<>();
-    private Map<StackPane, String> streetToType = new HashMap<>();
+    private final Map<StackPane, Street> streetMap = new HashMap<>();
+    private final Map<StackPane, String> streetToType = new HashMap<>();
 
     private ImageView[] getAllPlayerImages() {
         return new ImageView[]{
@@ -285,10 +285,11 @@ public class PolypolyGameController implements Initializable, DiceResultListener
                                 realLabel.setText("$ " + oneStreet.getPrice());
                             }
                         }
-                        index++;
                     }
                 }
 
+                streetMap.put(streets[index], oneStreet);
+                index++;
             }
         }
     }
@@ -507,12 +508,35 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         if (newPositionIndex >= 40) {
             players[currentPlayerIndex].addMoney(200);
             newPositionIndex -= 40;
+            GameLogger.getInstance().logInfo(players[currentPlayerIndex].getName() + " отримав 200$ за проходження старту");
         }
 
         updatePlayerPosition(newPositionIndex);
 
         players[currentPlayerIndex].setCurrentPositionIndex(newPositionIndex);
-//        System.out.println(lastDiceResult);
+
+        switch (streetToType.get(getAllStackPanes()[newPositionIndex])) {
+            case "start" -> {}
+            case "street" -> {
+                stepOnStreet();
+            }
+            case "chance" -> {
+                ServiceCards.showChance(eventCard, GameController.getCurrentPlayer());
+            }
+            case "tax" -> {
+                players[currentPlayerIndex].decreaseMoney(200);
+                GameLogger.getInstance().logInfo(players[currentPlayerIndex].getName() + " заплатив 200$ податку");
+            }
+            case "city" -> {
+                ServiceCards.showCity(eventCard, GameController.getCurrentPlayer());
+            }
+            case "jail", "goToJail" -> {
+                goToJail();
+            }
+            case "parking" -> {
+                GameLogger.getInstance().logInfo(players[currentPlayerIndex].getName() + " припаркувався");
+            }
+        }
     }
 
     private void updatePlayerPosition(int newPositionIndex) {
@@ -530,6 +554,23 @@ public class PolypolyGameController implements Initializable, DiceResultListener
                 fp.getChildren().add(currentPlayerImageView);
             }
         });
+    }
+
+    private void goToJail() {
+        players[currentPlayerIndex].setCurrentPositionIndex(10);
+        updatePlayerPosition(10);
+        GameLogger.getInstance().logInfo(players[currentPlayerIndex].getName() + " потрапив до в'язниці");
+    }
+
+    private void stepOnStreet() {
+        Street street = streetMap.get(getAllStackPanes()[players[currentPlayerIndex].getCurrentPositionIndex()]);
+        if (street.getOwner() != null) {
+            if (street.getOwner() != players[currentPlayerIndex]) {
+                players[currentPlayerIndex].decreaseMoney(street.getRent());
+                street.getOwner().addMoney(street.getRent());
+                GameLogger.getInstance().logInfo(players[currentPlayerIndex].getName() + " заплатив оренду " + street.getRent() + "$ гравцю " + street.getOwner().getName());
+            }
+        }
     }
 
     public void throwDices(MouseEvent mouseEvent) {

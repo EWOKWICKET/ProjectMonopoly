@@ -290,8 +290,8 @@
                     <center>
                         <AnchorPane style="-fx-background-color: lightgrey;" BorderPane.alignment="CENTER">
                             <children>
-                                <BorderPane fx:id="dice2" layoutX="365.0" layoutY="23.0" prefHeight="136.0" prefWidth="136.0" style="-fx-background-color: white;" />
-                                <BorderPane fx:id="dice1" layoutX="225.0" layoutY="23.0" prefHeight="136.0" prefWidth="136.0" style="-fx-background-color: white;" />
+                                <BorderPane fx:id="dice2" layoutX="365.0" layoutY="23.0" prefHeight="136.0" prefWidth="136.0" />
+                                <BorderPane fx:id="dice1" layoutX="225.0" layoutY="23.0" prefHeight="136.0" prefWidth="136.0" />
                                 <BorderPane fx:id="eventCard" layoutX="14.0" layoutY="23.0" prefHeight="120.0" prefWidth="198.0" style="-fx-background-color: white;">
                                     <padding>
                                         <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
