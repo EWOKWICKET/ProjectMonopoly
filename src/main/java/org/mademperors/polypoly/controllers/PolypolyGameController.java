@@ -231,29 +231,30 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         Arrays.stream(playerStreets).forEach(street -> {
 
             HBox streetOne = new HBox();
+            if (street.getColor().equals(color)) {
+                colorStreets.setSpacing(10);
+                streetOne.setStyle("-fx-background-color: " + color + ";");
+                streetOne.setPadding(new Insets(5));
+                streetOne.setPrefHeight(50);
+                streetOne.setAlignment(Pos.CENTER); // Center align contents in the HBox
 
-            colorStreets.setSpacing(10);
-            streetOne.setStyle("-fx-background-color: " + color + ";");
-            streetOne.setPadding(new Insets(5));
-            streetOne.setPrefHeight(50);
-            streetOne.setAlignment(Pos.CENTER); // Center align contents in the HBox
+                // Create label with street name
+                Label nameLabel = new Label(street.getName());
+                nameLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px;"); // Example styles
+                nameLabel.setAlignment(Pos.CENTER); // Center align label text
+                nameLabel.setWrapText(true); // Wrap text if it's too long
 
-            // Create label with street name
-            Label nameLabel = new Label(street.getName());
-            nameLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px;"); // Example styles
-            nameLabel.setAlignment(Pos.CENTER); // Center align label text
-            nameLabel.setWrapText(true); // Wrap text if it's too long
+                // Add label to the HBox
+                streetOne.getChildren().add(nameLabel);
 
-            // Add label to the HBox
-            streetOne.getChildren().add(nameLabel);
+                // Set click event on the HBox
+                streetOne.setOnMouseClicked(event -> {
+                    showAlertDialog(streetOne, street, false);
+                });
 
-            // Set click event on the HBox
-            streetOne.setOnMouseClicked(event -> {
-                showAlertDialog(streetOne, street, false);
-            });
-
-            // Add HBox to the VBox
-            colorStreets.getChildren().add(streetOne);
+                // Add HBox to the VBox
+                colorStreets.getChildren().add(streetOne);
+            }
         });
     }
 
