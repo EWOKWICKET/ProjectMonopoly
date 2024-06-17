@@ -23,11 +23,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.mademperors.polypoly.StreetCharacteristicsAlert;
 import org.mademperors.polypoly.listeners.DiceResultListener;
-import org.mademperors.polypoly.models.Bank;
-import org.mademperors.polypoly.models.GameLogger;
-import org.mademperors.polypoly.models.Player;
-import org.mademperors.polypoly.models.ServiceCards;
-import org.mademperors.polypoly.models.Street;
+import org.mademperors.polypoly.models.*;
 
 
 import java.io.IOException;
@@ -547,6 +543,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 //            }
 //        }
         if (!isDiceThrown) {
+            SoundManager.playSound("throw5");
             GameController.throwDices(this);
             dice1.setCenter(GameController.diceImageView1);
             dice2.setCenter(GameController.diceImageView2);

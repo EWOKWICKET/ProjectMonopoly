@@ -38,7 +38,7 @@ public class GameController {
             diceImageView1.setImage(DICES[rnd.nextInt(0, DICES.length)]);
             diceImageView2.setImage(DICES[rnd.nextInt(0, DICES.length)]);
         }));
-        timeline.setCycleCount(20);
+        timeline.setCycleCount(15);
         timeline.setOnFinished(e -> {
             int dice1 = extractDiceValue(diceImageView1.getImage());
             int dice2 = extractDiceValue(diceImageView2.getImage());
