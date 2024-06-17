@@ -315,7 +315,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     private void setServices(StackPane[] streets) {
         setChance(4, streets);
         setTax(6, 200, streets);
-        setCity(8, streets);
+        setChance(8, streets);
 
         setChance(14, streets);
         setTax(16, 200, streets);
@@ -325,9 +325,9 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         setChance(26, streets);
         setTax(28, 200, streets);
 
-        setCity(34, streets);
+        setChance(34, streets);
         setChance(36, streets);
-        setCity(38, streets);
+        setChance(38, streets);
     }
 
     private void setCity(int i, StackPane[] streets) {

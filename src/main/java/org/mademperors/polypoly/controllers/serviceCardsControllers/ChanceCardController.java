@@ -52,6 +52,7 @@ public class ChanceCardController {
     @FXML
     void moveChip(MouseEvent event) {
         GameController.getPpgc().updatePlayerPosition(streetIndex);
+        GameController.getPpgc().buyStreetButton.setDisable(false);
         makeEventResolved();
         Stage st = (Stage) chanceText.getScene().getWindow();
         st.close();
