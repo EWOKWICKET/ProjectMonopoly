@@ -52,7 +52,7 @@
                                         </FlowPane>
                                     </children>
                                 </StackPane>
-                                <StackPane fx:id="field2" GridPane.columnIndex="1">
+                                <StackPane fx:id="field2" GridPane.columnIndex="1" style="-fx-border-style: solid; -fx-border-width: 0 0 20 0; -fx-border-color: yellow;">
                                     <children>
                                         <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="60.0">
                                             <children>

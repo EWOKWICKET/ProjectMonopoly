@@ -104,6 +104,9 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         };
     }
 
+    private Map<StackPane, Object> streetMap = new HashMap<>();
+    private Map<StackPane, String> streetToType = new HashMap<>();
+
     private ImageView[] getAllPlayerImages() {
         return new ImageView[] {
                 player1,
@@ -118,6 +121,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         bank = new Bank();
+        initStreetToType();
         initStreets(bank.getAllStreets());
 
         VBox colorStreets = paneForStreetColors;
@@ -125,6 +129,49 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         Label streets = new Label("Вулиці:");
         streets.setStyle("-fx-font-size: 30px;");
         colorStreets.getChildren().add(streets);
+    }
+
+    private void initStreetToType() {
+        streetToType.put(field1, "start");
+        streetToType.put(field2, "street");
+        streetToType.put(field3, "street");
+        streetToType.put(field4, "chance");
+        streetToType.put(field5, "street");
+        streetToType.put(field6, "tax");
+        streetToType.put(field7, "street");
+        streetToType.put(field8, "city");
+        streetToType.put(field9, "street");
+        streetToType.put(field10, "street");
+        streetToType.put(field11, "jail");
+        streetToType.put(field12, "street");
+        streetToType.put(field13, "street");
+        streetToType.put(field14, "chance");
+        streetToType.put(field15, "street");
+        streetToType.put(field16, "tax");
+        streetToType.put(field17, "street");
+        streetToType.put(field18, "chance");
+        streetToType.put(field19, "street");
+        streetToType.put(field20, "street");
+        streetToType.put(field21, "vacation");
+        streetToType.put(field22, "street");
+        streetToType.put(field23, "street");
+        streetToType.put(field24, "tax");
+        streetToType.put(field25, "street");
+        streetToType.put(field26, "chance");
+        streetToType.put(field27, "street");
+        streetToType.put(field28, "tax");
+        streetToType.put(field29, "street");
+        streetToType.put(field30, "street");
+        streetToType.put(field31, "goToJail");
+        streetToType.put(field32, "street");
+        streetToType.put(field33, "street");
+        streetToType.put(field34, "city");
+        streetToType.put(field35, "street");
+        streetToType.put(field36, "chance");
+        streetToType.put(field37, "street");
+        streetToType.put(field38, "city");
+        streetToType.put(field39, "street");
+        streetToType.put(field40, "street");
     }
 
     public void initPlayerImages() {
@@ -150,8 +197,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         setServices(streets);
         for (Street[] oneColorStreet : allStreets) {
             for (Street oneStreet : oneColorStreet) {
-                while (streets[index].getId().equals("field1") || streets[index].getId().equals("field11") || streets[index].getId().equals("field21") || streets[index].getId().equals("field31")
-                        || streets[index].getId().equals("field4")) {
+                while (!streetToType.get(streets[index]).equals("street")) {
                     index++;
                 }
 
@@ -360,7 +406,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     @Override
     public void onDiceResult(int result) {
         lastDiceResult = result;
-        int newPositionIndex = players[currentPlayerIndex].getCurrentPositionIndex() + result;
+         int newPositionIndex = players[currentPlayerIndex].getCurrentPositionIndex() + result;
 
         if (newPositionIndex >= 40) {
             players[currentPlayerIndex].addMoney(200);
