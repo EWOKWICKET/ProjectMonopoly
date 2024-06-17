@@ -1,5 +1,6 @@
 package org.mademperors.polypoly.models;
 
+import javafx.scene.text.Text;
 
 import java.util.*;
 
@@ -52,9 +53,17 @@ public class Bank {
 
     private static final Map<Street, Integer> mortgaged = new HashMap<Street, Integer>();
 
+    public static void mortageStreet(Street street) {
+        mortgaged.put(street, 11);
+    }
+
 //    public static void checkMonopolies() {
 //        Arrays.stream(streets).forEach(Bank::checkMonopoly);
 //    }
+
+    public void nextTurn() {
+        updateMortgaged();
+    }
 
     public static void checkMonopoly(Street[] monopolyGroup) {
         Player firstOwner = monopolyGroup[0].getOwner();
@@ -79,9 +88,13 @@ public class Bank {
         monopolyGroup.ifPresent(Bank::checkMonopoly);
     }
 
-    public static void mortageStreet(Street street) {
-        mortgaged.put(street, 11);
+    public static void mortgageStreets(Street[] streets) {
+        Arrays.stream(streets).forEach(street -> {
+            mortgaged.put(street, 10);
+        });
     }
+
+
 
     public static void returnStreet(Street street) {
         mortgaged.remove(street);

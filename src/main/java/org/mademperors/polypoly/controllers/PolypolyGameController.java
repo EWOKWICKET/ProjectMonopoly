@@ -82,6 +82,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
     @FXML
     private BorderPane eventCard;
+    private boolean isEventCardPresent=false;
 
     @FXML
     private TextArea eventCardTextArea;
@@ -99,6 +100,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     private Bank bank;
     private GameLogger logger;
     private Street[] playerStreets;
+
 
     // Method to return an array of all StackPanes
     private StackPane[] getAllStackPanes() {
@@ -127,6 +129,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         bank = new Bank();
+        GameController.setPpgc(this);
         logger = GameLogger.getInstance();
         initStreetToType();
         initStreets(bank.getAllStreets());
@@ -137,7 +140,14 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 //        statisticsTextArea.appendText("123412342134");
     }
 
-    private void setPlayerMenu(Player player) {
+    public void setPlayerMenu(Player player) {
+        if(!isEventCardPresent){
+            eventCard.setTop(null);
+            eventCard.setBottom(null);
+            eventCard.setLeft(null);
+            eventCard.setRight(null);
+            eventCard.setCenter(null);
+        }
         playerName.setText("Гравець №" + (currentPlayerIndex + 1) + ":" + player.getName());
         playerMoney.setText("Гроші: " + player.getMoney());
         playerStreets = Arrays.stream(bank.getAllStreets()).flatMap(Arrays::stream).filter(street -> street.getOwner() == player).toArray(Street[]::new);
@@ -556,16 +566,26 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     }
 
     @FXML
-    public void endTurn(MouseEvent mouseEvent) {
-        if (isDiceThrown) {
+    public void endTurn() {
+        if (isDiceThrown && !isEventCardPresent) {
             applyTurnChanges();
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Не кидані кубики");
-            alert.setHeaderText(null);
-            alert.setContentText("Ви ще не кинули кубики. Не можна закінчити хід, не кинувши кубики.");
+            if(!isDiceThrown) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Не кидані кубики");
+                alert.setHeaderText(null);
+                alert.setContentText("Ви ще не кинули кубики. Не можна закінчити хід, не кинувши кубики.");
 
-            alert.showAndWait();
+                alert.showAndWait();
+            }
+            else{
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Не виконане завдання");
+                alert.setHeaderText(null);
+                alert.setContentText("Ви ще не виконали завдання з картки. Виконайте завдання перед тим як ходити");
+
+                alert.showAndWait();
+            }
         }
 //        System.out.println(currentPlayerIndex);
     }
@@ -598,17 +618,17 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         for (int i = 0; i < shortenedNames.length; i++) {
             players[i] = new Player(shortenedNames[i], initialMoney, colors[i]);
             players[i].setPlayerIndex(i);
-            if (i == 0) {
-                Bank bn = new Bank();
-                bn.getAllStreets()[0][0].setOwner(players[i]);
-                Street st = bn.getAllStreets()[0][1];
-                st.setMortgaged(true);
-                st.setOwner(players[i]);
-            }
-            if (i == 1) {
-                Bank bn = new Bank();
-                bn.getAllStreets()[0][2].setOwner(players[i]);
-            }
+//            if (i == 0) {
+//                Bank bn = new Bank();
+//                bn.getAllStreets()[0][0].setOwner(players[i]);
+//                Street st = bn.getAllStreets()[0][1];
+//                st.setMortgaged(true);
+//                st.setOwner(players[i]);
+//            }
+//            if (i == 1) {
+//                Bank bn = new Bank();
+//                bn.getAllStreets()[0][2].setOwner(players[i]);
+//            }
         }
 
         GameController.setCurrentPlayer(players[currentPlayerIndex]);
@@ -666,6 +686,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
                 stepOnStreet();
             }
             case "chance" -> {
+                isEventCardPresent=true;
                 ServiceCards.showChance(eventCard, GameController.getCurrentPlayer());
             }
             case "tax" -> {
@@ -674,6 +695,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
                 updateMoney();
             }
             case "city" -> {
+                isEventCardPresent=true;
                 ServiceCards.showCity(eventCard, GameController.getCurrentPlayer());
             }
             case "jail", "goToJail" -> {
@@ -685,7 +707,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         }
     }
 
-    private void updatePlayerPosition(int newPositionIndex) {
+    public void updatePlayerPosition(int newPositionIndex) {
         soundManager.playChipMoving();
 
         ImageView currentPlayerImageView = players[currentPlayerIndex].getPlayerImageView();
@@ -704,7 +726,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         });
     }
 
-    private void goToJail() {
+    public void goToJail() {
         soundManager.playToJail();
         players[currentPlayerIndex].setCurrentPositionIndex(10);
         updatePlayerPosition(10);
@@ -729,6 +751,29 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         isDiceThrown = thrown;
     }
 
+    public Bank getBank() {
+        return bank;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
+
+    public boolean isEventCardPresent() {
+        return isEventCardPresent;
+    }
+
+    public void setEventCardPresent(boolean eventCardPresent) {
+        isEventCardPresent = eventCardPresent;
+    }
+
+    public static Player[] getPlayers() {
+        return players;
+    }
+
+    public static void setPlayers(Player[] players) {
+        PolypolyGameController.players = players;
+    }
 }
 
 

@@ -4,12 +4,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.mademperors.polypoly.listeners.DiceResultListener;
 import org.mademperors.polypoly.models.Bank;
 import org.mademperors.polypoly.models.GameLogger;
 import org.mademperors.polypoly.models.Player;
 import org.mademperors.polypoly.models.Street;
+
 
 import java.util.Arrays;
 import java.util.Random;
@@ -20,6 +22,8 @@ public class GameController {
     private static final GameLogger logger = GameLogger.getInstance();
 
     private static final Random rnd = new Random();
+
+    private static PolypolyGameController ppgc;
 
     private static final Image[] DICES = {
             new Image(String.valueOf(GameController.class.getResource("/assets/dices/dice1.png"))),
@@ -121,5 +125,13 @@ public class GameController {
         String url = image.getUrl();
         char ch = url.charAt(url.length() - 5);
         return Character.getNumericValue(ch);
+    }
+
+    public static PolypolyGameController getPpgc() {
+        return ppgc;
+    }
+
+    public static void setPpgc(PolypolyGameController ppgc) {
+        GameController.ppgc = ppgc;
     }
 }

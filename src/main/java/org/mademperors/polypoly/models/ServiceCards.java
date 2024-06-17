@@ -21,10 +21,23 @@ public class ServiceCards {
     private static Random rgen=new Random();
 
     private final static String[][] chanceCards = {
-        {
-                "перейдіть на пл. Слави",
-                "перейдіть на Андріївський спуск"
-        }
+            {
+                    "19|Перейдіть на Андріївський спуск"
+            },
+            {
+                    "-40|Заплатіть 40 за візит до лікаря",
+                    "500|Бабуся померла і залишила вам спадок у розмірі 500"
+            },
+            {
+                "|Йдіть до в'язниці"
+            },
+            {
+                "|Отримайте карту «Вийти з в'язниці безкоштовно»"
+            },
+            {
+                    "-10|Заплатіть за ремонт будівель 10 за кожну",
+                    "10|Цього тижня було багато туристів. Отримайте 10 за кожну будівлю"
+            }
     };
     private final static String[][] cityCards = {
             {
@@ -42,14 +55,13 @@ public class ServiceCards {
 
     public static void showChance(BorderPane place, Player player){
         /* chanceType:
-        * 0-move to specified street and pay money
+        * 0-move to specified street
         * 1-monetary transactions
         * 2-go to jail
         * 3- free from jail card
         * 4- repairs/ expences (pay for all your houses $25)*/
 
         int chanceType=rgen.nextInt(0,5);
-        chanceType=0;
         String chanceText=chanceCards[chanceType][rgen.nextInt(0,chanceCards[chanceType].length)];
 
 
@@ -62,12 +74,13 @@ public class ServiceCards {
         label1.setFont(new Font(30.0));
         label1.setStyle("-fx-alignment: center;");
 
+
         // Create the second Label
-        Label label2 = new Label(chanceText);
+        Label label2 = new Label(chanceText.split("\\|")[1]);
         label2.setPrefHeight(109.0);
         label2.setPrefWidth(602.0);
         label2.setWrapText(true);
-        label2.setFont(new Font(15.0));
+        label2.setFont(new Font(10.0));
 
 //        // Create a VBox to hold the Labels
 //        VBox vbox = new VBox();
@@ -94,8 +107,8 @@ public class ServiceCards {
                 dialogStage.setTitle("Шанс");
                 ChanceCardController ccc=loader.getController();
                 ccc.setPlayer(player);
-                ccc.setChanceType(finalChanceType);
-                ccc.setText(chanceText);
+                ccc.setChanceTypeAndText(finalChanceType,chanceText );
+
                 dialogStage.showAndWait();
 
 
