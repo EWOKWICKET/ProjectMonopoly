@@ -8,7 +8,7 @@ public class Player {
 
     private final String name;
     private int money;
-    private boolean inJail = false;
+    private int jailTime = 0;
     private int jailFreeCards = 0;
     private ImageView playerImageView;
     private int currentPositionIndex = 0;
@@ -38,7 +38,7 @@ public class Player {
     //LIMIT so that player could use only in jail
     public void useJailFreeCard() {
         spendJailFreeCards(1);
-        inJail = false;
+        freeFromJail();
     }
 
     //getters and setters
@@ -49,10 +49,16 @@ public class Player {
         return money;
     }
     public boolean isInJail() {
-        return inJail;
+        return jailTime > 0;
     }
-    public void setInJail(boolean inJail) {
-        this.inJail = inJail;
+    public void putInJail() {
+        this.jailTime = 3;
+    }
+    public void decreaseJailTime() {
+        jailTime--;
+    }
+    public void freeFromJail() {
+        jailTime = 0;
     }
     public int getJailFreeCards() {
         return jailFreeCards;

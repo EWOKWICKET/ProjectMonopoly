@@ -497,8 +497,21 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     }
 
     @Override
-    public void onDiceResult(int result) {
+    public void onDiceResult(int dice1, int dice2) {
+        int result = dice1 + dice2;
         lastDiceResult = result;
+
+        if (players[currentPlayerIndex].isInJail()) {
+            if (dice1 == dice2) {
+                players[currentPlayerIndex].freeFromJail();
+                GameLogger.getInstance().logInfo(players[currentPlayerIndex].getName() + " вийшов з в'язниці");
+            } else {
+                players[currentPlayerIndex].decreaseJailTime();
+                GameLogger.getInstance().logInfo(players[currentPlayerIndex].getName() + " залишився в в'язниці");
+                return;
+            }
+        }
+
         int newPositionIndex = players[currentPlayerIndex].getCurrentPositionIndex() + result;
 
         if (newPositionIndex >= 40) {
@@ -555,6 +568,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     private void goToJail() {
         players[currentPlayerIndex].setCurrentPositionIndex(10);
         updatePlayerPosition(10);
+        players[currentPlayerIndex].putInJail();
         GameLogger.getInstance().logInfo(players[currentPlayerIndex].getName() + " потрапив до в'язниці");
     }
 
