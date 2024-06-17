@@ -107,7 +107,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         };
     }
 
-    private final Map<StackPane, Street> streetMap = new HashMap<>();
+    private static final Map<StackPane, Street> streetMap = new HashMap<>();
     private final Map<StackPane, String> streetToType = new HashMap<>();
 
     private ImageView[] getAllPlayerImages() {
@@ -475,7 +475,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
     @FXML
     public void buyStreet() {
-        GameController.buyStreet();
+        GameController.buyStreet(streetMap.get(getAllStackPanes()[GameController.getCurrentPlayer().getCurrentPositionIndex()]));
     }
 
     @FXML
@@ -600,7 +600,6 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         });
         stackPanes[newPositionIndex].getChildren().forEach(node -> {
             if (node instanceof FlowPane fp) {
-                GameController.getCurrentPlayer().setCurrentStreet(streetMap.get(stackPanes[newPositionIndex]));
                 fp.getChildren().add(currentPlayerImageView);
             }
         });

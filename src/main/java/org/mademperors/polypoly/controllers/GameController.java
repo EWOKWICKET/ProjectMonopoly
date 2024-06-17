@@ -58,8 +58,8 @@ public class GameController {
         timeline.play();
     }
 
-    public static void buyStreet() {
-        currentPlayer.buyStreet();
+    public static void buyStreet(Street street) {
+        currentPlayer.buyStreet(street);
     }
 
     public static void trade(int p1Money, Street[] p1Streets, int p1JailFreeCardsAmount, Player p2, int p2Money, Street[] p2Streets, int p2JailFreeCardsAmount) {
