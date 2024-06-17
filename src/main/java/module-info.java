@@ -2,6 +2,7 @@ module org.mademperors.polypoly {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.media;
+    requires jdk.security.jgss;
 
 
     opens org.mademperors.polypoly to javafx.fxml;

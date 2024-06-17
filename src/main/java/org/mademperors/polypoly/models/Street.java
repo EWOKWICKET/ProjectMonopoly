@@ -58,10 +58,12 @@ public class Street {
     public void mortgage() {
         owner.addMoney(mortgagePrice);
         isMortgaged = true;
+        Bank.mortageStreet(this);
+        Bank.checkMonopolyByStreet(this);
     }
 
     public void unmortgage() {
-        owner.decreaseMoney(mortgagePrice);
+        owner.decreaseMoney((int) (mortgagePrice * 1.5));
         isMortgaged = false;
         Bank.returnStreet(this);
     }

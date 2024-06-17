@@ -76,7 +76,7 @@ public class StreetCharacteristicsAlert {
         if (isToShow) {
             buttonPanel.setVisible(false);
             buttonPanel.setManaged(false);
-            checkButons();
+            checkButtons();
         }
     }
 
@@ -121,18 +121,18 @@ public class StreetCharacteristicsAlert {
         } else {
             tradeButton.setDisable(false);
             mortgageLabel.setVisible(false);
-            if (street.getNumberOfHouses() == 0) {
-                upgradeStreetButton.setDisable(false);
-                downgradeStreetButton.setDisable(true);
-            }
-            if (street.getNumberOfHouses() > 0) {
-                upgradeStreetButton.setDisable(false);
-                downgradeStreetButton.setDisable(false);
-            }
-            if (street.isHasHotel()) {
-                upgradeStreetButton.setDisable(true);
-                downgradeStreetButton.setDisable(false);
-            }
+//            if (street.getNumberOfHouses() == 0) {
+//                upgradeStreetButton.setDisable(false);
+//                downgradeStreetButton.setDisable(true);
+//            }
+//            if (street.getNumberOfHouses() > 0) {
+//                upgradeStreetButton.setDisable(false);
+//                downgradeStreetButton.setDisable(false);
+//            }
+//            if (street.isHasHotel()) {
+//                upgradeStreetButton.setDisable(true);
+//                downgradeStreetButton.setDisable(false);
+//            }
 
         }
     }
@@ -140,16 +140,14 @@ public class StreetCharacteristicsAlert {
     @FXML
     public void upgradeStreet(MouseEvent mouseEvent) {
         GameController.downgradeStreet(street);
-        init();
     }
 
     @FXML
     public void downgradeStreet(MouseEvent mouseEvent) {
         int playerMoney = street.getOwner().getMoney();
         int housePrice = street.getHousePrice();
-        if (playerMoney >= housePrice) {
+        if ( playerMoney >= housePrice) {
             GameController.upgradeStreet(street);
-            init();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Недостатньо грошей");
@@ -161,14 +159,18 @@ public class StreetCharacteristicsAlert {
 
     }
 
-    public void checkButons() {
+    public void checkButtons() {
         if (street.isMonopoly()) {
-            downgradeStreetButton.setDisable(street.getNumberOfHouses() > 0);
             checkUpgradeButton();
+            checkDowngradeButton();
         } else {
             upgradeStreetButton.setDisable(true);
             downgradeStreetButton.setDisable(true);
         }
+    }
+
+    private void checkDowngradeButton() {
+        downgradeStreetButton.setDisable(street.getNumberOfHouses() == 0);
     }
 
     private void checkUpgradeButton() {

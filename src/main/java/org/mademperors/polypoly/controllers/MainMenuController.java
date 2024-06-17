@@ -115,8 +115,8 @@ public class MainMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         BorderPane borderPane = (BorderPane) startButton.getParent().getParent().getParent();
         borderPane.getStyleClass().add("border-pane");
-        System.out.println(getClass().getResource("/styles.css"));
-        System.out.println(getClass().getResource("/org/mademperors/polypoly/PolypolyGame.fxml"));
+//        System.out.println(getClass().getResource("/styles.css"));
+//        System.out.println(getClass().getResource("/org/mademperors/polypoly/PolypolyGame.fxml"));
 
     }
 }
