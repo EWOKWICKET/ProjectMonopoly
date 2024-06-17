@@ -17,6 +17,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -26,6 +28,7 @@ import org.mademperors.polypoly.listeners.DiceResultListener;
 import org.mademperors.polypoly.models.*;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -127,6 +130,14 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        String musicPath = "src/main/resources/sounds/mainGameBcgrMuusic.mp3"; // Replace with your path
+        Media music = new Media(new File(musicPath).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(music);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        System.out.println(mediaPlayer.getVolume());
+        mediaPlayer.setVolume(mediaPlayer.getVolume()-0.7);
+        mediaPlayer.play();
 
         bank = new Bank();
         GameController.setPpgc(this);

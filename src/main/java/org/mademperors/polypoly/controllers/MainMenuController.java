@@ -10,8 +10,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,6 +32,7 @@ public class MainMenuController implements Initializable {
 
     @FXML
     private TextField numberOfPlayers;
+    private MediaPlayer mediaPlayer;
 
 
     @FXML
@@ -84,6 +88,7 @@ public class MainMenuController implements Initializable {
 
             EditPlayersMenuController editplayers = loader.getController();
             editplayers.setGridOfPlayers(Integer.parseInt(numberOfPlayers.getText()), Integer.parseInt(amountOfMoney.getText()));
+            editplayers.setMediaPlayer(mediaPlayer);
             Stage stage = (Stage) startButton.getScene().getWindow();
             // Set the new scene
             stage.setScene(new Scene(editPlayersMenu));
@@ -113,6 +118,12 @@ public class MainMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        String musicPath = "src/main/resources/sounds/backgroundMusic.mp3"; // Replace with your path
+        Media music = new Media(new File(musicPath).toURI().toString());
+        mediaPlayer = new MediaPlayer(music);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.play();
+
         BorderPane borderPane = (BorderPane) startButton.getParent().getParent().getParent();
         borderPane.getStyleClass().add("border-pane");
 //        System.out.println(getClass().getResource("/styles.css"));

@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -20,6 +21,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class EditPlayersMenuController implements Initializable {
 
@@ -41,6 +44,7 @@ public class EditPlayersMenuController implements Initializable {
     private Button startGame, goBackToMenu;
 
     private int initialMoney, players;
+    private MediaPlayer mediaPlayer;
 
     @FXML
     void beginGame(MouseEvent event) {
@@ -56,7 +60,7 @@ public class EditPlayersMenuController implements Initializable {
 
                 Stage stage = (Stage) startGame.getScene().getWindow();
 
-
+                fadeOutMusic();
                 // Set the new scene
                 stage.setScene(new Scene(polypolyGame));
 
@@ -92,6 +96,24 @@ public class EditPlayersMenuController implements Initializable {
             // Show the Alert dialog and wait for user response
             alert.showAndWait();
         }
+    }
+
+    private void fadeOutMusic() {
+        final double[] currentVolume = {mediaPlayer.getVolume()};
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                currentVolume[0] -= 0.01; // Adjust decrement value for fade speed
+                if (currentVolume[0] <= 0.0) {
+                    mediaPlayer.stop();
+                    timer.cancel();
+                } else {
+                    mediaPlayer.setVolume(currentVolume[0]);
+                }
+            }
+        };
+        timer.schedule(task, 0, 10); // Adjust delay and period for fade duration
     }
 
     private boolean isAllNamesNormal(String[] playerNames) {
@@ -196,5 +218,9 @@ public class EditPlayersMenuController implements Initializable {
     private void fillCircle(Circle playerImage, String s) {
         Image image = new Image(s);
         playerImage.setFill(new ImagePattern(image));
+    }
+
+    public void setMediaPlayer(MediaPlayer mediaPlayer) {
+        this.mediaPlayer=mediaPlayer;
     }
 }
