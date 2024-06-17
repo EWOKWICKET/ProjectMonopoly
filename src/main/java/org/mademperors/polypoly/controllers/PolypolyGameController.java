@@ -517,6 +517,33 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     @FXML
     public void buyStreet() {
         GameController.buyStreet(streetMap.get(getAllStackPanes()[GameController.getCurrentPlayer().getCurrentPositionIndex()]));
+        updateStreet(GameController.getCurrentPlayer().getCurrentPositionIndex());
+    }
+
+    public void updateStreet(int streetIndex) {
+        StackPane street = getAllStackPanes()[streetIndex];
+        Street streetObj = streetMap.get(street);
+
+        if (streetObj.getOwner() == null) {
+            street.setBorder(null);
+            return;
+        }
+
+        Color ownerColor = streetObj.isMortgaged() ? Color.GRAY : streetObj.getOwner().getPlayerColor();
+        BorderWidths borderWidths = null;
+
+        if (streetIndex > 0 && streetIndex < 10) {
+            borderWidths = new BorderWidths(0, 0, 20, 0);
+        } else if (streetIndex > 10 && streetIndex < 20) {
+            borderWidths = new BorderWidths(0, 0, 0, 10);
+        } else if (streetIndex > 20 && streetIndex < 30) {
+            borderWidths = new BorderWidths(20, 0, 0, 0);
+        } else {
+            borderWidths = new BorderWidths(0, 10, 0, 0);
+        }
+
+        Border ownerBorder = new Border(new BorderStroke(ownerColor, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, borderWidths));
+        street.setBorder(ownerBorder);
     }
 
     @FXML
