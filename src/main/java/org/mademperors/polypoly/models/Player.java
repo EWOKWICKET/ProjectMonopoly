@@ -13,13 +13,13 @@ public class Player {
     private ImageView playerImageView;
     private int currentPositionIndex = 0;
     private int playerIndex;
-    private final String color;
+    private final Color color;
 
 
     public Player(String name, int money, String color) {
         this.name = name;
         this.money = money;
-        this.color = color;
+        this.color = Color.web(color);
     }
 
     // DELETE player from players array()
@@ -79,7 +79,7 @@ public class Player {
     public void acquireJailFreeCards(int amount) {
         this.jailFreeCards += amount;
     }
-    public String getPlayerColor() {
+    public Color getPlayerColor() {
         return color;
     }
     public ImageView getPlayerImageView() {
