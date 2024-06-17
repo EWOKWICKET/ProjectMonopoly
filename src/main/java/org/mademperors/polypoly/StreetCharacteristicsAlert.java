@@ -37,6 +37,7 @@ public class StreetCharacteristicsAlert {
     private Label mortgagePrice;
 
     private boolean isToShow = false;
+    private boolean boughtHouseThisTurn = false;
     private Street street;
 
     public void setPriceForBuildingsLabel(int priceForHouse, int priceForHotel) {
@@ -180,6 +181,10 @@ public class StreetCharacteristicsAlert {
         }
     }
 
+    public void setBoughtHouseThisTurn(boolean boughtHouseThisTurn) {
+        this.boughtHouseThisTurn = boughtHouseThisTurn;
+        this.upgradeStreetButton.setDisable(boughtHouseThisTurn);
+    }
 }
 
 

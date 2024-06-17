@@ -620,10 +620,9 @@
                   <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: black;" GridPane.rowIndex="3" />
                   <FlowPane columnHalignment="CENTER" hgap="10.0" prefHeight="200.0" prefWidth="200.0" vgap="10.0" GridPane.rowIndex="4">
                      <children>
-                        <Button fx:id="AddRed" mnemonicParsing="false" onMouseClicked="#addRed" prefHeight="40.0" prefWidth="100.0" text="Add red" />
                         <Button fx:id="throwDicesButton" mnemonicParsing="false" onMouseClicked="#throwDices" prefHeight="40.0" prefWidth="100.0" text="Кинути кубик" />
                         <Button fx:id="endMoveButton" mnemonicParsing="false" onMouseClicked="#endTurn" prefHeight="40.0" prefWidth="100.0" text="Закінчити хід" />
-                        <Button fx:id="buyStreetButton" mnemonicParsing="false" onMouseClicked="#buyStreet" prefHeight="40.0" prefWidth="100.0" text="Купити вулицю" />
+                        <Button fx:id="buyStreetButton" mnemonicParsing="false" onMouseClicked="#buyStreet" prefHeight="40.0" prefWidth="100.0" text="Купити вулицю" disable="true" />
                      </children>
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

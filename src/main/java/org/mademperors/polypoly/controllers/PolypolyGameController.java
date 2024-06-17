@@ -418,6 +418,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
             sca.setStreetPrices(street.getRentModel());
             sca.setMortgagedPrice(street.getMortgagePrice());
             sca.setPriceForBuildingsLabel(street.getHousePrice(), street.getHotelPrice());
+            sca.setBoughtHouseThisTurn(false);
             sca.init();
             dialogStage.showAndWait();
 
@@ -518,6 +519,8 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     public void buyStreet() {
         GameController.buyStreet(streetMap.get(getAllStackPanes()[GameController.getCurrentPlayer().getCurrentPositionIndex()]));
         updateStreet(GameController.getCurrentPlayer().getCurrentPositionIndex());
+        buyStreetButton.setDisable(true);
+        setPlayerMenu(GameController.getCurrentPlayer());
     }
 
     public void updateStreet(int streetIndex) {
@@ -562,6 +565,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     }
 
     private void applyTurnChanges() {
+        buyStreetButton.setDisable(true);
         currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
         GameController.setCurrentPlayer(players[currentPlayerIndex]);
         setPlayerMenu(GameController.getCurrentPlayer());
@@ -655,6 +659,8 @@ public class PolypolyGameController implements Initializable, DiceResultListener
                 GameLogger.getInstance().logInfo(players[currentPlayerIndex].getName() + " припаркувався");
             }
         }
+
+        setPlayerMenu(GameController.getCurrentPlayer());
     }
 
     private void updatePlayerPosition(int newPositionIndex) {
@@ -690,6 +696,10 @@ public class PolypolyGameController implements Initializable, DiceResultListener
                 players[currentPlayerIndex].decreaseMoney(street.getRent());
                 street.getOwner().addMoney(street.getRent());
                 GameLogger.getInstance().logInfo(players[currentPlayerIndex].getName() + " заплатив оренду " + street.getRent() + "$ гравцю " + street.getOwner().getName());
+            }
+        } else {
+            if (players[currentPlayerIndex].getMoney() >= street.getPrice()) {
+                buyStreetButton.setDisable(false);
             }
         }
     }
