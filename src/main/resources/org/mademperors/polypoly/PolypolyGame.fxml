@@ -148,7 +148,7 @@
                                     <children>
                                         <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: darkblue;">
                                             <center>
-                                                <Label prefHeight="62.0" prefWidth="82.0" style="-fx-font-weight: bold;" text="Старт" textFill="WHITE" underline="true" BorderPane.alignment="CENTER">
+                                                <Label prefHeight="62.0" prefWidth="128.0" style="-fx-font-weight: bold;" text="В'язниця" textFill="WHITE" underline="true" BorderPane.alignment="CENTER">
                                                     <font>
                                                         <Font size="27.0" />
                                                     </font>
@@ -334,7 +334,7 @@
                                     <children>
                                         <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: darkblue;">
                                             <center>
-                                                <Label prefHeight="62.0" prefWidth="82.0" style="-fx-font-weight: bold;" text="Старт" textFill="WHITE" underline="true" BorderPane.alignment="CENTER">
+                                                <Label prefHeight="102.0" prefWidth="133.0" style="-fx-font-weight: bold;" text="Йдіть до в'язниці" textFill="WHITE" underline="true" wrapText="true" BorderPane.alignment="CENTER">
                                                     <font>
                                                         <Font size="27.0" />
                                                     </font>
@@ -447,7 +447,7 @@
                                     <children>
                                         <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: darkblue;">
                                             <center>
-                                                <Label prefHeight="62.0" prefWidth="82.0" style="-fx-font-weight: bold;" text="Старт" textFill="WHITE" underline="true" BorderPane.alignment="CENTER">
+                                                <Label prefHeight="62.0" prefWidth="133.0" style="-fx-font-weight: bold;" text="Парковка" textFill="WHITE" underline="true" BorderPane.alignment="CENTER">
                                                     <font>
                                                         <Font size="27.0" />
                                                     </font>

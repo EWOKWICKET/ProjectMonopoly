@@ -7,7 +7,7 @@
 
 <BorderPane style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mademperors.polypoly.StreetCharacteristicsAlert">
    <center>
-      <StackPane>
+      <StackPane style="-fx-background-color: red;">
          <children>
             <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="395.0">
                <top>
