@@ -171,8 +171,14 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         setServices(streets);
         for (Street[] oneColorStreet : allStreets) {
             for (Street oneStreet : oneColorStreet) {
-                while (streets[index].getId().equals("field1") || streets[index].getId().equals("field11") || streets[index].getId().equals("field21") || streets[index].getId().equals("field31")
-                        || streets[index].getId().equals("field4")) {
+                while (streets[index].getId().equals("field1") || streets[index].getId().equals("field11")
+                        || streets[index].getId().equals("field21") || streets[index].getId().equals("field31")
+                        || streets[index].getId().equals("field4") || streets[index].getId().equals("field6")
+                        || streets[index].getId().equals("field8") || streets[index].getId().equals("field14")
+                        || streets[index].getId().equals("field16") || streets[index].getId().equals("field18")
+                        || streets[index].getId().equals("field24") || streets[index].getId().equals("field26")
+                        || streets[index].getId().equals("field28") || streets[index].getId().equals("field34")
+                        || streets[index].getId().equals("field36") || streets[index].getId().equals("field38")){
                     index++;
                 }
 
