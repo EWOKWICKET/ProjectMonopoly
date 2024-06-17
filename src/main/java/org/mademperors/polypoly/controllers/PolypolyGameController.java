@@ -42,8 +42,9 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     //Dice interfaces and fields
     private static int lastDiceResult;
     private static int currentPlayerIndex = 0;
-    private boolean isDiceThrown = false;
+    private static boolean isDiceThrown = false;
 
+    SoundManager soundManager;
 
     @FXML
     public BorderPane polypolyField;
@@ -126,6 +127,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         initStreets(bank.getAllStreets());
         setPlayerMenu(GameController.getCurrentPlayer());
         GameLogger.setStatisticsTextArea(statisticsTextArea);
+        soundManager = new SoundManager();
 
 //        statisticsTextArea.appendText("123412342134");
     }
@@ -536,6 +538,8 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     }
 
     private void updatePlayerPosition(int newPositionIndex) {
+        soundManager.playChipMoving();
+
         ImageView currentPlayerImageView = players[currentPlayerIndex].getPlayerImageView();
         int currentPositionIndex = players[currentPlayerIndex].getCurrentPositionIndex();
         StackPane[] stackPanes = getAllStackPanes();
@@ -584,11 +588,10 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 //            }
 //        }
         if (!isDiceThrown) {
-            SoundManager.playSound("throw5");
+            soundManager.playThrow();
             GameController.throwDices(this);
             dice1.setCenter(GameController.diceImageView1);
             dice2.setCenter(GameController.diceImageView2);
-            isDiceThrown = true;
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Вже кидані кубики");
@@ -597,6 +600,10 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
             alert.showAndWait();
         }
+    }
+
+    public static void setDiceThrown(boolean thrown) {
+        isDiceThrown = thrown;
     }
 
 }
