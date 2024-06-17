@@ -60,6 +60,9 @@ public class Player {
     public void freeFromJail() {
         jailTime = 0;
     }
+    public int getJailTime() {
+        return jailTime;
+    }
     public int getJailFreeCards() {
         return jailFreeCards;
     }

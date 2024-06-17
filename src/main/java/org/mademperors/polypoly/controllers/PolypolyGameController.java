@@ -20,6 +20,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.mademperors.polypoly.PrisonAlert;
 import org.mademperors.polypoly.StreetCharacteristicsAlert;
 import org.mademperors.polypoly.listeners.DiceResultListener;
 import org.mademperors.polypoly.models.*;
@@ -426,19 +427,59 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         }
     }
 
+    private void showPrisonDialog() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/mademperors/polypoly/prison.fxml"));
+            Parent root = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.initOwner(field1.getScene().getWindow());
+            dialogStage.initModality(Modality.APPLICATION_MODAL); // Block input events to other windows
+
+            dialogStage.setScene(new Scene(root));
+            dialogStage.setTitle("В'язниця");
+
+            PrisonAlert prisonAlert = loader.getController();
+
+            prisonAlert.setJailTurnsText(players[currentPlayerIndex].getJailTime());
+            prisonAlert.setCloseAlert(dialogStage::close);
+            prisonAlert.setPayBail(() -> {
+                players[currentPlayerIndex].decreaseMoney(50);
+                players[currentPlayerIndex].freeFromJail();
+                dialogStage.close();
+            });
+            prisonAlert.setFreeExit(() -> {
+                players[currentPlayerIndex].useJailFreeCard();
+                players[currentPlayerIndex].freeFromJail();
+                dialogStage.close();
+            });
+            prisonAlert.setRollDice(() -> {
+                throwDices(null);
+                dialogStage.close();
+            });
+            prisonAlert.setPlayerMoney(players[currentPlayerIndex].getMoney());
+            prisonAlert.setJailFreeCards(players[currentPlayerIndex].getJailFreeCards());
+
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void addRed(MouseEvent mouseEvent) {
-        VBox colorStreets = paneForStreetColors;
-        HBox streetOne = new HBox();
-        streetOne.setStyle("-fx-background-color: red;");
-        streetOne.setPadding(new Insets(5));
-        streetOne.setPrefHeight(50);
-        streetOne.setOnMouseClicked(event -> {
-            showAlertDialog(streetOne, bank.getAllStreets()[0][0], false);
-        });
-        colorStreets.getChildren().add(streetOne);
-
-
-        GameController.throwDices(this);
+        showPrisonDialog();
+//        VBox colorStreets = paneForStreetColors;
+//        HBox streetOne = new HBox();
+//        streetOne.setStyle("-fx-background-color: red;");
+//        streetOne.setPadding(new Insets(5));
+//        streetOne.setPrefHeight(50);
+//        streetOne.setOnMouseClicked(event -> {
+//            showAlertDialog(streetOne, bank.getAllStreets()[0][0], false);
+//        });
+//        colorStreets.getChildren().add(streetOne);
+//
+//
+//        GameController.throwDices(this);
     }
 
     @FXML
@@ -478,6 +519,10 @@ public class PolypolyGameController implements Initializable, DiceResultListener
             GameController.setCurrentPlayer(players[currentPlayerIndex]);
             setPlayerMenu(GameController.getCurrentPlayer());
             isDiceThrown = false;
+
+            if (players[currentPlayerIndex].isInJail()) {
+                showPrisonDialog();
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Не кидані кубики");

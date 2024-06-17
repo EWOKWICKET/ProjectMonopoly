@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<?import javafx.scene.text.TextFlow?>
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.mademperors.polypoly.PrisonAlert" alignment="CENTER" style="-fx-padding: 20;">
+    <!-- Top Text Section -->
+    <Text fx:id="jailStatusText" text="Ви у в'язниці." style="-fx-font-size: 16px;"/>
+    <Text fx:id="jailTurnsText" text="Ходів у в'язниці: 3" style="-fx-font-size: 16px;"/>
+    <TextFlow textAlignment="CENTER" prefWidth="200">
+        <Text text="Ви можете викупитися або кинути кубики, якщо на кубиках випадуть однакові числа вас випустять із В'язниці" style="-fx-font-size: 16px;"/>
+    </TextFlow>
+
+    <!-- Bottom Button Section -->
+    <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
+        <Button fx:id="payBailButton" text="Викупитись ($50)" style="-fx-font-size: 14px; -fx-background-color: lightgrey;" onAction="#payBail" />
+        <Button fx:id="freeExitButton" text="Вийти з в'язниці безкоштовно (0 залишилось)" style="-fx-font-size: 14px;" onAction="#freeExit" disable="true" />
+    </HBox>
+    <Button fx:id="rollDiceButton" text="Кинути кубики" style="-fx-font-size: 14px;" onAction="#rollDice" />
+</VBox>
