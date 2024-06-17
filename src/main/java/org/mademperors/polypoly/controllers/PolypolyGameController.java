@@ -136,7 +136,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         MediaPlayer mediaPlayer = new MediaPlayer(music);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         System.out.println(mediaPlayer.getVolume());
-        mediaPlayer.setVolume(mediaPlayer.getVolume()-0.7);
+        mediaPlayer.setVolume(mediaPlayer.getVolume()-0.6);
         mediaPlayer.play();
 
         bank = new Bank();
