@@ -23,12 +23,12 @@ public class GameController {
     private static final Random rnd = new Random();
 
     private static final Image[] DICES = {
-            new Image(String.valueOf(GameController.class.getResource("/assets/dices/dice1.jpg"))),
-            new Image(String.valueOf(GameController.class.getResource("/assets/dices/dice2.jpg"))),
-            new Image(String.valueOf(GameController.class.getResource("/assets/dices/dice3.jpg"))),
-            new Image(String.valueOf(GameController.class.getResource("/assets/dices/dice4.jpg"))),
-            new Image(String.valueOf(GameController.class.getResource("/assets/dices/dice5.jpg"))),
-            new Image(String.valueOf(GameController.class.getResource("/assets/dices/dice6.jpg")))
+            new Image(String.valueOf(GameController.class.getResource("/assets/dices/dice1.png"))),
+            new Image(String.valueOf(GameController.class.getResource("/assets/dices/dice2.png"))),
+            new Image(String.valueOf(GameController.class.getResource("/assets/dices/dice3.png"))),
+            new Image(String.valueOf(GameController.class.getResource("/assets/dices/dice4.png"))),
+            new Image(String.valueOf(GameController.class.getResource("/assets/dices/dice5.png"))),
+            new Image(String.valueOf(GameController.class.getResource("/assets/dices/dice6.png")))
     };
 
     public static final ImageView diceImageView1 = new ImageView(DICES[1]), diceImageView2 = new ImageView(DICES[2]);
