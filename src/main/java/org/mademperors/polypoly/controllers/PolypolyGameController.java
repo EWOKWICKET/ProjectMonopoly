@@ -40,6 +40,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
     //Dice interfaces and fields
     private static int lastDiceResult;
+    private static int doublesInRow = 0;
     private static int currentPlayerIndex = 0;
     private static boolean isDiceThrown = false;
 
@@ -96,6 +97,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
 
     private Bank bank;
+    private GameLogger logger;
     private Street[] playerStreets;
 
     // Method to return an array of all StackPanes
@@ -108,7 +110,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         };
     }
 
-    private static final Map<StackPane, Street> streetMap = new HashMap<>();
+    private final Map<StackPane, Street> streetMap = new HashMap<>();
     private final Map<StackPane, String> streetToType = new HashMap<>();
 
     private ImageView[] getAllPlayerImages() {
@@ -125,6 +127,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         bank = new Bank();
+        logger = GameLogger.getInstance();
         initStreetToType();
         initStreets(bank.getAllStreets());
         setPlayerMenu(GameController.getCurrentPlayer());
@@ -163,6 +166,10 @@ public class PolypolyGameController implements Initializable, DiceResultListener
                 colors.add(street.getColor());
             }
         });
+    }
+
+    public void updateMoney() {
+        playerMoney.setText("Гроші: " + players[currentPlayerIndex].getMoney());
     }
 
     private void initStreetToType() {
@@ -516,7 +523,9 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
     @FXML
     public void buyStreet() {
+        soundManager.playPay();
         GameController.buyStreet(streetMap.get(getAllStackPanes()[GameController.getCurrentPlayer().getCurrentPositionIndex()]));
+        updateMoney();
     }
 
     @FXML
@@ -539,9 +548,13 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         GameController.setCurrentPlayer(players[currentPlayerIndex]);
         setPlayerMenu(GameController.getCurrentPlayer());
         isDiceThrown = false;
+        doublesInRow = 0;
+
+        bank.updateMortgaged();
         if (players[currentPlayerIndex].isInJail()) {
             showPrisonDialog();
         }
+
     }
 
 
@@ -586,20 +599,34 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         if (players[currentPlayerIndex].isInJail()) {
             if (dice1 == dice2) {
                 players[currentPlayerIndex].freeFromJail();
-                GameLogger.getInstance().logInfo(players[currentPlayerIndex].getName() + " вийшов з в'язниці");
+                logger.logInfo(players[currentPlayerIndex].getName() + " вийшов з в'язниці");
             } else {
                 players[currentPlayerIndex].decreaseJailTime();
-                GameLogger.getInstance().logInfo(players[currentPlayerIndex].getName() + " залишився в в'язниці");
+                logger.logInfo(players[currentPlayerIndex].getName() + " залишився в в'язниці");
                 return;
             }
+        }
+
+        if (dice1 == dice2) {
+            if (++doublesInRow == 3) {
+                goToJail();
+                logger.logInfo(String.format("%s викинув 3 дублі підряд\nГравець їде до в'язниці", players[currentPlayerIndex].getName()));
+            } else {
+                isDiceThrown = false;
+                logger.logInfo("Дубль! Можна кинути ще раз!");
+            }
+        } else {
+            isDiceThrown = true;
         }
 
         int newPositionIndex = players[currentPlayerIndex].getCurrentPositionIndex() + result;
 
         if (newPositionIndex >= 40) {
+            soundManager.playPay();
             players[currentPlayerIndex].addMoney(200);
             newPositionIndex -= 40;
-            GameLogger.getInstance().logInfo(players[currentPlayerIndex].getName() + " отримав 200$ за проходження старту");
+            logger.logInfo(players[currentPlayerIndex].getName() + " отримав 200$ за проходження старту");
+            updateMoney();
         }
 
         updatePlayerPosition(newPositionIndex);
@@ -616,7 +643,8 @@ public class PolypolyGameController implements Initializable, DiceResultListener
             }
             case "tax" -> {
                 players[currentPlayerIndex].decreaseMoney(200);
-                GameLogger.getInstance().logInfo(players[currentPlayerIndex].getName() + " заплатив 200$ податку");
+                logger.logInfo(players[currentPlayerIndex].getName() + " заплатив 200$ податку");
+                updateMoney();
             }
             case "city" -> {
                 ServiceCards.showCity(eventCard, GameController.getCurrentPlayer());
@@ -625,7 +653,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
                 goToJail();
             }
             case "parking" -> {
-                GameLogger.getInstance().logInfo(players[currentPlayerIndex].getName() + " припаркувався");
+                logger.logInfo(players[currentPlayerIndex].getName() + " припаркувався");
             }
         }
     }
@@ -650,19 +678,22 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     }
 
     private void goToJail() {
+        soundManager.playToJail();
         players[currentPlayerIndex].setCurrentPositionIndex(10);
         updatePlayerPosition(10);
         players[currentPlayerIndex].putInJail();
-        GameLogger.getInstance().logInfo(players[currentPlayerIndex].getName() + " потрапив до в'язниці");
+        logger.logInfo(players[currentPlayerIndex].getName() + " потрапив до в'язниці");
     }
 
     private void stepOnStreet() {
         Street street = streetMap.get(getAllStackPanes()[players[currentPlayerIndex].getCurrentPositionIndex()]);
         if (street.getOwner() != null) {
             if (street.getOwner() != players[currentPlayerIndex]) {
+                soundManager.playPay();
                 players[currentPlayerIndex].decreaseMoney(street.getRent());
                 street.getOwner().addMoney(street.getRent());
-                GameLogger.getInstance().logInfo(players[currentPlayerIndex].getName() + " заплатив оренду " + street.getRent() + "$ гравцю " + street.getOwner().getName());
+                logger.logInfo(players[currentPlayerIndex].getName() + " заплатив оренду " + street.getRent() + "$ гравцю " + street.getOwner().getName());
+                updateMoney();
             }
         }
     }

@@ -1,7 +1,5 @@
 package org.mademperors.polypoly.models;
 
-import javafx.scene.text.Text;
-import org.mademperors.polypoly.utils.Utils;
 
 import java.util.*;
 
@@ -58,10 +56,6 @@ public class Bank {
 //        Arrays.stream(streets).forEach(Bank::checkMonopoly);
 //    }
 
-    public void nextTurn() {
-        updateMortgaged();
-    }
-
     public static void checkMonopoly(Street[] monopolyGroup) {
         Player firstOwner = monopolyGroup[0].getOwner();
         if (firstOwner == null) {
@@ -85,13 +79,9 @@ public class Bank {
         monopolyGroup.ifPresent(Bank::checkMonopoly);
     }
 
-    public static void mortgageStreets(Street[] streets) {
-        Arrays.stream(streets).forEach(street -> {
-            mortgaged.put(street, 10);
-        });
+    public static void mortageStreet(Street street) {
+        mortgaged.put(street, 11);
     }
-
-
 
     public static void returnStreet(Street street) {
         mortgaged.remove(street);
@@ -103,11 +93,10 @@ public class Bank {
                 .filter(street -> street.getOwner() == bankruptPlayer)
                 .forEach(Street::loseStreet);
 
-        Text playerName = Utils.paintPlayerName(bankruptPlayer);
-        logger.logInfo(String.format("%s went bankrupt", playerName));
+        logger.logInfo(String.format("%s став банкротом", bankruptPlayer.getName()));
     }
 
-    private static void updateMortgaged() {
+    public void updateMortgaged() {
         Iterator<Map.Entry<Street, Integer>> iterator = mortgaged.entrySet().iterator();
 
         while (iterator.hasNext()) {
@@ -120,9 +109,7 @@ public class Bank {
                 streetLost.loseStreet();
                 iterator.remove();
 
-                Text streetName = Utils.paintStreetName(streetLost);
-                logger.logInfo(String.format("Mortgaged street %s lost", streetLost));
-                checkMonopolyByStreet(streetLost);
+                logger.logInfo(String.format("Закладена вулиця %s втрачена", streetLost.getName()));
             }
         }
     }
