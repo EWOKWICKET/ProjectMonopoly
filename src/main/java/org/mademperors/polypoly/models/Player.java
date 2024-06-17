@@ -15,6 +15,7 @@ public class Player {
     private int playerIndex;
     private final Color color;
 
+
     public Player(String name, int money, String color) {
         this.name = name;
         this.money = money;
@@ -25,6 +26,12 @@ public class Player {
     public void goBankrupt() {
         Bank.takeBankruptPlayerStreets(this);
         playerImageView.setVisible(false);
+    }
+
+    public void buyStreet(Street street) {
+        street.setOwner(this);
+        decreaseMoney(street.getPrice());
+        Bank.checkMonopolyByStreet(street);
     }
 
     public void addMoney(int amount) {

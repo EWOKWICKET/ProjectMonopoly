@@ -26,12 +26,6 @@ public class Street {
 
     }
 
-    public void buyStreet(Player owner) {
-        this.owner = owner;
-        rent = rentModel[0];
-        owner.decreaseMoney(price);
-    }
-
     public void tradedTo(Player newOwner) {
         owner = newOwner;
         Bank.checkMonopolyByStreet(this);
@@ -145,12 +139,6 @@ public class Street {
     public int getMortgagePrice() {
         return mortgagePrice;
     }
-
-    public void setMortgagePrice(int mortgagePrice) {
-        this.mortgagePrice = mortgagePrice;
-    }
-
-
 
     //private methods
     private void buyHouse() {

@@ -49,9 +49,11 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     public BorderPane polypolyField;
     @FXML
     public Button AddRed;
+
     @FXML
-    public Button throdDicesButton;
+    public Button throwDicesButton;
     public Button endMoveButton;
+    public Button buyStreetButton;
 
     public Label playerMoney;
     public Label playerName;
@@ -106,7 +108,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         };
     }
 
-    private final Map<StackPane, Street> streetMap = new HashMap<>();
+    private static final Map<StackPane, Street> streetMap = new HashMap<>();
     private final Map<StackPane, String> streetToType = new HashMap<>();
 
     private ImageView[] getAllPlayerImages() {
@@ -410,11 +412,11 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
             StreetCharacteristicsAlert sca = loader.getController();
             sca.setStreet(street);
+            sca.setStreetColor(street.getColor());
             sca.setToShow(isToShow);
             sca.setStreetName(street.getName());
             sca.setStreetPrices(street.getRentModel());
             sca.setMortgagedPrice(street.getMortgagePrice());
-            sca.setStreetColor(street.getColor());
             sca.setPriceForBuildingsLabel(street.getHousePrice(), street.getHotelPrice());
             sca.init();
             dialogStage.showAndWait();
@@ -513,16 +515,14 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     }
 
     @FXML
+    public void buyStreet() {
+        GameController.buyStreet(streetMap.get(getAllStackPanes()[GameController.getCurrentPlayer().getCurrentPositionIndex()]));
+    }
+
+    @FXML
     public void endTurn(MouseEvent mouseEvent) {
         if (isDiceThrown) {
-            currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
-            GameController.setCurrentPlayer(players[currentPlayerIndex]);
-            setPlayerMenu(GameController.getCurrentPlayer());
-            isDiceThrown = false;
-
-            if (players[currentPlayerIndex].isInJail()) {
-                showPrisonDialog();
-            }
+            applyTurnChanges();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Не кидані кубики");
@@ -533,6 +533,17 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         }
 //        System.out.println(currentPlayerIndex);
     }
+
+    private void applyTurnChanges() {
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+        GameController.setCurrentPlayer(players[currentPlayerIndex]);
+        setPlayerMenu(GameController.getCurrentPlayer());
+        isDiceThrown = false;
+        if (players[currentPlayerIndex].isInJail()) {
+            showPrisonDialog();
+        }
+    }
+
 
     public static void setPlayers(String[] names) {
         String[] shortenedNames = Arrays.stream(names)
