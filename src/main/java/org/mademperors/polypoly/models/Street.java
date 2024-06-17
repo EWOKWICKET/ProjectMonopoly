@@ -63,7 +63,7 @@ public class Street {
     }
 
     public void unmortgage() {
-        owner.decreaseMoney(mortgagePrice);
+        owner.decreaseMoney((int) (mortgagePrice * 1.5));
         isMortgaged = false;
         Bank.returnStreet(this);
     }

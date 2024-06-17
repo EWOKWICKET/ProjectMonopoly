@@ -104,13 +104,13 @@ public class GameController {
     //LIMIT so that it can be used only for monopolies
     public static void upgradeStreet(Street street) {
         street.upgrade();
-        logger.logInfo(String.format("%s upgraded", street.getName()));
+        logger.logInfo(String.format("Бюдівлю %s побудовано", street.getName()));
     }
 
     //LIMIT so that it can be used only for monopolies with 1 house minimum
     public static void downgradeStreet(Street street) {
         street.downgrade();
-        logger.logInfo(String.format("%s downgraded", street.getName()));
+        logger.logInfo(String.format("Будівлю %s знищено", street.getName()));
     }
 
     public static void setCurrentPlayer(Player currentPlayer) {
