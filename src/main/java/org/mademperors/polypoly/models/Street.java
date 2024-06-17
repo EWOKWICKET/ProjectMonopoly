@@ -142,15 +142,6 @@ public class Street {
     }
 
     /**
-     * Sets the rent of the street.
-     *
-     * @param rent the new rent of the street
-     */
-    public void setRent(int rent) {
-        this.rent = rent;
-    }
-
-    /**
      * Returns the number of houses on the street.
      *
      * @return the number of houses on the street
@@ -214,15 +205,6 @@ public class Street {
     }
 
     /**
-     * Sets the color of the street.
-     *
-     * @param color the new color of the street
-     */
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    /**
      * Returns whether the street has a hotel.
      *
      * @return true if the street has a hotel, false otherwise
@@ -232,48 +214,12 @@ public class Street {
     }
 
     /**
-     * Sets whether the street has a hotel.
-     *
-     * @param hasHotel true if the street has a hotel, false otherwise
-     */
-    public void setHasHotel(boolean hasHotel) {
-        this.hasHotel = hasHotel;
-    }
-
-    /**
-     * Sets whether the street is mortgaged.
-     *
-     * @param mortgaged true if the street is mortgaged, false otherwise
-     */
-    public void setMortgaged(boolean mortgaged) {
-        isMortgaged = mortgaged;
-    }
-
-    /**
-     * Sets the number of houses on the street.
-     *
-     * @param numberOfHouses the new number of houses on the street
-     */
-    public void setNumberOfHouses(int numberOfHouses) {
-        this.numberOfHouses = numberOfHouses;
-    }
-
-    /**
      * Returns the rent model of the street.
      *
      * @return the rent model of the street
      */
     public int[] getRentModel() {
         return rentModel;
-    }
-
-    /**
-     * Sets the rent model of the street.
-     *
-     * @param rentModel the new rent model of the street
-     */
-    public void setRentModel(int[] rentModel) {
-        this.rentModel = rentModel;
     }
 
     /**

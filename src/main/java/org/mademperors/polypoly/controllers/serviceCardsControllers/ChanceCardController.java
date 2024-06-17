@@ -11,7 +11,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import org.mademperors.polypoly.controllers.GameController;
-import org.mademperors.polypoly.controllers.PolypolyFieldController;
 import org.mademperors.polypoly.controllers.PolypolyGameController;
 import org.mademperors.polypoly.models.Bank;
 import org.mademperors.polypoly.models.Player;
