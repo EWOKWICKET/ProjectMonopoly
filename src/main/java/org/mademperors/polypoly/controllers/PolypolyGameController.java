@@ -129,11 +129,10 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        String musicPath = "src/main/resources/sounds/mainGameBcgrMuusic.mp3"; // Replace with your path
+        String musicPath = "src/main/resources/sounds/mainGameBcgrMusic.mp3"; // Replace with your path
         Media music = new Media(new File(musicPath).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(music);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        System.out.println(mediaPlayer.getVolume());
         mediaPlayer.setVolume(mediaPlayer.getVolume() - 0.6);
         mediaPlayer.play();
 
