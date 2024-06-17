@@ -14,6 +14,7 @@ public class Player {
     private int currentPositionIndex = 0;
     private int playerIndex;
     private final Color color;
+    private Street currentStreet;
 
     public Player(String name, int money, String color) {
         this.name = name;
@@ -25,6 +26,12 @@ public class Player {
     public void goBankrupt() {
         Bank.takeBankruptPlayerStreets(this);
         playerImageView.setVisible(false);
+    }
+
+    public void buyStreet() {
+        currentStreet.setOwner(this);
+        decreaseMoney(currentStreet.getPrice());
+        Bank.checkMonopolyByStreet(currentStreet);
     }
 
     public void addMoney(int amount) {
@@ -89,5 +96,11 @@ public class Player {
     }
     public void setPlayerIndex(int playerIndex) {
         this.playerIndex = playerIndex;
+    }
+    public Street getCurrentStreet() {
+        return currentStreet;
+    }
+    public void setCurrentStreet(Street currentStreet) {
+        this.currentStreet = currentStreet;
     }
 }

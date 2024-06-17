@@ -48,9 +48,11 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     public BorderPane polypolyField;
     @FXML
     public Button AddRed;
+
     @FXML
-    public Button throdDicesButton;
+    public Button throwDicesButton;
     public Button endMoveButton;
+    public Button buyStreetButton;
 
     public Label playerMoney;
     public Label playerName;
@@ -409,11 +411,11 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
             StreetCharacteristicsAlert sca = loader.getController();
             sca.setStreet(street);
+            sca.setStreetColor(street.getColor());
             sca.setToShow(isToShow);
             sca.setStreetName(street.getName());
             sca.setStreetPrices(street.getRentModel());
             sca.setMortgagedPrice(street.getMortgagePrice());
-            sca.setStreetColor(street.getColor());
             sca.setPriceForBuildingsLabel(street.getHousePrice(), street.getHotelPrice());
             sca.init();
             dialogStage.showAndWait();
@@ -472,12 +474,14 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     }
 
     @FXML
+    public void buyStreet() {
+        GameController.buyStreet();
+    }
+
+    @FXML
     public void endTurn(MouseEvent mouseEvent) {
         if (isDiceThrown) {
-            currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
-            GameController.setCurrentPlayer(players[currentPlayerIndex]);
-            setPlayerMenu(GameController.getCurrentPlayer());
-            isDiceThrown = false;
+            applyTurnChanges();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Не кидані кубики");
@@ -488,6 +492,14 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         }
 //        System.out.println(currentPlayerIndex);
     }
+
+    private void applyTurnChanges() {
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+        GameController.setCurrentPlayer(players[currentPlayerIndex]);
+        setPlayerMenu(GameController.getCurrentPlayer());
+        isDiceThrown = false;
+    }
+
 
     public static void setPlayers(String[] names) {
         String[] shortenedNames = Arrays.stream(names)

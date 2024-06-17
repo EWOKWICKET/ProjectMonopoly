@@ -7,6 +7,7 @@ import javafx.animation.Timeline;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.mademperors.polypoly.listeners.DiceResultListener;
+import org.mademperors.polypoly.models.Bank;
 import org.mademperors.polypoly.models.GameLogger;
 import org.mademperors.polypoly.models.Player;
 import org.mademperors.polypoly.models.Street;
@@ -55,6 +56,10 @@ public class GameController {
 //            pause.play();
         });
         timeline.play();
+    }
+
+    public static void buyStreet() {
+        currentPlayer.buyStreet();
     }
 
     public static void trade(int p1Money, Street[] p1Streets, int p1JailFreeCardsAmount, Player p2, int p2Money, Street[] p2Streets, int p2JailFreeCardsAmount) {
