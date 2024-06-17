@@ -8,14 +8,18 @@ public class GameLogger implements Logger {
     private static final GameLogger instance = new GameLogger();
 
     @FXML
-    private TextArea statisticsTextArea;
+    private static TextArea statisticsTextArea;
 
     public static GameLogger getInstance() {
         return instance;
     }
 
+    public static void setStatisticsTextArea(TextArea statisticsTextArea) {
+        GameLogger.statisticsTextArea = statisticsTextArea;
+    }
+
     @Override
     public void logInfo(String message) {
-        statisticsTextArea.appendText(message + "\n");
+        statisticsTextArea.insertText(0, message + "\n");
     }
 }
