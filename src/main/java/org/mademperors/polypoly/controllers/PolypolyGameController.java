@@ -177,7 +177,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         Arrays.stream(playerStreets).forEach(street -> {
             if (!colors.contains(street.getColor())) {
                 HBox streetOne = new HBox();
-                streetOne.setStyle("-fx-background-color: " + street.getColor() + ";");
+                streetOne.setStyle("-fx-background-color: " + street.getColor() + "; -fx-border-width: 3; -fx-border-color: black;");
                 streetOne.setPadding(new Insets(5));
                 streetOne.setPrefHeight(50);
                 streetOne.setOnMouseClicked(event -> {
@@ -276,14 +276,14 @@ public class PolypolyGameController implements Initializable, DiceResultListener
             HBox streetOne = new HBox();
             if (street.getColor().equals(color)) {
                 colorStreets.setSpacing(10);
-                streetOne.setStyle("-fx-background-color: " + color + ";");
+                streetOne.setStyle("-fx-background-color: " + color + "; -fx-border-width: 3; -fx-border-color: black;");
                 streetOne.setPadding(new Insets(5));
                 streetOne.setPrefHeight(50);
                 streetOne.setAlignment(Pos.CENTER); // Center align contents in the HBox
 
                 // Create label with street name
                 Label nameLabel = new Label(street.getName());
-                nameLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px;"); // Example styles
+                nameLabel.setStyle("-fx-text-fill: black; -fx-font-size: 16px;"); // Example styles
                 nameLabel.setAlignment(Pos.CENTER); // Center align label text
                 nameLabel.setWrapText(true); // Wrap text if it's too long
 
