@@ -12,6 +12,9 @@ import org.mademperors.polypoly.controllers.GameController;
 import org.mademperors.polypoly.models.Bank;
 import org.mademperors.polypoly.models.Street;
 
+/**
+ * This class represents an alert for displaying street characteristics.
+ */
 public class StreetCharacteristicsAlert {
 
     public FlowPane buttonPanel;
@@ -41,11 +44,22 @@ public class StreetCharacteristicsAlert {
     private boolean boughtHouseThisTurn = false;
     private Street street;
 
+    /**
+     * Sets the price for buildings label.
+     * 
+     * @param priceForHouse The price for a house.
+     * @param priceForHotel The price for a hotel.
+     */
     public void setPriceForBuildingsLabel(int priceForHouse, int priceForHotel) {
         priceForHouseLabel.setText("Будинок- по " + priceForHouse + " за кожний");
         priceForHotelLabel.setText("Готель- за " + priceForHouse);
     }
 
+    /**
+     * Sets the street prices.
+     * 
+     * @param rentModel An array of rent prices.
+     */
     public void setStreetPrices(int[] rentModel) {
         streetPrice.setText(String.valueOf(rentModel[0]));
         monopolyStreetPrice.setText(String.valueOf(rentModel[1]));
@@ -56,22 +70,47 @@ public class StreetCharacteristicsAlert {
         hotelPrice.setText(String.valueOf(rentModel[6]));
     }
 
+    /**
+     * Sets the mortgaged price.
+     * 
+     * @param mortgagedPrice The mortgaged price.
+     */
     public void setMortgagedPrice(int mortgagedPrice) {
         mortgagePrice.setText("Залогова ціна: " + mortgagedPrice);
     }
 
+    /**
+     * Sets the street color.
+     * 
+     * @param color The color of the street.
+     */
     public void setStreetColor(String color) {
         streetColor.setStyle("-fx-background-color: " + color + "; -fx-border-color:red; -fx-border-width:7;");
     }
 
+    /**
+     * Sets the street name.
+     * 
+     * @param name The name of the street.
+     */
     public void setStreetName(String name) {
         streetName.setText(name);
     }
 
+    /**
+     * Sets the street.
+     * 
+     * @param street The street object.
+     */
     public void setStreet(Street street) {
         this.street = street;
     }
 
+    /**
+     * Sets whether to show the alert.
+     * 
+     * @param toShow True to show the alert, false otherwise.
+     */
     public void setToShow(boolean toShow) {
         isToShow = toShow;
         if (isToShow) {
@@ -81,6 +120,11 @@ public class StreetCharacteristicsAlert {
         }
     }
 
+    /**
+     * Handles the trade event.
+     * 
+     * @param mouseEvent The mouse event.
+     */
     public void trade(MouseEvent mouseEvent) {
         if (street.getNumberOfHouses() == 0) {
             System.out.println("trading");
@@ -95,7 +139,11 @@ public class StreetCharacteristicsAlert {
         }
     }
 
-
+    /**
+     * Handles the mortgage event.
+     * 
+     * @param mouseEvent The mouse event.
+     */
     public void mortage(MouseEvent mouseEvent) {
         if (street.getNumberOfHouses() == 0) {
             GameController.mortgageActions(street);
@@ -110,7 +158,9 @@ public class StreetCharacteristicsAlert {
         }
     }
 
-
+    /**
+     * Initializes the alert.
+     */
     public void init() {
         Bank.checkMonopolyByStreet(street);
         if (street.isMortgaged()) {
@@ -145,6 +195,11 @@ public class StreetCharacteristicsAlert {
         }
     }
 
+    /**
+     * Handles the downgrade street event.
+     * 
+     * @param mouseEvent The mouse event.
+     */
     @FXML
     public void downgradeStreet(MouseEvent mouseEvent) {
 
@@ -152,6 +207,11 @@ public class StreetCharacteristicsAlert {
         init();
     }
 
+    /**
+     * Handles the upgrade street event.
+     * 
+     * @param mouseEvent The mouse event.
+     */
     @FXML
     public void upgradeStreet(MouseEvent mouseEvent) {
         int playerMoney = street.getOwner().getMoney();
@@ -170,6 +230,9 @@ public class StreetCharacteristicsAlert {
 
     }
 
+    /**
+     * Checks the buttons.
+     */
     public void checkButtons() {
         if (street.isMonopoly()) {
             checkUpgradeButton();
@@ -180,10 +243,16 @@ public class StreetCharacteristicsAlert {
         }
     }
 
+    /**
+     * Checks the downgrade button.
+     */
     private void checkDowngradeButton() {
         downgradeStreetButton.setDisable(street.getNumberOfHouses() == 0);
     }
 
+    /**
+     * Checks the upgrade button.
+     */
     private void checkUpgradeButton() {
         int ownerMoney = street.getOwner().getMoney();
 
@@ -194,6 +263,11 @@ public class StreetCharacteristicsAlert {
         }
     }
 
+    /**
+     * Sets whether a house was bought this turn.
+     * 
+     * @param boughtHouseThisTurn True if a house was bought this turn, false otherwise.
+     */
     public void setBoughtHouseThisTurn(boolean boughtHouseThisTurn) {
         this.boughtHouseThisTurn = boughtHouseThisTurn;
         this.upgradeStreetButton.setDisable(boughtHouseThisTurn);

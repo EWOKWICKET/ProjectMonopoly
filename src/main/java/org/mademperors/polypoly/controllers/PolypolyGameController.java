@@ -27,7 +27,6 @@ import org.mademperors.polypoly.StreetCharacteristicsAlert;
 import org.mademperors.polypoly.listeners.DiceResultListener;
 import org.mademperors.polypoly.models.*;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,13 +34,15 @@ import java.net.URL;
 import java.util.*;
 import java.util.List;
 
+/**
+ * Controller class for the Polypoly game.
+ */
 public class PolypolyGameController implements Initializable, DiceResultListener {
-
 
     private static Player[] players;
     private static int initialMoney;
 
-    //Dice interfaces and fields
+    // Dice interfaces and fields
     private static int lastDiceResult;
     private static int doublesInRow = 0;
     private static int currentPlayerIndex = 0;
@@ -53,12 +54,10 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     public BorderPane polypolyField;
     @FXML
     public Button AddRed;
-
     @FXML
     public Button throwDicesButton;
     public Button endMoveButton;
     public Button buyStreetButton;
-
     public Label playerMoney;
     public Label playerName;
     @FXML
@@ -73,39 +72,37 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     public ImageView player5;
     @FXML
     private VBox paneForStreetColors;
-
     @FXML
     private VBox paneForStreets;
-
     @FXML
     private BorderPane panelForPolypolyField;
     @FXML
     private BorderPane dice1, dice2;
-
-
     @FXML
     private BorderPane eventCard;
-    private boolean isEventCardPresent=false;
-
+    private boolean isEventCardPresent = false;
     @FXML
     private TextArea eventCardTextArea;
-
     @FXML
     private TextArea statisticsTextArea;
-
     @FXML
     private StackPane field1, field2, field3, field4, field5, field6, field7, field8, field9, field10,
             field11, field12, field13, field14, field15, field16, field17, field18, field19, field20,
             field21, field22, field23, field24, field25, field26, field27, field28, field29, field30,
             field31, field32, field33, field34, field35, field36, field37, field38, field39, field40;
 
-
     private Bank bank;
     private GameLogger logger;
     private Street[] playerStreets;
 
+    private final Map<StackPane, Street> streetMap = new HashMap<>();
+    private final Map<StackPane, String> streetToType = new HashMap<>();
 
-    // Method to return an array of all StackPanes
+    /**
+     * Method to return an array of all StackPanes.
+     *
+     * @return an array of all StackPanes
+     */
     private StackPane[] getAllStackPanes() {
         return new StackPane[]{
                 field1, field2, field3, field4, field5, field6, field7, field8, field9, field10,
@@ -115,9 +112,11 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         };
     }
 
-    private final Map<StackPane, Street> streetMap = new HashMap<>();
-    private final Map<StackPane, String> streetToType = new HashMap<>();
-
+    /**
+     * Method to return an array of all player ImageViews.
+     *
+     * @return an array of all player ImageViews
+     */
     private ImageView[] getAllPlayerImages() {
         return new ImageView[]{
                 player1,
@@ -130,13 +129,12 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         String musicPath = "src/main/resources/sounds/mainGameBcgrMuusic.mp3"; // Replace with your path
         Media music = new Media(new File(musicPath).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(music);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         System.out.println(mediaPlayer.getVolume());
-        mediaPlayer.setVolume(mediaPlayer.getVolume()-0.6);
+        mediaPlayer.setVolume(mediaPlayer.getVolume() - 0.6);
         mediaPlayer.play();
 
         bank = new Bank();
@@ -147,12 +145,15 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         setPlayerMenu(GameController.getCurrentPlayer());
         GameLogger.setStatisticsTextArea(statisticsTextArea);
         soundManager = new SoundManager();
-
-//        statisticsTextArea.appendText("123412342134");
     }
 
+    /**
+     * Sets the player menu with the current player's details.
+     *
+     * @param player the current player
+     */
     public void setPlayerMenu(Player player) {
-        if(!isEventCardPresent){
+        if (!isEventCardPresent) {
             eventCard.setTop(null);
             eventCard.setBottom(null);
             eventCard.setLeft(null);
@@ -164,7 +165,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         playerStreets = Arrays.stream(bank.getAllStreets()).flatMap(Arrays::stream).filter(street -> street.getOwner() == player).toArray(Street[]::new);
 
         VBox colorStreets = paneForStreetColors;
-        //clear panes
+        // clear panes
         paneForStreets.getChildren().clear();
         colorStreets.getChildren().clear();
 
@@ -172,7 +173,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         Label steets = new Label("Вулиці:");
         steets.setStyle("-fx-font-size: 30px;");
         colorStreets.getChildren().add(steets);
-        //set street colors in vBox
+        // set street colors in vBox
         ArrayList<String> colors = new ArrayList<>();
         Arrays.stream(playerStreets).forEach(street -> {
             if (!colors.contains(street.getColor())) {
@@ -189,10 +190,16 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         });
     }
 
+    /**
+     * Updates the player's money display.
+     */
     public void updateMoney() {
         playerMoney.setText("Гроші: " + players[currentPlayerIndex].getMoney());
     }
 
+    /**
+     * Initializes the street to type mapping.
+     */
     private void initStreetToType() {
         streetToType.put(field1, "start");
         streetToType.put(field2, "street");
@@ -236,6 +243,9 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         streetToType.put(field40, "street");
     }
 
+    /**
+     * Initializes player images.
+     */
     public void initPlayerImages() {
         String[] images = {"/assets/players/blue.png",
                 "/assets/players/red.png",
@@ -253,6 +263,12 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         }
     }
 
+    /**
+     * Shows the streets of a specific color.
+     *
+     * @param color         the color of the streets
+     * @param playerStreets the player's streets
+     */
     private void showStreetThisColor(String color, Street[] playerStreets) {
         VBox colorStreets = paneForStreets;
         colorStreets.getChildren().clear();
@@ -286,6 +302,11 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         });
     }
 
+    /**
+     * Initializes the streets on the game board.
+     *
+     * @param allStreets the array of all streets
+     */
     private void initStreets(Street[][] allStreets) {
         StackPane[] streets = getAllStackPanes();
         int index = 0;
@@ -323,6 +344,11 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         }
     }
 
+    /**
+     * Sets the services (e.g., Chance, Tax) on the game board.
+     *
+     * @param streets the array of all StackPanes
+     */
     private void setServices(StackPane[] streets) {
         setChance(4, streets);
         setTax(6, 200, streets);
@@ -341,6 +367,12 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         setChance(38, streets);
     }
 
+    /**
+     * Sets a city on the game board.
+     *
+     * @param i       the index of the city
+     * @param streets the array of all StackPanes
+     */
     private void setCity(int i, StackPane[] streets) {
         ObservableList<Node> nodes = streets[i - 1].getChildren();
         for (Node node : nodes) {
@@ -371,10 +403,16 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         }
     }
 
+    /**
+     * Sets a tax on the game board.
+     *
+     * @param i        the index of the tax field
+     * @param taxPrice the tax price
+     * @param streets  the array of all StackPanes
+     */
     private void setTax(int i, int taxPrice, StackPane[] streets) {
         ObservableList<Node> nodes = streets[i - 1].getChildren();
         for (Node node : nodes) {
-
             if (node.getClass().toString().contains("AnchorPane")) {
                 AnchorPane ap = (AnchorPane) node;
                 ap.setStyle("-fx-background-color: white;");
@@ -388,11 +426,16 @@ public class PolypolyGameController implements Initializable, DiceResultListener
                         realLabel.setText("$ " + taxPrice);
                     }
                 }
-
             }
         }
     }
 
+    /**
+     * Sets a chance on the game board.
+     *
+     * @param i       the index of the chance field
+     * @param streets the array of all StackPanes
+     */
     private void setChance(int i, StackPane[] streets) {
         ObservableList<Node> nodes = streets[i - 1].getChildren();
         for (Node node : nodes) {
@@ -421,9 +464,15 @@ public class PolypolyGameController implements Initializable, DiceResultListener
                 labels.removeAll(nodesToRemove);
             }
         }
-
     }
 
+    /**
+     * Shows the alert dialog for a street.
+     *
+     * @param streetOne the street node
+     * @param street    the street object
+     * @param isToShow  whether to show the dialog
+     */
     private void showAlertDialog(Node streetOne, Street street, boolean isToShow) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/mademperors/polypoly/streetCard.fxml"));
@@ -456,6 +505,9 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         }
     }
 
+    /**
+     * Shows the prison dialog.
+     */
     private void showPrisonDialog() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/mademperors/polypoly/prison.fxml"));
@@ -495,45 +547,30 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         }
     }
 
+    /**
+     * Handles the action of the Add Red button.
+     *
+     * @param mouseEvent the mouse event
+     */
     public void addRed(MouseEvent mouseEvent) {
         showPrisonDialog();
-//        VBox colorStreets = paneForStreetColors;
-//        HBox streetOne = new HBox();
-//        streetOne.setStyle("-fx-background-color: red;");
-//        streetOne.setPadding(new Insets(5));
-//        streetOne.setPrefHeight(50);
-//        streetOne.setOnMouseClicked(event -> {
-//            showAlertDialog(streetOne, bank.getAllStreets()[0][0], false);
-//        });
-//        colorStreets.getChildren().add(streetOne);
-//
-//
-//        GameController.throwDices(this);
     }
 
+    /**
+     * Handles the action of the Throw Dices button.
+     *
+     * @param mouseEvent the mouse event
+     */
     @FXML
     public void throwDices(MouseEvent mouseEvent) {
-
-//        AnchorPane anp = (AnchorPane) polypolyField.getCenter();
-//        for (Node node : anp.getChildren()) {
-//
-//            if (node.getId() != null && node.getId().equals("dice1")) {
-//                BorderPane bp = (BorderPane) node;
-//                bp.setCenter(GameController.diceImageView1);
-//            }
-//            if (node.getId() != null && node.getId().equals("dice2")) {
-//                BorderPane bp = (BorderPane) node;
-//                bp.setCenter(GameController.diceImageView2);
-//            }
-//        }
-        if(GameController.getCurrentPlayer().isInJail()){
+        if (GameController.getCurrentPlayer().isInJail()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Ви у в'язниці");
             alert.setHeaderText(null);
             alert.setContentText("Ви у в'язниці. Ви не можете кидати ходити");
 
             alert.showAndWait();
-        }else {
+        } else {
             if (!isDiceThrown) {
                 soundManager.playThrow();
                 GameController.throwDices(this);
@@ -550,6 +587,9 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         }
     }
 
+    /**
+     * Handles the action of the Buy Street button.
+     */
     @FXML
     public void buyStreet() {
         soundManager.playPay();
@@ -560,6 +600,11 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         setPlayerMenu(GameController.getCurrentPlayer());
     }
 
+    /**
+     * Updates the street display.
+     *
+     * @param streetIndex the index of the street
+     */
     public void updateStreet(int streetIndex) {
         StackPane street = getAllStackPanes()[streetIndex];
         Street streetObj = streetMap.get(street);
@@ -586,20 +631,22 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         street.setBorder(ownerBorder);
     }
 
+    /**
+     * Handles the action of the End Turn button.
+     */
     @FXML
     public void endTurn() {
         if (isDiceThrown && !isEventCardPresent) {
             applyTurnChanges();
         } else {
-            if(!isDiceThrown) {
+            if (!isDiceThrown) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Не кидані кубики");
                 alert.setHeaderText(null);
                 alert.setContentText("Ви ще не кинули кубики. Не можна закінчити хід, не кинувши кубики.");
 
                 alert.showAndWait();
-            }
-            else{
+            } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Не виконане завдання");
                 alert.setHeaderText(null);
@@ -608,9 +655,11 @@ public class PolypolyGameController implements Initializable, DiceResultListener
                 alert.showAndWait();
             }
         }
-//        System.out.println(currentPlayerIndex);
     }
 
+    /**
+     * Applies changes for the turn.
+     */
     private void applyTurnChanges() {
         buyStreetButton.setDisable(true);
 
@@ -643,16 +692,18 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         if (players[currentPlayerIndex].isInJail()) {
             showPrisonDialog();
         }
-
     }
 
-
+    /**
+     * Sets the players for the game.
+     *
+     * @param names the array of player names
+     */
     public static void setPlayers(String[] names) {
         String[] shortenedNames = Arrays.stream(names)
                 .filter(Objects::nonNull)
                 .toArray(String[]::new);
 
-//        String[] colors = {"#0000FF", "#FF0000", "#008000","#800080", "#FFFF00"};
         String[] colors = {"blue", "red", "green", "purple", "yellow"};
 
         players = new Player[shortenedNames.length];
@@ -660,22 +711,16 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         for (int i = 0; i < shortenedNames.length; i++) {
             players[i] = new Player(shortenedNames[i], initialMoney, colors[i]);
             players[i].setPlayerIndex(i);
-//            if (i == 0) {
-//                Bank bn = new Bank();
-//                bn.getAllStreets()[0][0].setOwner(players[i]);
-//                Street st = bn.getAllStreets()[0][1];
-//                st.setMortgaged(true);
-//                st.setOwner(players[i]);
-//            }
-//            if (i == 1) {
-//                Bank bn = new Bank();
-//                bn.getAllStreets()[0][2].setOwner(players[i]);
-//            }
         }
 
         GameController.setCurrentPlayer(players[currentPlayerIndex]);
     }
 
+    /**
+     * Sets the initial money for each player.
+     *
+     * @param initialMoney the initial money
+     */
     public static void setInitialMoney(int initialMoney) {
         PolypolyGameController.initialMoney = initialMoney;
     }
@@ -723,12 +768,13 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         players[currentPlayerIndex].setCurrentPositionIndex(newPositionIndex);
 
         switch (streetToType.get(getAllStackPanes()[newPositionIndex])) {
-            case "start" -> {}
+            case "start" -> {
+            }
             case "street" -> {
                 stepOnStreet();
             }
             case "chance" -> {
-                isEventCardPresent=true;
+                isEventCardPresent = true;
                 ServiceCards.showChance(eventCard, GameController.getCurrentPlayer());
             }
             case "tax" -> {
@@ -738,7 +784,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
                 setPlayerMenu(GameController.getCurrentPlayer());
             }
             case "city" -> {
-                isEventCardPresent=true;
+                isEventCardPresent = true;
                 ServiceCards.showCity(eventCard, GameController.getCurrentPlayer());
             }
             case "jail", "goToJail" -> {
@@ -752,6 +798,11 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         setPlayerMenu(GameController.getCurrentPlayer());
     }
 
+    /**
+     * Updates the player's position on the game board.
+     *
+     * @param newPositionIndex the new position index
+     */
     public void updatePlayerPosition(int newPositionIndex) {
         soundManager.playChipMoving();
 
@@ -771,8 +822,11 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         });
     }
 
+    /**
+     * Sends the player to jail.
+     */
     public void goToJail() {
-        isDiceThrown=true;
+        isDiceThrown = true;
         soundManager.playToJail();
         players[currentPlayerIndex].setCurrentPositionIndex(10);
         updatePlayerPosition(10);
@@ -780,6 +834,9 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         logger.logInfo(players[currentPlayerIndex].getName() + " потрапив до в'язниці");
     }
 
+    /**
+     * Handles the player stepping on a street.
+     */
     private void stepOnStreet() {
         Street street = streetMap.get(getAllStackPanes()[players[currentPlayerIndex].getCurrentPositionIndex()]);
         if (street.getOwner() != null) {
@@ -797,35 +854,66 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         }
     }
 
+    /**
+     * Sets whether the dice have been thrown.
+     *
+     * @param thrown whether the dice have been thrown
+     */
     public static void setDiceThrown(boolean thrown) {
         isDiceThrown = thrown;
     }
 
+    /**
+     * Gets the bank.
+     *
+     * @return the bank
+     */
     public Bank getBank() {
         return bank;
     }
 
+    /**
+     * Sets the bank.
+     *
+     * @param bank the bank
+     */
     public void setBank(Bank bank) {
         this.bank = bank;
     }
 
+    /**
+     * Gets whether an event card is present.
+     *
+     * @return whether an event card is present
+     */
     public boolean isEventCardPresent() {
         return isEventCardPresent;
     }
 
+    /**
+     * Sets whether an event card is present.
+     *
+     * @param eventCardPresent whether an event card is present
+     */
     public void setEventCardPresent(boolean eventCardPresent) {
         isEventCardPresent = eventCardPresent;
     }
 
+    /**
+     * Gets the players.
+     *
+     * @return the players
+     */
     public static Player[] getPlayers() {
         return players;
     }
 
+    /**
+     * Sets the players.
+     *
+     * @param players the players
+     */
     public static void setPlayers(Player[] players) {
         PolypolyGameController.players = players;
     }
 }
-
-
-
-

@@ -16,6 +16,9 @@ import org.mademperors.polypoly.models.Street;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * The GameController class is responsible for controlling the game logic of the Polypoly game.
+ */
 public class GameController {
     private static Player currentPlayer;
 
@@ -36,6 +39,11 @@ public class GameController {
 
     public static final ImageView diceImageView1 = new ImageView(DICES[1]), diceImageView2 = new ImageView(DICES[2]);
 
+    /**
+     * Throws the dice and invokes the provided listener with the dice result.
+     *
+     * @param listener The listener to be invoked with the dice result.
+     */
     public static void throwDices(DiceResultListener listener) {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.115), e -> {
             diceImageView1.setImage(DICES[rnd.nextInt(0, DICES.length)]);
@@ -59,11 +67,27 @@ public class GameController {
         timeline.play();
     }
 
+    /**
+     * Buys the specified street for the current player.
+     *
+     * @param street The street to be bought.
+     */
     public static void buyStreet(Street street) {
         currentPlayer.buyStreet(street);
         logger.logInfo(String.format("%s купив %s", currentPlayer.getName(), street.getName()));
     }
 
+    /**
+     * Trades properties, money, and jail free cards between two players.
+     *
+     * @param p1Money              The amount of money to be traded from player 1 to player 2.
+     * @param p1Streets            The streets to be traded from player 1 to player 2.
+     * @param p1JailFreeCardsAmount The number of jail free cards to be traded from player 1 to player 2.
+     * @param p2                   The player to trade with.
+     * @param p2Money              The amount of money to be traded from player 2 to player 1.
+     * @param p2Streets            The streets to be traded from player 2 to player 1.
+     * @param p2JailFreeCardsAmount The number of jail free cards to be traded from player 2 to player 1.
+     */
     public static void trade(int p1Money, Street[] p1Streets, int p1JailFreeCardsAmount, Player p2, int p2Money, Street[] p2Streets, int p2JailFreeCardsAmount) {
         //to player 1(currentPlayer)
         currentPlayer.addMoney(p2Money);
@@ -90,6 +114,11 @@ public class GameController {
         logger.logInfo(info2.toString());
     }
 
+    /**
+     * Performs mortgage actions on the specified street.
+     *
+     * @param street The street to perform mortgage actions on.
+     */
     public static void mortgageActions(Street street) {
         if (street.isMortgaged()) {
             street.unmortgage();
@@ -101,22 +130,42 @@ public class GameController {
         }
     }
 
-    //LIMIT so that it can be used only for monopolies
+    /**
+     * Upgrades the specified street.
+     * This method can only be used for monopolies.
+     *
+     * @param street The street to be upgraded.
+     */
     public static void upgradeStreet(Street street) {
         street.upgrade();
         logger.logInfo(String.format("Бюдівлю %s побудовано", street.getName()));
     }
 
-    //LIMIT so that it can be used only for monopolies with 1 house minimum
+    /**
+     * Downgrades the specified street.
+     * This method can only be used for monopolies with at least 1 house.
+     *
+     * @param street The street to be downgraded.
+     */
     public static void downgradeStreet(Street street) {
         street.downgrade();
         logger.logInfo(String.format("Будівлю %s знищено", street.getName()));
     }
 
+    /**
+     * Sets the current player.
+     *
+     * @param currentPlayer The current player.
+     */
     public static void setCurrentPlayer(Player currentPlayer) {
         GameController.currentPlayer = currentPlayer;
     }
 
+    /**
+     * Gets the current player.
+     *
+     * @return The current player.
+     */
     public static Player getCurrentPlayer() {
         return currentPlayer;
     }

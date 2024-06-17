@@ -4,10 +4,22 @@ import javafx.scene.text.Text;
 
 import java.util.*;
 
+/**
+ * The Bank class represents the bank in the PolyPoly game. It manages the streets, mortgages, and other operations related to the game.
+ */
+/**
+ * The Bank class represents the bank in the PolyPoly game. It manages the streets, mortgages, and ownership of properties.
+ */
 public class Bank {
 
+    /**
+     * The logger instance used for logging game information.
+     */
     private static final GameLogger logger = GameLogger.getInstance();
 
+    /**
+     * The array of streets in the game.
+     */
     private static final Street[][] streets = {
             {
                     new Street("пл. Галицька", 230, new int[]{23,46,115,345,650,975,1075}, 120, 130, "lightblue"),
@@ -51,20 +63,32 @@ public class Bank {
             }
     };
 
+    /**
+     * A map that stores the mortgaged streets and their mortgage values.
+     */
     private static final Map<Street, Integer> mortgaged = new HashMap<Street, Integer>();
 
+    /**
+     * Mortgages a street by adding it to the mortgaged map with a mortgage value.
+     *
+     * @param street The street to be mortgaged.
+     */
     public static void mortageStreet(Street street) {
         mortgaged.put(street, 11);
     }
 
-//    public static void checkMonopolies() {
-//        Arrays.stream(streets).forEach(Bank::checkMonopoly);
-//    }
-
+    /**
+     * Updates the state of the bank at the start of each turn.
+     */
     public void nextTurn() {
         updateMortgaged();
     }
 
+    /**
+     * Checks if a monopoly group of streets is owned by the same player and marks them as a monopoly if true.
+     *
+     * @param monopolyGroup The group of streets to check for monopoly.
+     */
     public static void checkMonopoly(Street[] monopolyGroup) {
         Player firstOwner = monopolyGroup[0].getOwner();
         if (firstOwner == null) {
@@ -80,6 +104,11 @@ public class Bank {
         }
     }
 
+    /**
+     * Checks if a street belongs to a monopoly group and calls the checkMonopoly method for that group.
+     *
+     * @param street The street to check for monopoly.
+     */
     public static void checkMonopolyByStreet(Street street) {
         Optional<Street[]> monopolyGroup = Arrays.stream(streets)
                 .filter(group -> Arrays.asList(group).contains(street))
@@ -88,18 +117,31 @@ public class Bank {
         monopolyGroup.ifPresent(Bank::checkMonopoly);
     }
 
+    /**
+     * Mortgages an array of streets by adding them to the mortgaged map with mortgage values.
+     *
+     * @param streets The array of streets to be mortgaged.
+     */
     public static void mortgageStreets(Street[] streets) {
         Arrays.stream(streets).forEach(street -> {
             mortgaged.put(street, 10);
         });
     }
 
-
-
+    /**
+     * Removes a street from the mortgaged map.
+     *
+     * @param street The street to be returned.
+     */
     public static void returnStreet(Street street) {
         mortgaged.remove(street);
     }
 
+    /**
+     * Takes all the streets owned by a bankrupt player and removes them from the game.
+     *
+     * @param bankruptPlayer The bankrupt player.
+     */
     public static void takeBankruptPlayerStreets(Player bankruptPlayer) {
         Arrays.stream(streets)
                 .flatMap(Arrays::stream)
@@ -109,6 +151,9 @@ public class Bank {
         logger.logInfo(String.format("%s став банкротом", bankruptPlayer.getName()));
     }
 
+    /**
+     * Updates the mortgage status of the streets in the mortgaged map.
+     */
     public void updateMortgaged() {
         Iterator<Map.Entry<Street, Integer>> iterator = mortgaged.entrySet().iterator();
 
@@ -127,8 +172,12 @@ public class Bank {
         }
     }
 
+    /**
+     * Returns the array of all streets in the game.
+     *
+     * @return The array of all streets.
+     */
     public Street[][] getAllStreets(){
         return streets;
     }
-
 }

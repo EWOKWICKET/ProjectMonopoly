@@ -24,8 +24,14 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Controller class for the Edit Players Menu.
+ */
 public class EditPlayersMenuController implements Initializable {
 
+    /**
+     * The player images.
+     */
     public Circle player1Image, player2Image, player3Image, player4Image, player5Image;
 
     @FXML
@@ -46,6 +52,12 @@ public class EditPlayersMenuController implements Initializable {
     private int initialMoney, players;
     private MediaPlayer mediaPlayer;
 
+    /**
+     * Event handler for the "Begin Game" button click.
+     * Starts the game with the entered player names.
+     *
+     * @param event The mouse event.
+     */
     @FXML
     void beginGame(MouseEvent event) {
         String[] playerNames = new String[5];
@@ -63,7 +75,6 @@ public class EditPlayersMenuController implements Initializable {
                 fadeOutMusic();
                 // Set the new scene
                 stage.setScene(new Scene(polypolyGame));
-
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -93,6 +104,7 @@ public class EditPlayersMenuController implements Initializable {
 
             // Set the content text
             alert.setContentText("Введіть коректні назви гравців. Не може бути гравців з однаковими іменами або без імені.");
+
             // Show the Alert dialog and wait for user response
             alert.showAndWait();
         }
@@ -116,6 +128,12 @@ public class EditPlayersMenuController implements Initializable {
         timer.schedule(task, 0, 10); // Adjust delay and period for fade duration
     }
 
+    /**
+     * Checks if all player names are valid.
+     *
+     * @param playerNames The array to store the player names.
+     * @return True if all names are valid, false otherwise.
+     */
     private boolean isAllNamesNormal(String[] playerNames) {
         return checkPLayer(playerName1.getText(), playerNames, 1) &&
                 checkPLayer(playerName2.getText(), playerNames, 2) &&
@@ -124,12 +142,25 @@ public class EditPlayersMenuController implements Initializable {
                 checkPLayer(playerName5.getText(), playerNames, 5);
     }
 
+    /**
+     * Gets an array of player names.
+     *
+     * @return The array of player names.
+     */
     public String[] getArrayOfPlayers() {
         String[] playerNames = new String[5];
         isAllNamesNormal(playerNames);
         return playerNames;
     }
 
+    /**
+     * Checks if a player name is valid and stores it in the playerNames array.
+     *
+     * @param playerName   The player name to check.
+     * @param playerNames  The array to store the player names.
+     * @param playerNumber The player number.
+     * @return True if the name is valid, false otherwise.
+     */
     private boolean checkPLayer(String playerName, String[] playerNames, int playerNumber) {
         if (playerNumber > players) {
             return true;
@@ -148,16 +179,22 @@ public class EditPlayersMenuController implements Initializable {
         }
     }
 
+    /**
+     * Event handler for the "Go to Menu" button click.
+     * Navigates back to the main menu.
+     *
+     * @param event The mouse event.
+     */
     @FXML
     void goToMenu(MouseEvent event) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/mademperors/polypoly/MainMenu.fxml"));
         try {
-
             Parent mainMenu = loader.load();
             MainMenuController mainMenuController = loader.getController();
 
             mainMenuController.setPlayerAndMoney(players, initialMoney);
             Stage stage = (Stage) goBackToMenu.getScene().getWindow();
+
             // Set the new scene
             stage.setScene(new Scene(mainMenu));
         } catch (IOException e) {
@@ -172,11 +209,18 @@ public class EditPlayersMenuController implements Initializable {
 
             // Set the content text
             alert.setContentText("Упс.. Щось пішло не так");
+
             // Show the Alert dialog and wait for user response
             alert.showAndWait();
         }
     }
 
+    /**
+     * Sets the grid of players based on the number of players and initial money.
+     *
+     * @param players The number of players.
+     * @param money   The initial money.
+     */
     void setGridOfPlayers(int players, int money) {
         this.initialMoney = money;
         this.players = players;
@@ -215,8 +259,14 @@ public class EditPlayersMenuController implements Initializable {
         fillCircle(player5Image, "file:src/main/resources/assets/players/yellow.png");
     }
 
-    private void fillCircle(Circle playerImage, String s) {
-        Image image = new Image(s);
+    /**
+     * Fills the player image circle with the specified image.
+     *
+     * @param playerImage The player image circle.
+     * @param imagePath   The path to the image.
+     */
+    private void fillCircle(Circle playerImage, String imagePath) {
+        Image image = new Image(imagePath);
         playerImage.setFill(new ImagePattern(image));
     }
 
