@@ -600,6 +600,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         });
         stackPanes[newPositionIndex].getChildren().forEach(node -> {
             if (node instanceof FlowPane fp) {
+                GameController.getCurrentPlayer().setCurrentStreet(streetMap.get(stackPanes[newPositionIndex]));
                 fp.getChildren().add(currentPlayerImageView);
             }
         });

@@ -12,9 +12,10 @@ public class Player {
     private int jailFreeCards = 0;
     private ImageView playerImageView;
     private int currentPositionIndex = 0;
+    private Street currentStreet;
     private int playerIndex;
     private final Color color;
-    private Street currentStreet;
+
 
     public Player(String name, int money, String color) {
         this.name = name;
