@@ -14,13 +14,13 @@ public class Street {
     private Player owner = null;
     private String color;
 
-    public Street(String name, int price, int[] rentModel, int housePrice, int hotelPrice, int mortgagePrice, String color) {
+    public Street(String name, int price, int[] rentModel, int housePrice, int hotelPrice, String color) {
         this.name = name;
         this.price = price;
         this.rentModel = rentModel;
         this.housePrice = housePrice;
         this.hotelPrice = hotelPrice;
-        this.mortgagePrice = mortgagePrice;
+        this.mortgagePrice = price / 2;
         this.color = color;
         this.rent = rentModel[0];
 
@@ -30,12 +30,6 @@ public class Street {
         this.owner = owner;
         rent = rentModel[0];
         owner.decreaseMoney(price);
-    }
-
-    public void unmortgage() {
-        owner.decreaseMoney(price/2);
-        isMortgaged = false;
-        Bank.returnStreet(this);
     }
 
     public void tradedTo(Player newOwner) {
@@ -68,8 +62,14 @@ public class Street {
     }
 
     public void mortgage() {
-        owner.addMoney(price/2);
+        owner.addMoney(mortgagePrice);
         isMortgaged = true;
+    }
+
+    public void unmortgage() {
+        owner.decreaseMoney(mortgagePrice);
+        isMortgaged = false;
+        Bank.returnStreet(this);
     }
 
     //getters and setters

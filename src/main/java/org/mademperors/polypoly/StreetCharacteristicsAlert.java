@@ -2,19 +2,14 @@ package org.mademperors.polypoly;
 
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 import org.mademperors.polypoly.controllers.GameController;
 import org.mademperors.polypoly.models.Street;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class StreetCharacteristicsAlert {
 
@@ -25,22 +20,10 @@ public class StreetCharacteristicsAlert {
         public Button delBuildingButton;
         public Button mortgageButton;
         @FXML
-        private Label fourHousePrice;
+        private Label streetPrice, monopolyStreetPrice, oneHousePrice, twoHousePrice, threeHousePrice, fourHousePrice, hotelPrice;
 
         @FXML
-        private Label hotelPrice;
-
-        @FXML
-        private Label oneHousePrice;
-
-        @FXML
-        private Label onlyStreetPrice;
-
-        @FXML
-        private Label priceForHotelLabel;
-
-        @FXML
-        private Label priceForHouseLabel;
+        private Label priceForHotelLabel, priceForHouseLabel;
 
         @FXML
         private HBox streetColor;
@@ -49,39 +32,28 @@ public class StreetCharacteristicsAlert {
         private Label streetName;
 
         @FXML
-        private Label threeHousePrice;
-
-        @FXML
-        private Label twoHousePrice;
-
-        @FXML
         private Label mortgagePrice;
 
         private boolean isToShow=false;
         private Street street;
 
-        public void setFourHousePrice(int fourHouse) {
-                fourHousePrice.setText(String.valueOf(fourHouse));
-        }
-
-        public void setHotelPrice(int hotelPric) {
-                hotelPrice.setText(String.valueOf(hotelPric));
-        }
-
-        public void setOneHousePrice(int oneHouse) {
-                oneHousePrice.setText(String.valueOf(oneHouse));
-        }
-
-        public void setOnlyStreetPrice(int onlyStreet) {
-                onlyStreetPrice.setText(Integer.toString(onlyStreet));
-        }
-
-        public void setPriceForHotelLabel(int priceForHotel) {
+        public void setPriceForBuildingsLabel(int priceForHouse, int priceForHotel) {
+                priceForHouseLabel.setText("Будинок- по "+priceForHouse+" за кожний");
                 priceForHotelLabel.setText("Готель- за "+priceForHotel);
         }
 
-        public void setPriceForHouseLabel(int priceForHouse) {
-                priceForHouseLabel.setText("Будинок- по "+priceForHouse+" за кожний");
+        public void setStreetPrices(int[] rentModel) {
+                streetPrice.setText(String.valueOf(rentModel[0]));
+                monopolyStreetPrice.setText(String.valueOf(rentModel[1]));
+                oneHousePrice.setText(String.valueOf(rentModel[2]));
+                twoHousePrice.setText(String.valueOf(rentModel[3]));
+                threeHousePrice.setText(String.valueOf(rentModel[4]));
+                fourHousePrice.setText(String.valueOf(rentModel[5]));
+                hotelPrice.setText(String.valueOf(rentModel[6]));
+        }
+
+        public void setMortgagedPrice(int mortgagedPrice) {
+                mortgagePrice.setText("Залогова ціна: " + mortgagedPrice);
         }
 
         public void setStreetColor(String color) {
@@ -90,18 +62,6 @@ public class StreetCharacteristicsAlert {
 
         public void setStreetName(String name) {
                 streetName.setText(name);
-        }
-
-        public void setThreeHousePrice(int threeHouse) {
-                threeHousePrice.setText(String.valueOf(threeHouse));
-        }
-
-        public void setTwoHousePrice(int twoHousee) {
-                twoHousePrice.setText(String.valueOf(twoHousee));
-        }
-
-        public void setMortgagePrice(int mortgage) {
-                mortgagePrice.setText("Залогова ціна: "+String.valueOf(mortgage));
         }
 
         public void setStreet(Street street) {

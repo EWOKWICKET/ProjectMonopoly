@@ -20,7 +20,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import org.mademperors.polypoly.StreetCharacteristicsAlert;
 import org.mademperors.polypoly.listeners.DiceResultListener;
 import org.mademperors.polypoly.models.*;
@@ -31,7 +30,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class PolypolyGameController implements Initializable, DiceResultListener {
 
@@ -53,6 +51,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     @FXML
     public Button throdDicesButton;
     public Button endMoveButton;
+
     public Label playerMoney;
     public Label playerName;
     @FXML
@@ -412,16 +411,10 @@ public class PolypolyGameController implements Initializable, DiceResultListener
             sca.setStreet(street);
             sca.setToShow(isToShow);
             sca.setStreetName(street.getName());
-            sca.setOnlyStreetPrice(street.getRentModel()[0]);
-            sca.setOneHousePrice(street.getRentModel()[1]);
-            sca.setTwoHousePrice(street.getRentModel()[2]);
-            sca.setThreeHousePrice(street.getRentModel()[3]);
-            sca.setFourHousePrice(street.getRentModel()[4]);
-            sca.setHotelPrice(street.getRentModel()[5]);
+            sca.setStreetPrices(street.getRentModel());
+            sca.setMortgagedPrice(street.getMortgagePrice());
             sca.setStreetColor(street.getColor());
-            sca.setPriceForHotelLabel(street.getHousePrice());
-            sca.setPriceForHouseLabel(street.getHousePrice());
-            sca.setMortgagePrice(street.getMortgagePrice());
+            sca.setPriceForBuildingsLabel(street.getHousePrice(), street.getHotelPrice());
             sca.init();
             dialogStage.showAndWait();
 
@@ -448,6 +441,37 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         GameController.throwDices(this);
     }
 
+    @FXML
+    public void throwDices(MouseEvent mouseEvent) {
+
+//        AnchorPane anp = (AnchorPane) polypolyField.getCenter();
+//        for (Node node : anp.getChildren()) {
+//
+//            if (node.getId() != null && node.getId().equals("dice1")) {
+//                BorderPane bp = (BorderPane) node;
+//                bp.setCenter(GameController.diceImageView1);
+//            }
+//            if (node.getId() != null && node.getId().equals("dice2")) {
+//                BorderPane bp = (BorderPane) node;
+//                bp.setCenter(GameController.diceImageView2);
+//            }
+//        }
+        if (!isDiceThrown) {
+            soundManager.playThrow();
+            GameController.throwDices(this);
+            dice1.setCenter(GameController.diceImageView1);
+            dice2.setCenter(GameController.diceImageView2);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Вже кидані кубики");
+            alert.setHeaderText(null);
+            alert.setContentText("Ви вже кинули кубики. Не можна кидати кубики двічі.");
+
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
     public void endTurn(MouseEvent mouseEvent) {
         if (isDiceThrown) {
             currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
@@ -584,35 +608,6 @@ public class PolypolyGameController implements Initializable, DiceResultListener
                 street.getOwner().addMoney(street.getRent());
                 GameLogger.getInstance().logInfo(players[currentPlayerIndex].getName() + " заплатив оренду " + street.getRent() + "$ гравцю " + street.getOwner().getName());
             }
-        }
-    }
-
-    public void throwDices(MouseEvent mouseEvent) {
-
-//        AnchorPane anp = (AnchorPane) polypolyField.getCenter();
-//        for (Node node : anp.getChildren()) {
-//
-//            if (node.getId() != null && node.getId().equals("dice1")) {
-//                BorderPane bp = (BorderPane) node;
-//                bp.setCenter(GameController.diceImageView1);
-//            }
-//            if (node.getId() != null && node.getId().equals("dice2")) {
-//                BorderPane bp = (BorderPane) node;
-//                bp.setCenter(GameController.diceImageView2);
-//            }
-//        }
-        if (!isDiceThrown) {
-            soundManager.playThrow();
-            GameController.throwDices(this);
-            dice1.setCenter(GameController.diceImageView1);
-            dice2.setCenter(GameController.diceImageView2);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Вже кидані кубики");
-            alert.setHeaderText(null);
-            alert.setContentText("Ви вже кинули кубики. Не можна кидати кубики двічі.");
-
-            alert.showAndWait();
         }
     }
 
