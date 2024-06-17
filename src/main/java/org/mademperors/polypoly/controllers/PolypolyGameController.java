@@ -26,6 +26,7 @@ import org.mademperors.polypoly.listeners.DiceResultListener;
 import org.mademperors.polypoly.models.Bank;
 import org.mademperors.polypoly.models.GameLogger;
 import org.mademperors.polypoly.models.Player;
+import org.mademperors.polypoly.models.ServiceCards;
 import org.mademperors.polypoly.models.Street;
 
 
@@ -34,6 +35,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class PolypolyGameController implements Initializable, DiceResultListener {
 
@@ -44,6 +46,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     //Dice interfaces and fields
     private static int lastDiceResult;
     private static int currentPlayerIndex = 0;
+    private boolean isDiceThrown=false;
 
 
     @FXML
@@ -52,6 +55,9 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     public Button AddRed;
     @FXML
     public Button throdDicesButton;
+    public Button endMoveButton;
+    public Label playerMoney;
+    public Label playerName;
     @FXML
     public ImageView player1;
     @FXML
@@ -65,10 +71,8 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     @FXML
     private VBox paneForStreetColors;
 
-    private PolypolyFieldController ppfc;
-
     @FXML
-    private BorderPane paneForStreets;
+    private VBox paneForStreets;
 
     @FXML
     private BorderPane panelForPolypolyField;
@@ -83,16 +87,16 @@ public class PolypolyGameController implements Initializable, DiceResultListener
     private TextArea eventCardTextArea;
 
     @FXML
-    private BorderPane field111, field1111;
+    private static TextArea statisticsTextArea;
 
     @FXML private StackPane field1, field2, field3, field4, field5, field6, field7, field8, field9, field10,
             field11, field12, field13, field14, field15, field16, field17, field18, field19, field20,
             field21, field22, field23, field24, field25, field26, field27, field28, field29, field30,
             field31, field32, field33, field34, field35, field36, field37, field38, field39, field40;
 
-    @FXML
-    private TextArea statisticsTextArea;
+
     private Bank bank;
+    private Street[] playerStreets;
 
     // Method to return an array of all StackPanes
     private StackPane[] getAllStackPanes() {
@@ -124,14 +128,44 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         initStreetToType();
         initStreets(bank.getAllStreets());
 
-        VBox colorStreets = paneForStreetColors;
-        colorStreets.setSpacing(10);
-        Label streets = new Label("Вулиці:");
-        streets.setStyle("-fx-font-size: 30px;");
-        colorStreets.getChildren().add(streets);
+
+        setPlayerMenu(GameController.getCurrentPlayer());
+
+//        statisticsTextArea.appendText("123412342134");
     }
 
-    private void initStreetToType() {
+    private void setPlayerMenu(Player player) {
+        playerName.setText("Гравець №"+(currentPlayerIndex+1)+":"+player.getName());
+        playerMoney.setText("Гроші: "+player.getMoney());
+       playerStreets=Arrays.stream(bank.getAllStreets()).flatMap(Arrays::stream).filter(street -> street.getOwner() == player).toArray(Street[]::new);
+
+        VBox colorStreets = paneForStreetColors;
+        //clear panes
+       paneForStreets.getChildren().clear();
+        colorStreets.getChildren().clear();
+
+        colorStreets.setSpacing(10);
+        Label steets = new Label("Вулиці:");
+        steets.setStyle("-fx-font-size: 30px;");
+        colorStreets.getChildren().add(steets);
+       //set street colors in vBox
+        ArrayList<String> colors=new ArrayList<>();
+        Arrays.stream(playerStreets).forEach(street->{
+            if(!colors.contains(street.getColor())) {
+                HBox streetOne = new HBox();
+                streetOne.setStyle("-fx-background-color: "+street.getColor()+";");
+                streetOne.setPadding(new Insets(5));
+                streetOne.setPrefHeight(50);
+                streetOne.setOnMouseClicked(event -> {
+                    showStreetThisColor(street.getColor(), playerStreets);
+                });
+                colorStreets.getChildren().add(streetOne);
+                colors.add(street.getColor());
+            }
+        });
+    }
+
+        private void initStreetToType() {
         streetToType.put(field1, "start");
         streetToType.put(field2, "street");
         streetToType.put(field3, "street");
@@ -191,6 +225,38 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         }
     }
 
+    private void showStreetThisColor(String color, Street[] playerStreets) {
+        VBox colorStreets = paneForStreets;
+        colorStreets.getChildren().clear();
+        Arrays.stream(playerStreets).forEach(street->{
+
+            HBox streetOne = new HBox();
+
+            colorStreets.setSpacing(10);
+            streetOne.setStyle("-fx-background-color: " + color + ";");
+            streetOne.setPadding(new Insets(5));
+            streetOne.setPrefHeight(50);
+            streetOne.setAlignment(Pos.CENTER); // Center align contents in the HBox
+
+            // Create label with street name
+            Label nameLabel = new Label(street.getName());
+            nameLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px;"); // Example styles
+            nameLabel.setAlignment(Pos.CENTER); // Center align label text
+            nameLabel.setWrapText(true); // Wrap text if it's too long
+
+            // Add label to the HBox
+            streetOne.getChildren().add(nameLabel);
+
+            // Set click event on the HBox
+            streetOne.setOnMouseClicked(event -> {
+                showAlertDialog(streetOne, street, false);
+            });
+
+            // Add HBox to the VBox
+            colorStreets.getChildren().add(streetOne);
+        });
+    }
+
     private void initStreets(Street[][] allStreets) {
         StackPane[] streets = getAllStackPanes();
         int index = 0;
@@ -204,7 +270,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
                 ObservableList<Node> nodes = streets[index].getChildren();
                 for (Node node : nodes) {
                     node.setOnMouseClicked(event -> {
-                        showAlertDialog(node, oneStreet);
+                        showAlertDialog(node, oneStreet, true);
                     });
                     if (node.getClass().toString().contains("AnchorPane")) {
                         AnchorPane ap = (AnchorPane) node;
@@ -220,7 +286,6 @@ public class PolypolyGameController implements Initializable, DiceResultListener
                             }
                         }
                         index++;
-
                     }
                 }
 
@@ -248,6 +313,9 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
     private void setCity(int i, StackPane[] streets) {
         ObservableList<Node> nodes = streets[i - 1].getChildren();
+        if(i==8){
+            ServiceCards.showCity(eventCard, GameController.getCurrentPlayer());
+        }
         for (Node node : nodes) {
             if (node instanceof AnchorPane) {
                 AnchorPane ap = (AnchorPane) node;
@@ -329,7 +397,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
     }
 
-    private void showAlertDialog(Node streetOne, Street street) {
+    private void showAlertDialog(Node streetOne, Street street, boolean isToShow) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/mademperors/polypoly/streetCard.fxml"));
             Parent root = loader.load();
@@ -339,9 +407,11 @@ public class PolypolyGameController implements Initializable, DiceResultListener
             dialogStage.initModality(Modality.APPLICATION_MODAL); // Block input events to other windows
 
             dialogStage.setScene(new Scene(root));
-            dialogStage.setTitle("Street info");
+            dialogStage.setTitle("Характеристики вулиці");
 
             StreetCharacteristicsAlert sca=loader.getController();
+            sca.setStreet(street);
+            sca.setToShow(isToShow);
             sca.setStreetName(street.getName());
             sca.setOnlyStreetPrice(street.getRentModel()[0]);
             sca.setOneHousePrice(street.getRentModel()[1]);
@@ -350,11 +420,15 @@ public class PolypolyGameController implements Initializable, DiceResultListener
             sca.setFourHousePrice(street.getRentModel()[4]);
             sca.setHotelPrice(street.getRentModel()[5]);
             sca.setStreetColor(street.getColor());
-            sca.setPriceForHotelLabel(street.getHotelPrice());
+            sca.setPriceForHotelLabel(street.getHousePrice());
             sca.setPriceForHouseLabel(street.getHousePrice());
             sca.setMortgagePrice(street.getMortgagePrice());
-
+            sca.init();
             dialogStage.showAndWait();
+
+            if(!isToShow) {
+                setPlayerMenu(street.getOwner());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -367,7 +441,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         streetOne.setPadding(new Insets(5));
         streetOne.setPrefHeight(50);
         streetOne.setOnMouseClicked(event -> {
-            showAlertDialog(streetOne,bank.getAllStreets()[0][0]);
+            showAlertDialog(streetOne,bank.getAllStreets()[0][0], false);
         });
         colorStreets.getChildren().add(streetOne);
 
@@ -375,9 +449,21 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         GameController.throwDices(this);
     }
 
-    public void endTurn() {
-        currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
-        GameController.setCurrentPlayer(players[currentPlayerIndex]);
+    public void endTurn(MouseEvent mouseEvent) {
+        if(isDiceThrown) {
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+            GameController.setCurrentPlayer(players[currentPlayerIndex]);
+            setPlayerMenu(GameController.getCurrentPlayer());
+            isDiceThrown=false;
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Не кидані кубики");
+            alert.setHeaderText(null);
+            alert.setContentText("Ви ще не кинули кубики. Не можна закінчити хід, не кинувши кубики.");
+
+            alert.showAndWait();
+        }
 //        System.out.println(currentPlayerIndex);
     }
 
@@ -394,6 +480,17 @@ public class PolypolyGameController implements Initializable, DiceResultListener
         for (int i = 0; i < shortenedNames.length; i ++) {
             players[i] = new Player(shortenedNames[i], initialMoney, colors[i]);
             players[i].setPlayerIndex(i);
+            if(i==0){
+                Bank bn=new Bank();
+                bn.getAllStreets()[0][0].setOwner(players[i]);
+                Street st=bn.getAllStreets()[0][1];
+                st.setMortgaged(true);
+                st.setOwner(players[i]);
+            }
+            if(i==1){
+                Bank bn=new Bank();
+                bn.getAllStreets()[0][2].setOwner(players[i]);
+            }
         }
 
         GameController.setCurrentPlayer(players[currentPlayerIndex]);
@@ -450,11 +547,21 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 //                bp.setCenter(GameController.diceImageView2);
 //            }
 //        }
-        dice1.setCenter(GameController.diceImageView1);
-        dice2.setCenter(GameController.diceImageView2);
+        if (!isDiceThrown) {
+            GameController.throwDices(this);
+            dice1.setCenter(GameController.diceImageView1);
+            dice2.setCenter(GameController.diceImageView2);
+            isDiceThrown = true;
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Вже кидані кубики");
+            alert.setHeaderText(null);
+            alert.setContentText("Ви вже кинули кубики. Не можна кидати кубики двічі.");
 
-        GameController.throwDices(this);
+            alert.showAndWait();
+        }
     }
+
 }
 
 

@@ -1,6 +1,8 @@
 package org.mademperors.polypoly.models;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 public class Player {
 
@@ -8,15 +10,15 @@ public class Player {
     private int money;
     private boolean inJail = false;
     private int jailFreeCards = 0;
-    private final String color;
     private ImageView playerImageView;
     private int currentPositionIndex = 0;
     private int playerIndex;
+    private final Color color;
 
     public Player(String name, int money, String color) {
         this.name = name;
         this.money = money;
-        this.color = color;
+        this.color = Color.web(color);
     }
 
     // DELETE player from players array()
@@ -61,7 +63,7 @@ public class Player {
     public void acquireJailFreeCards(int amount) {
         this.jailFreeCards += amount;
     }
-    public String getPlayerColor() {
+    public Color getPlayerColor() {
         return color;
     }
     public ImageView getPlayerImageView() {

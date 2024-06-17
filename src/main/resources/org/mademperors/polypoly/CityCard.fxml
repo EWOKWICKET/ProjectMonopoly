@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="306.0" prefWidth="600.0" style="-fx-background-color: lightblue; -fx-border-width: 5; -fx-border-color: black;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mademperors.polypoly.controllers.serviceCardsControllers.CityCardController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="204.00001831054686" minHeight="10.0" prefHeight="189.2000244140625" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="177.59999999999997" minHeight="0.0" prefHeight="85.99997558593748" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <GridPane>
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="78.59998168945313" minHeight="10.0" prefHeight="41.799990081787115" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="125.0000099182129" minHeight="10.0" prefHeight="125.0000099182129" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="CENTER" prefHeight="34.0" prefWidth="596.0" text="Місто">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="cityText" prefHeight="109.0" prefWidth="602.0" text="123456789 12345678123456789 123456789 2345675432124123456789 123456789 23456754321249 2345675432124" wrapText="true" GridPane.rowIndex="1">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <StackPane prefHeight="114.0" prefWidth="600.0" GridPane.rowIndex="1">
+         <children>
+            <FlowPane fx:id="paneButtonType0" alignment="TOP_CENTER" prefWidth="600.0" style="-fx-padding: 10;" visible="false">
+               <children>
+                  <Button fx:id="moveChip" mnemonicParsing="false" onMouseClicked="#moveChipAndPayMoneyForExc" prefHeight="39.0" prefWidth="222.0" text="Перемістити фішку і заплатити">
+                     <FlowPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </FlowPane.margin>
+                  </Button>
+               </children>
+            </FlowPane>
+            <FlowPane fx:id="paneButtonType3" alignment="TOP_CENTER" prefHeight="78.0" prefWidth="600.0" style="-fx-padding: 10;" visible="false">
+               <children>
+                  <Button mnemonicParsing="false" onMouseClicked="#takeFreeJailCard" prefHeight="39.0" prefWidth="153.0" text="Взяти карту" />
+               </children>
+            </FlowPane>
+            <FlowPane fx:id="paneButtonType12" alignment="TOP_CENTER" prefHeight="78.0" prefWidth="600.0" style="-fx-padding: 10;" visible="false">
+               <children>
+                  <Button mnemonicParsing="false" onMouseClicked="#payGetMoney" prefHeight="39.0" prefWidth="202.0" text="Отримати/Виплатити гроші">
+                     <FlowPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </FlowPane.margin>
+                  </Button>
+               </children>
+            </FlowPane>
+         </children>
+      </StackPane>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</GridPane>

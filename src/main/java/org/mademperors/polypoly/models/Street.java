@@ -63,7 +63,7 @@ public class Street {
         if (hasHotel) {
             sellHotel();
         } else {
-            sellHouse();
+            if(numberOfHouses>0)  sellHouse();
         }
     }
 

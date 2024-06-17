@@ -1,5 +1,8 @@
 package org.mademperors.polypoly.models;
 
+import javafx.scene.text.Text;
+import org.mademperors.polypoly.utils.Utils;
+
 import java.util.*;
 
 public class Bank {
@@ -8,9 +11,9 @@ public class Bank {
 
     private static final Street[][] streets = {
             {
-                    new Street("пл. Слави", 290, new int[]{29, 145, 435, 870, 1305, 1435}, 180, 190, 190, "orange"),
-                    new Street("пл. Укр. Героїв", 300, new int[]{30, 150, 450, 900, 1345, 1480}, 190, 200, 200, "orange"),
-                    new Street("Андріївський спуск", 310, new int[]{31, 155, 465, 930, 1395, 1535}, 200, 210, 210, "orange")
+                    new Street("пл. Слави", 290, new int[]{29,58, 145, 435, 870, 1305, 1435}, 180, 190, 190, "orange"),
+                    new Street("пл. Укр. Героїв", 300, new int[]{30, 60, 150, 450, 900, 1345, 1480}, 190, 200, 200, "orange"),
+                    new Street("Андріївський спуск", 310, new int[]{31,62, 155, 465, 930, 1395, 1535}, 200, 210, 210, "orange")
             },
             {
                 new Street("вул. Грушевського", 320, new int[]{32, 160, 480, 950, 1425, 1575}, 210, 220, 220, "magenta"),
@@ -70,7 +73,9 @@ public class Bank {
                 .flatMap(Arrays::stream)
                 .filter(street -> street.getOwner() == bankruptPlayer)
                 .forEach(Street::loseStreet);
-        logger.logInfo(String.format("%s went bankrupt", bankruptPlayer.getName()));
+
+        Text playerName = Utils.paintPlayerName(bankruptPlayer);
+        logger.logInfo(String.format("%s went bankrupt", playerName));
     }
 
     private static void updateMortgaged() {
@@ -85,6 +90,8 @@ public class Bank {
                 Street streetLost = entry.getKey();
                 streetLost.loseStreet();
                 iterator.remove();
+
+                Text streetName = Utils.paintStreetName(streetLost);
                 logger.logInfo(String.format("Mortgaged street %s lost", streetLost));
                 checkMonopolyByStreet(streetLost);
             }
