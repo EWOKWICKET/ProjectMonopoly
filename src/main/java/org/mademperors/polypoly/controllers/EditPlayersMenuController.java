@@ -190,6 +190,7 @@ public class EditPlayersMenuController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/mademperors/polypoly/MainMenu.fxml"));
         try {
             Parent mainMenu = loader.load();
+            mediaPlayer.stop();
             MainMenuController mainMenuController = loader.getController();
 
             mainMenuController.setPlayerAndMoney(players, initialMoney);

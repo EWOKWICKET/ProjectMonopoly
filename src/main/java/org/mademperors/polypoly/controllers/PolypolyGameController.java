@@ -129,11 +129,11 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        String musicPath = "src/main/resources/sounds/mainGameBcgrMusic.mp3"; // Replace with your path
+        String musicPath = "src/main/resources/sounds/videoplayback.m4a"; // Replace with your path
         Media music = new Media(new File(musicPath).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(music);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.setVolume(mediaPlayer.getVolume() - 0.6);
+        mediaPlayer.setVolume(mediaPlayer.getVolume());
         mediaPlayer.play();
 
         bank = new Bank();
@@ -562,14 +562,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
      */
     @FXML
     public void throwDices(MouseEvent mouseEvent) {
-        if (GameController.getCurrentPlayer().isInJail()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Ви у в'язниці");
-            alert.setHeaderText(null);
-            alert.setContentText("Ви у в'язниці. Ви не можете кидати ходити");
 
-            alert.showAndWait();
-        } else {
             if (!isDiceThrown) {
                 soundManager.playThrow();
                 GameController.throwDices(this);
@@ -583,7 +576,7 @@ public class PolypolyGameController implements Initializable, DiceResultListener
 
                 alert.showAndWait();
             }
-        }
+
     }
 
     /**

@@ -148,11 +148,14 @@ public class MainMenuController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        String musicPath = "src/main/resources/sounds/backgroundMusic.mp3";
-        Media music = new Media(new File(musicPath).toURI().toString());
-        mediaPlayer = new MediaPlayer(music);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.play();
+
+            String musicPath = "src/main/resources/sounds/backgroundMusic.mp3";
+            Media music = new Media(new File(musicPath).toURI().toString());
+            mediaPlayer = new MediaPlayer(music);
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            mediaPlayer.play();
+        
+
 
         BorderPane borderPane = (BorderPane) startButton.getParent().getParent().getParent();
         borderPane.getStyleClass().add("border-pane");
